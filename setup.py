@@ -33,16 +33,16 @@
 
 import os
 from setuptools import setup, find_packages
-from s3ddb._version import __version__
+from dblib._version import __version__
 
 
 class Setup:
     """Create a dist package for this library."""
 
-    PACKAGE         = 's3ddb'
+    PACKAGE         = 'dblib'
     VERSION         = __version__
     PLATFORMS       = 'Python 3.6+'
-    DESC            = 'S3DEV database encapsulation library.'
+    DESC            = 'Generalised and simple database interface library.'
     AUTHOR          = 'J. Berendt'
     AUTHOR_EMAIL    = 'development@s3dev.uk'
     URL             = 'n/a'
@@ -64,11 +64,11 @@ class Setup:
                        'Topic :: Utilities']
 
     # PACKAGE REQUIREMENTS
-    REQUIRES        = ['pandas', 'sqlalchemy']
+    REQUIRES        = ['pandas', 'sqlalchemy', 'utils4']
     PACKAGES        = find_packages()
 
     # ADD DATA AND DOCUMENTATION FILES
-    PACKAGE_DATA    = {'s3ddb': ['config.json', 'LICENSE']}
+    PACKAGE_DATA    = {}
 
     def run(self):
         """Run the setup."""
