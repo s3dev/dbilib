@@ -7,3 +7,4 @@ dblib.egg-info/SOURCES.txt
 dblib.egg-info/dependency_links.txt
 dblib.egg-info/requires.txt
 dblib.egg-info/top_level.txt
+tests/test_database_mysql.py

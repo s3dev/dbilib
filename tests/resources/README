@@ -1,0 +1,13 @@
+
+In the event the testing environment moves, the database is corrupted 
+or any scripts are lost or damaged, the database can be completely
+rebuilt (or established) using the scripts contained in the 
+mysqlsetup_*.tar.gz archive.
+
+The *.sh shell scripts are wrappers around the .sql script and can be 
+used for deployment or database teardown. These shell scripts are executed
+by the testing modules via a subprocess call.
+
+/ jb
+2023-05-18
+

@@ -1,0 +1,13 @@
+[run]
+omit = 
+    ./testlibs/*
+    ./base.py
+    ./test_*.py
+
+[report]
+exclude_lines =
+    nocover
+    except Exception as err:
+    except IntegrityError as ierr:
+    except SQLAlchemyError as err:
+

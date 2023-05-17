@@ -235,7 +235,7 @@ class DBInterface:
     def execute_query(self,
                       stmt: str,
                       params: dict=None,
-                      raw: bool=True) -> Union[list, pd.DataFrame]:
+                      raw: bool=True) -> Union[list, pd.DataFrame, None]:
         """Execute a query statement.
 
         If the query did not return results and the ``raw`` argument is
@@ -258,18 +258,30 @@ class DBInterface:
             bindings.
 
         Returns:
-            Union[list, pd.DataFrame): If the ``raw`` parameter is True,
-            a list of tuples containing values is returned. Otherwise,
-            a ``pandas.DataFrame`` object containing the returned data
-            is returned.
+            Union[list, pd.DataFrame, None): If the ``raw`` parameter is
+            True, a list of tuples containing values is returned.
+            Otherwise, a ``pandas.DataFrame`` object containing the
+            returned data is returned.
+
+            If this method is called with a script which does not return
+            results, for example a CREATE script, None is returned;
+            regardless of the value passed to the ``raw`` parameter.
 
         """
-        with self._engine.connect() as conn:
-            result = conn.execute(sa.text(stmt), params)
-            conn.close()
-        if raw:
-            return result.fetchall()
-        return self._result_to_df__cursor(result=result)
+        # pylint: disable=no-else-return
+        # pylint: disable=no-member
+        try:
+            with self._engine.connect() as conn:
+                result = conn.execute(sa.text(stmt), params)
+                conn.close()
+            if raw:
+                return result.fetchall()
+            else:
+                return self._result_to_df__cursor(result=result)
+        except Exception as err:
+            if 'object does not return rows' not in err._message():
+                reporterror(err)
+        return None
 
     # TODO: Build option for Oracle.
     def table_exists(self, table_name: str, verbose: bool=False) -> bool:
@@ -318,7 +330,7 @@ class DBInterface:
                                 pool_pre_ping=True,
                                 max_overflow=0)
 
-    def _report_sqla_error(self, msg: str, error: SQLAlchemyError):
+    def _report_sqla_error(self, msg: str, error: SQLAlchemyError):  # pragma: nocover
         """Report SQLAlchemy error to the terminal.
 
         Args:
@@ -367,9 +379,10 @@ class DBInterface:
             procedure call.
 
         """
-        # pylint: disable=unnecessary-dunder-call
         df = pd.DataFrame()
-        if result.__length_hint__():
+        try:
             x = next(result)  # There is only one item in the iterable.
             df = pd.DataFrame(data=x.fetchall(), columns=x.column_names)
+        except Exception as err:
+            reporterror(err)
         return df
