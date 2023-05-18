@@ -1,5 +1,8 @@
 setup.py
 dblib/__init__.py
+dblib/_dbi_base.py
+dblib/_dbi_mysql.py
+dblib/_dbi_oracle.py
 dblib/_version.py
 dblib/database.py
 dblib.egg-info/PKG-INFO

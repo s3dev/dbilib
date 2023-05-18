@@ -75,10 +75,13 @@ for f in $( /usr/bin/find ../ -name "*.py" | grep -v "docs" ); do
     bname=$( basename ${f} )
     dname=$( basename $( dirname ${f} ) )_
     [ $dname = ".._" ] && dname=""
-    if [[ ${bname} =~ ^[a-z][a-z0-9_]+\.py ]]; then
-        echo Processing: ${f}
-        outname=${dname}$( echo ${bname} | sed s/.py// )${EXT}
-        pylint "${rcfile}" ${f} > "${OUTPUT}/${outname}"
+    # HACK: Hacked this version to also test '_private' modules.
+    if [[ ${bname} =~ ^[a-z_][a-z0-9_]+\.py ]]; then
+        if [[ ${bname} != "_version.py" ]] && [[ ${bname} != "__init__.py" ]]; then
+            echo Processing: ${f}
+            outname=${dname}$( echo ${bname} | sed s/.py// )${EXT}
+            pylint "${rcfile}" ${f} > "${OUTPUT}/${outname}"
+        fi
     fi
 done
 

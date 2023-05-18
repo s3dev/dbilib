@@ -64,7 +64,11 @@ class Setup:
                        'Topic :: Utilities']
 
     # PACKAGE REQUIREMENTS
-    REQUIRES        = ['pandas', 'sqlalchemy', 'utils4']
+    REQUIRES        = ['pandas',
+                       'utils4',
+                       'cx_oracle',
+                       'mysql-connector-python',
+                       'sqlalchemy']
     PACKAGES        = find_packages()
 
     # ADD DATA AND DOCUMENTATION FILES

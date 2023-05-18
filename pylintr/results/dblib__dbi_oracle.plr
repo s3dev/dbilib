@@ -1,8 +1,12 @@
+************* Module dblib._dbi_oracle
+/var/devmt/py/dblib_0.2.0.dev1/dblib/_dbi_oracle.py:118:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dblib_0.2.0.dev1/dblib/_dbi_oracle.py:195:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dblib_0.2.0.dev1/dblib/_dbi_oracle.py:212:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
 
 
 Report
 ======
-23 statements analysed.
+52 statements analysed.
 
 Statistics by type
 ------------------
@@ -14,14 +18,14 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |class    |1      |1          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |2      |2          |=          |100.00      |0.00     |
+|method   |8      |8          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |function |0      |NC         |NC         |0           |0        |
 +---------+-------+-----------+-----------+------------+---------+
 
 
 
-125 lines have been analyzed
+228 lines have been analyzed
 
 Raw metrics
 -----------
@@ -29,13 +33,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |26     |20.80 |26       |=          |
+|code      |59     |25.88 |59       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |88     |70.40 |88       |=          |
+|docstring |152    |66.67 |152      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |5      |4.00  |5        |=          |
+|comment   |5      |2.19  |5        |=          |
 +----------+-------+------+---------+-----------+
-|empty     |6      |4.80  |6        |=          |
+|empty     |12     |5.26  |12       |=          |
 +----------+-------+------+---------+-----------+
 
 
@@ -73,9 +77,11 @@ Messages by category
 Messages
 --------
 
-+-----------+------------+
-|message id |occurrences |
-+===========+============+
++----------------------+------------+
+|message id            |occurrences |
++======================+============+
+|c-extension-no-member |3           |
++----------------------+------------+
 
 
 
