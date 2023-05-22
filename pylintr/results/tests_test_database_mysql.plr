@@ -21,20 +21,6 @@ Statistics by type
 
 
 
-External dependencies
----------------------
-::
-
-    base (test_database_mysql)
-    dblib 
-      \-database (test_database_mysql)
-    pandas (test_database_mysql)
-    testlibs 
-      \-constants (test_database_mysql)
-      \-utilities (test_database_mysql)
-
-
-
 343 lines have been analyzed
 
 Raw metrics

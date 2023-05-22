@@ -23,7 +23,7 @@
 import sqlalchemy as sa
 from utils4 import utils
 # locals
-if utils.testimport('mysql.connector', verbose=False):
+if utils.testimport('mysql', verbose=False):
     try:
         from _dbi_mysql import _DBIMySQL
     except ImportError:
@@ -65,10 +65,11 @@ class DBInterface:
                                               '<db_name>'))
 
     """
+    # pylint: disable=unused-argument
 
     _SUPPORTED_DBS = ['mysql', 'oracle']
 
-    def __new__(cls, connstr: str):
+    def __new__(cls, connstr: str, *args, **kwargs):
         """Provide a database interface based on the connection string.
 
         Using the provided connection string, a
