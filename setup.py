@@ -66,8 +66,9 @@ class Setup:
     # PACKAGE REQUIREMENTS
     REQUIRES        = ['pandas',
                        'utils4',
-                       'cx_oracle',
-                       'mysql-connector-python',
+                       # Removed for flexibility.
+                       # 'cx_oracle',
+                       # 'mysql-connector-python',
                        'sqlalchemy']
     PACKAGES        = find_packages()
 

@@ -22,6 +22,7 @@
         - :class:`_DBIOracle`
 
 """
+# pylint: disable=import-error
 # pylint: disable=wrong-import-order
 
 import cx_Oracle

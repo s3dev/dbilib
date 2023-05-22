@@ -1,7 +1,3 @@
-************* Module dblib._dbi_oracle
-/var/devmt/py/dblib_0.2.0.dev1/dblib/_dbi_oracle.py:118:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dblib_0.2.0.dev1/dblib/_dbi_oracle.py:195:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dblib_0.2.0.dev1/dblib/_dbi_oracle.py:212:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
 
 
 Report
@@ -25,7 +21,7 @@ Statistics by type
 
 
 
-228 lines have been analyzed
+229 lines have been analyzed
 
 Raw metrics
 -----------
@@ -33,13 +29,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |59     |25.88 |59       |=          |
+|code      |59     |25.76 |59       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |152    |66.67 |152      |=          |
+|docstring |152    |66.38 |152      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |5      |2.19  |5        |=          |
+|comment   |6      |2.62  |6        |=          |
 +----------+-------+------+---------+-----------+
-|empty     |12     |5.26  |12       |=          |
+|empty     |12     |5.24  |12       |=          |
 +----------+-------+------+---------+-----------+
 
 
@@ -77,11 +73,9 @@ Messages by category
 Messages
 --------
 
-+----------------------+------------+
-|message id            |occurrences |
-+======================+============+
-|c-extension-no-member |3           |
-+----------------------+------------+
++-----------+------------+
+|message id |occurrences |
++===========+============+
 
 
 

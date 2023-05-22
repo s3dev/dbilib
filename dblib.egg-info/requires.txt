@@ -1,5 +1,3 @@
 pandas
 utils4
-cx_oracle
-mysql-connector-python
 sqlalchemy

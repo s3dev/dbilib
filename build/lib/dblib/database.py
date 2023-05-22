@@ -21,13 +21,18 @@
 # pylint: disable=import-error
 
 import sqlalchemy as sa
+from utils4 import utils
 # locals
-try:
-    from _dbi_mysql import _DBIMySQL
-    from _dbi_oracle import _DBIOracle
-except ImportError:
-    from ._dbi_mysql import _DBIMySQL
-    from ._dbi_oracle import _DBIOracle
+if utils.testimport('mysql.connector', verbose=False):
+    try:
+        from _dbi_mysql import _DBIMySQL
+    except ImportError:
+        from ._dbi_mysql import _DBIMySQL
+if utils.testimport('cx_oracle', verbose=False):
+    try:
+        from _dbi_oracle import _DBIOracle
+    except ImportError:
+        from ._dbi_oracle import _DBIOracle
 
 
 class DBInterface:
@@ -88,10 +93,14 @@ class DBInterface:
         if name not in cls._SUPPORTED_DBS:
             raise NotImplementedError('The only databases supported at this time are: '
                                       f'{cls._SUPPORTED_DBS}.')
-        if name== 'mysql':
+        if all((name == 'mysql', utils.testimport('mysql.connector', verbose=False))):
             return _DBIMySQL(connstr=connstr)
-        elif name == 'oracle':
+        elif all((name == 'oracle', utils.testimport('cx_oracle', verbose=False))):
             return _DBIOracle(connstr=connstr)
+        else:
+            raise RuntimeError('An error occurred while creating an instance of the database '
+                               'accessor class. Perhaps the appropriate database driver is not '
+                               'installed?')
         return None
 
     @staticmethod
