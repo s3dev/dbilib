@@ -18,21 +18,18 @@
         - :class:`DBInterface`
 
 """
+# This enables a single module installed test, rather than two.
+# pylint: disable=import-outside-toplevel
+# Silence the spurious IDE-based error.
 # pylint: disable=import-error
 
+import os
+import sys
 import sqlalchemy as sa
 from utils4 import utils
-# locals
-if utils.testimport('mysql', verbose=False):
-    try:
-        from _dbi_mysql import _DBIMySQL
-    except ImportError:
-        from ._dbi_mysql import _DBIMySQL
-if utils.testimport('cx_oracle', verbose=False):
-    try:
-        from _dbi_oracle import _DBIOracle
-    except ImportError:
-        from ._dbi_oracle import _DBIOracle
+
+# Set syspath to enable the private modules to import their db-specific class.
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 
 class DBInterface:
@@ -65,7 +62,6 @@ class DBInterface:
                                               '<db_name>'))
 
     """
-    # pylint: disable=unused-argument
 
     _SUPPORTED_DBS = ['mysql', 'oracle']
 
@@ -89,20 +85,27 @@ class DBInterface:
                 for the database interface instance.
 
         """
-        # pylint: disable=no-else-return
+        # Enable the use of *args and **kwargs for class parameters.
+        # pylint: disable=unused-argument
         name = cls._create_engine__internal_only(connstr=connstr)
         if name not in cls._SUPPORTED_DBS:
             raise NotImplementedError('The only databases supported at this time are: '
                                       f'{cls._SUPPORTED_DBS}.')
-        if all((name == 'mysql', utils.testimport('mysql.connector', verbose=False))):
-            return _DBIMySQL(connstr=connstr)
-        elif all((name == 'oracle', utils.testimport('cx_oracle', verbose=False))):
-            return _DBIOracle(connstr=connstr)
-        else:
-            raise RuntimeError('An error occurred while creating an instance of the database '
-                               'accessor class. Perhaps the appropriate database driver is not '
-                               'installed?')
-        return None
+        # These are intentionally verbose as a ModuleNotFoundError will
+        # be raised during the test if operating on an environment without
+        # that driver installed.
+        if name == 'mysql':
+            if utils.testimport('mysql.connector', verbose=False):
+                from _dbi_mysql import _DBIMySQL
+                return _DBIMySQL(connstr=connstr)
+        if name == 'oracle':
+            if utils.testimport('cx_Oracle', verbose=False):
+                from _dbi_oracle import _DBIOracle
+                return _DBIOracle(connstr=connstr)
+        # Fallback if a module is not installed.
+        raise RuntimeError('An error occurred while creating an instance of the database '
+                           'accessor class. Perhaps the appropriate database driver is not '
+                           'installed?')
 
     @staticmethod
     def _create_engine__internal_only(connstr: str) -> str:

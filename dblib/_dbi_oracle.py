@@ -9,10 +9,7 @@
 :Developer: J Berendt
 :Email:     support@s3dev.uk
 
-:Comments:  It's worth noting that the base module's core functionality
-            was written for MySQL databases. Therefore, this
-            Oracle-specific database class will provide method overriding
-            and specialisation to the base class.
+:Comments:  n/a
 
 :Example:
 
@@ -22,8 +19,9 @@
         - :class:`_DBIOracle`
 
 """
-# pylint: disable=import-error
 # pylint: disable=wrong-import-order
+# Silence the spurious IDE-based error.
+# pylint: disable=import-error
 
 import cx_Oracle
 import pandas as pd
@@ -31,10 +29,7 @@ from typing import Union, Tuple
 from utils4.reporterror import reporterror
 from utils4.user_interface import ui
 # locals
-try:
-    from _dbi_base import _DBIBase
-except ImportError:
-    from ._dbi_base import _DBIBase
+from _dbi_base import _DBIBase
 
 
 class _DBIOracle(_DBIBase):
@@ -77,9 +72,7 @@ class _DBIOracle(_DBIBase):
     _ERROR_NI = ('Due to restrictions on the development environment, '
                  'this method is currently not implemented.')
 
-    def __init__(self, connstr: str):
-        """Class initialiser."""
-        super().__init__(connstr=connstr)
+    # The __init__ method is implemented in the parent class.
 
     def call_procedure(self,
                        proc: str,
@@ -203,7 +196,6 @@ class _DBIOracle(_DBIBase):
                 try/except block.
 
         """
-        # pylint: disable=unnecessary-dunder-call
         msg = f'{self._PREFIX} {msg}'
         errr = f'- Error: {error.args[0].message}'
         ui.print_alert(text=msg)
