@@ -2,12 +2,17 @@
 In the event the testing environment moves, the database is corrupted 
 or any scripts are lost or damaged, the database can be completely
 rebuilt (or established) using the scripts contained in the 
-mysqlsetup_*.tar.gz archive.
+mysqlsetup_*.tar.gz or the sqlitesetup_*.tar.gz archive files.
 
-The *.sh shell scripts are wrappers around the .sql script and can be 
+Each *.tar.gz file is created in their respective database directory in
+/var/admin/database/dblib_test, on the 73DEVLTP02 development PC. The 
+archive file is stored to the 'archive' directory at the path above, 
+and into this directory.
+
+The *.sh shell scripts are wrappers around the .sql scripts and can be 
 used for deployment or database teardown. These shell scripts are executed
 by the testing modules via a subprocess call.
 
 / jb
-2023-05-18
+2023-06-07
 

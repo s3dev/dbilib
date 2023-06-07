@@ -21,6 +21,17 @@ Statistics by type
 
 
 
+External dependencies
+---------------------
+::
+
+    pandas (dblib._dbi_oracle)
+    utils4 
+      \-reporterror (dblib._dbi_oracle)
+      \-user_interface (dblib._dbi_oracle)
+
+
+
 221 lines have been analyzed
 
 Raw metrics

@@ -27,6 +27,11 @@ class _StartOfTest:
         """MySQL database functionality testing start of test message."""
         return 'MySQL database interface'
 
+    @property
+    def database_sqlite(self):
+        """SQLite database functionality testing start of test message."""
+        return 'SQLite database interface'
+
 
 class _Templates:
     """String templates used across the various unit tests."""

@@ -109,7 +109,7 @@ class _DBIMySQL(_DBIBase):
             success = not df.empty
         except SQLAlchemyError as err:
             msg = f'Error occurred while running the USP: {proc}.'
-            self._report_sqla_error(msg=msg, error=err)
+            self._report_sa_error(msg=msg, error=err)
         except Exception as err:
             reporterror(error=err)
         return (df, success) if return_status else df

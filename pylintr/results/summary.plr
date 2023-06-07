@@ -4,10 +4,12 @@ dblib_database.plr: 10.00/10
 dblib__dbi_base.plr: 10.00/10
 dblib__dbi_mysql.plr: 10.00/10
 dblib__dbi_oracle.plr: 10.00/10
+dblib__dbi_sqlite.plr: 10.00/10
 setup.plr: 10.00/10
 testlibs_constants.plr: 10.00/10
 testlibs_utilities.plr: 10.00/10
 tests_base.plr: 10.00/10
 tests_test_database_mysql.plr: 10.00/10
+tests_test_database_sqlite.plr: 10.00/10
 ------------------------
-Run date: Wed 24 May 11:14:53 BST 2023
+Run date: Wed 7 Jun 11:26:24 BST 2023

@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------------------------
-# Prog:     db_setup.sh
-# Version:  0.1.0
-# Desc:     Script wrapper for performing the pre-testing database setup
-#           operations.
+# Prog:     db_setup_mysql.sh
+# Version:  0.2.0
+# Desc:     Script wrapper for performing the pre-testing MySQL database 
+#           setup operations.
 #
-# Use:      $ ./db_setup.sh <db_test_user_pwd>
+# Use:      $ ./db_setup_mysql.sh <db_test_user_pwd>
 #
 # Updates:
 # 17.05.23  J. Berendt  Written.
+# 07.06.23  J. Berendt  Updated for explicit MySQL support.
 #-------------------------------------------------------------------------
 
 export MYSQL_PWD=$1
 path=$( realpath $( dirname "$0" ) )
+path="${path}/mysql/setup/create"
 nargs=$#
 user=testuser
 dbname=dblib_test

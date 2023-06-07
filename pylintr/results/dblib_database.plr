@@ -2,7 +2,7 @@
 
 Report
 ======
-25 statements analysed.
+29 statements analysed.
 
 Statistics by type
 ------------------
@@ -21,17 +21,7 @@ Statistics by type
 
 
 
-External dependencies
----------------------
-::
-
-    sqlalchemy (dblib.database)
-    utils4 
-      \-utils (dblib.database)
-
-
-
-138 lines have been analyzed
+142 lines have been analyzed
 
 Raw metrics
 -----------
@@ -39,13 +29,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |28     |20.29 |26       |+2.00      |
+|code      |32     |22.54 |32       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |90     |65.22 |90       |=          |
+|docstring |90     |63.38 |90       |=          |
 +----------+-------+------+---------+-----------+
-|comment   |13     |9.42  |10       |+3.00      |
+|comment   |13     |9.15  |13       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |7      |5.07  |7        |=          |
+|empty     |7      |4.93  |7        |=          |
 +----------+-------+------+---------+-----------+
 
 

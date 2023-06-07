@@ -167,7 +167,7 @@ class _DBIBase:
                                 pool_pre_ping=True,
                                 max_overflow=0)
 
-    def _report_sqla_error(self, msg: str, error: SQLAlchemyError):  # pragma: nocover
+    def _report_sa_error(self, msg: str, error: SQLAlchemyError):  # pragma: nocover
         """Report SQLAlchemy error to the terminal.
 
         Args:

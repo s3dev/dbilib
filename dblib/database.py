@@ -63,7 +63,7 @@ class DBInterface:
 
     """
 
-    _SUPPORTED_DBS = ['mysql', 'oracle']
+    _SUPPORTED_DBS = ['mysql', 'oracle', 'sqlite']
 
     def __new__(cls, connstr: str, *args, **kwargs):
         """Provide a database interface based on the connection string.
@@ -102,6 +102,10 @@ class DBInterface:
             if utils.testimport('cx_Oracle', verbose=False):
                 from _dbi_oracle import _DBIOracle
                 return _DBIOracle(connstr=connstr)
+        if name == 'sqlite':
+            if utils.testimport('sqlite3', verbose=False):
+                from _dbi_sqlite import _DBISQLite
+                return _DBISQLite(connstr=connstr)
         # Fallback if a module is not installed.
         raise RuntimeError('An error occurred while creating an instance of the database '
                            'accessor class. Perhaps the appropriate database driver is not '

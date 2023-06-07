@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------------------------
-# Prog:     db_teardown.sh
-# Version:  0.1.0
-# Desc:     Script wrapper for performing the post-testing database 
+# Prog:     db_teardown_mysql.sh
+# Version:  0.2.0
+# Desc:     Script wrapper for performing the post-testing MySQL database 
 #           teardown operations.
 #
-# Use:      $ ./db_teardown.sh <db_test_user_pwd>
+# Use:      $ ./db_teardown_mysql.sh <db_test_user_pwd>
 #
 # Updates:
 # 17.05.23  J. Berendt  Written.
+# 07.06.23  J. Berendt  Updated for explicit MySQL support.
 #-------------------------------------------------------------------------
 
 export MYSQL_PWD=$1
 path=$( realpath $( dirname "$0" ) )
+path="${path}/mysql/setup/drop"
 nargs=$#
 user=testuser
 dbname=dblib_test

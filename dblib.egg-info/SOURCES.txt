@@ -3,6 +3,7 @@ dblib/__init__.py
 dblib/_dbi_base.py
 dblib/_dbi_mysql.py
 dblib/_dbi_oracle.py
+dblib/_dbi_sqlite.py
 dblib/_version.py
 dblib/database.py
 dblib.egg-info/PKG-INFO
@@ -11,3 +12,4 @@ dblib.egg-info/dependency_links.txt
 dblib.egg-info/requires.txt
 dblib.egg-info/top_level.txt
 tests/test_database_mysql.py
+tests/test_database_sqlite.py

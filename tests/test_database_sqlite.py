@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 :Purpose:   Testing module for the ``database`` module; specifically
-            MySQL functionality.
+            SQLite functionality.
 
-:Tests:     Refer to the :class:`~TestDatabaseMySQL` docstring.
+:Tests:     Refer to the :class:`~TestDatabaseSQLite` docstring.
 
 :Platform:  Linux/Windows | Python 3.6+
 :Developer: J Berendt
@@ -30,8 +30,8 @@ from testlibs.utilities import utilities
 from dblib.database import DBInterface
 
 
-class TestDatabaseMySQL(TestBase):
-    """Testing class used to test the MySQL database interface.
+class TestDatabaseSQLite(TestBase):
+    """Testing class used to test the SQLite database interface.
 
     :Tests Overview:
 
@@ -42,13 +42,9 @@ class TestDatabaseMySQL(TestBase):
     """
 
     _MSG1 = templates.not_as_expected.database
-    _CREDS = {'database': 'dblib_test',
-              'drivername': 'mysql+mysqlconnector',
-              'host': 'localhost',
-              'password': 'testing123',
-              'port': 3306,
-              'username': 'testuser'}
-    _CONNSTR_T = '{drivername}://{username}:{password}@{host}:{port}/{database}'
+    _CREDS = {'drivername': 'sqlite',
+              'database': os.path.join(TestBase._DIR_RESC, 'testdatabase.db')}
+    _CONNSTR_T = '{drivername}:///{database}'
     _CONNSTR = _CONNSTR_T.format(**_CREDS)
 
     @classmethod
@@ -62,7 +58,7 @@ class TestDatabaseMySQL(TestBase):
               testing is aborted.
 
         """
-        utilities.msgs.print_testing_start(msg=startoftest.database_mysql)
+        utilities.msgs.print_testing_start(msg=startoftest.database_sqlite)
         if not cls()._db_setup():
             msg = 'The database setup failed. All further module testing aborted.'
             print(msg)  # Not printed from the raise.
@@ -73,7 +69,7 @@ class TestDatabaseMySQL(TestBase):
         """Actions to be performed once all tests are complete.
 
         :Actions:
-            - Deconstruct the testing database.
+            - Delete the testing database file.
 
         """
         cls()._db_teardown()
@@ -94,7 +90,18 @@ class TestDatabaseMySQL(TestBase):
                 tst = dbi.engine.url.__getattribute__(key)
                 self.assertEqual(val, tst, msg=self._MSG1.format(val, tst))
 
-    def test02a__table_exists(self):
+    def test02__file_not_found(self):
+        """Test the interface creation for a non-exist database file.
+
+        :Test:
+            - Verify a FileNotFoundError is raised when a database file
+              is passed which does not exist.
+
+        """
+        with self.assertRaises(FileNotFoundError):
+            DBInterface(connstr='sqlite:////tmp/notexist.db')
+
+    def test03a__table_exists(self):
         """Test the table exists method returns True.
 
         :Test:
@@ -107,7 +114,7 @@ class TestDatabaseMySQL(TestBase):
         tst = dbi.table_exists(table_name='guitars', verbose=False)
         self.assertTrue(tst, msg=self._MSG1.format(True, tst))
 
-    def test02b__table_exists(self):
+    def test03b__table_exists(self):
         """Test the table exists method returns False.
 
         :Test:
@@ -120,7 +127,7 @@ class TestDatabaseMySQL(TestBase):
         tst = dbi.table_exists(table_name='some_table', verbose=False)
         self.assertFalse(tst, msg=self._MSG1.format(False, tst))
 
-    def test02c__table_exists(self):
+    def test03c__table_exists(self):
         """Test the table exists method returns False, in verbose mode.
 
         :Test:
@@ -137,91 +144,12 @@ class TestDatabaseMySQL(TestBase):
         tst2 = buff.getvalue()
         exp1 = False
         exp2 = 'Table does not exist'
-        exp3 = 'dblib_test.some_table'
+        exp3 = f'{self._CREDS.get("database")}.some_table'
         self.assertFalse(tst1, msg=self._MSG1.format(exp1, tst1))
         self.assertIn(exp2, tst2, msg=self._MSG1.format(exp2, tst2))
         self.assertIn(exp3, tst2, msg=self._MSG1.format(exp3, tst2))
 
-    def test03__call_procedure(self):
-        """Test the call_procedure method.
-
-        :Test:
-            - Call the ``call_procedure`` method and verify the returned
-              results are as expected.
-
-        """
-        fname = f'{self.id().split(".")[-1]}.p'
-        dbi = DBInterface(connstr=self._CONNSTR)
-        df = dbi.call_procedure(proc='sp_get_guitars_colour', params=['black'])
-        exp = pd.read_pickle(os.path.join(self._DIR_DATA, fname))
-        self.assertTrue(exp.equals(df.iloc[:,1:]), msg=self._MSG1.format(exp, df))
-
-    def test04__call_procedure_update(self):
-        """Test the call_procedure_update method, without a return ID.
-
-        :Test:
-            - Update the colour of a guitar for a specific ID.
-            - Verify the procedure call returned True.
-            - Verify the new colour for the ID.
-
-        """
-        dbi = DBInterface(connstr=self._CONNSTR)
-        exp1 = True
-        exp2 = 'green'
-        tst1 = dbi.call_procedure_update(proc='sp_update_guitars_colour', params=[1, exp2])
-        tst2 = dbi.execute_query('select colour from guitars where id = 1')[0][0]
-        self.assertEqual(exp1, tst1, msg=self._MSG1.format(exp1, tst1))
-        self.assertEqual(exp2, tst2, msg=self._MSG1.format(exp2, tst2))
-
-    def test05__call_procedure_update__with_row_id(self):
-        """Test the call_procedure_update method, with a return ID.
-
-        :Test:
-            - Call the ``call_procedure_update`` method to add a new
-              guitar, with the ``return_id`` argument set to True.
-            - Call the ``execute_query`` method to obtain the newly
-              added ID directly from the database (for testing).
-            - Call the ``call_procedure_update_many`` method to add new
-              players for the newly added guitar, passing in the ID
-              returned from the previous method.
-            - Call the ``execute_query`` method to collect the names of
-              the players just added, matching the ``guitars_id`` of the
-              newly added guitar.
-            - Verify the first procedure call (adding the new guitar)
-              returned the expected  results.
-            - Verify the ID returned by the first procedure call matches
-              that of the one actually assigned by the database.
-            - Verify the second procedure call (adding the new players)
-              returned the expected results.
-            - Verify the players added to the database are as expected.
-
-        """
-        # pylint: disable=line-too-long
-        players  = ['David Gilmour', 'Eric Clapton', 'Eric Johnson', 'Mark Knopfler']
-        dbi = DBInterface(connstr=self._CONNSTR)
-        # Add new guitar.
-        exp1 = (15, True)
-        tst1 = dbi.call_procedure_update(proc='sp_insert_guitars_add_new',
-                                         params=['Fender', 'Stratocaster', 'Various'],
-                                         return_id=True)
-        # Collect the ID of the newly added guitar, from the database.
-        tst2 = dbi.execute_query(stmt='select id from guitars where colour = :colour',
-                                 params={'colour': 'Various'},
-                                 raw=True)[0][0]
-        # Add players for the new guitar.
-        tst3 = dbi.call_procedure_update_many(tst1[0],
-                                              proc='sp_insert_players_add_new',
-                                              iterable=players)
-        tst4 = dbi.execute_query(stmt='select name from players where guitars_id = :id order by name',
-                                 params={'id': tst1[0]},
-                                 raw=True)
-        tst4 = [i[0] for i in tst4]
-        self.assertEqual(exp1, tst1, msg=self._MSG1.format(exp1, tst1))
-        self.assertEqual(exp1[0], tst2, msg=self._MSG1.format(exp1[0], tst2))
-        self.assertTrue(tst3, msg=self._MSG1.format(True, tst3))
-        self.assertEqual(players, tst4, msg=self._MSG1.format(players, tst4))
-
-    def test06a__execute_query__raw(self):
+    def test04a__execute_query__raw(self):
         """Test the execute_query method, returning raw results.
 
         :Test:
@@ -236,7 +164,7 @@ class TestDatabaseMySQL(TestBase):
                                 raw=True)
         self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
 
-    def test06b__execute_query__dataframe(self):
+    def test04b__execute_query__dataframe(self):
         """Test the execute_query method, returning a DataFrame.
 
         :Test:
@@ -251,7 +179,7 @@ class TestDatabaseMySQL(TestBase):
                                 raw=False)
         self.assertTrue(exp.equals(tst), msg=self._MSG1.format(exp, tst))
 
-    def test06c__execute_query__none(self):
+    def test04c__execute_query__none(self):
         """Test the execute_query method, returning None.
 
         :Test:
@@ -269,42 +197,6 @@ class TestDatabaseMySQL(TestBase):
         self.assertTrue(all([tst1 is None, tst2 is None]),
                         msg=self._MSG1.format(exp, (tst1, tst2)))
 
-    def test07a__call_procedure_update_raw__no_error(self):
-        """Test the call_procedure_update_raw method, no errors.
-
-        :Test:
-            - Call the raw procedure (without generating an error) and
-              verify the returned value is None.
-
-        """
-        buff = io.StringIO()
-        dbi = DBInterface(connstr=self._CONNSTR)
-        exp = ''
-        with contextlib.redirect_stdout(buff):
-            dbi.call_procedure_update_raw(proc='sp_update_guitars_colour',
-                                                params=[1, 'blue'])
-        tst = buff.getvalue()
-        self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
-
-    def test07b__call_procedure_update_raw__invalid_usp(self):
-        """Test the call_procedure_update_raw method, with an invalid USP.
-
-        :Test:
-            - Call the raw procedure (with a non-existant USP) and verify
-              the error is trapped locally.
-
-        """
-        buff = io.StringIO()
-        exp = '1305 (42000): PROCEDURE dblib_test.sp_i_dont_exist does not exist\n'
-        dbi = DBInterface(connstr=self._CONNSTR)
-        with contextlib.redirect_stdout(buff):
-            try:
-                dbi.call_procedure_update_raw(proc='sp_i_dont_exist', params=[])
-            except Exception as err:
-                print(err)
-        tst = buff.getvalue()
-        self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
-
     def _db_setup(self) -> bool:
         """Run the database setup script, via a subproess.
 
@@ -313,13 +205,13 @@ class TestDatabaseMySQL(TestBase):
             False.
 
         """
-        args = ['resources/db_setup_mysql.sh', self._CREDS.get('password')]
+        args = ['resources/db_setup_sqlite.sh', self._CREDS.get('database')]
         with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
             _ = proc.communicate()
         # Invert the bit so exit code 0 is True, and visa versa.
         if proc.returncode ^ 1:
             dbi = DBInterface(connstr=self._CONNSTR)
-            rtn = (pd.read_csv(os.path.join(self._DIR_RAW_DATA_MYSQL, 'data__guitars.csv'))
+            rtn = (pd.read_csv(os.path.join(self._DIR_RAW_DATA_SQLITE, 'data__guitars.csv'))
                    .to_sql('guitars', con=dbi.engine, index=False, if_exists='append'))
             # Verify the expected number of values were loaded.
             if rtn == 14:
@@ -334,7 +226,7 @@ class TestDatabaseMySQL(TestBase):
             False.
 
         """
-        args = ['resources/db_teardown_mysql.sh', self._CREDS.get('password')]
+        args = ['resources/db_teardown_sqlite.sh', self._CREDS.get('database')]
         with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
             _ = proc.communicate()
         # Invert the bit so exit code 0 is True, and visa versa.
