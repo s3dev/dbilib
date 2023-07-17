@@ -15,7 +15,8 @@
 CREATE DATABASE `dblib_test`;
 
 -- CREATE LOCAL USERS FOR BOTH DATABASES
-CREATE USER 'testuser'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'testing123';
+-- CREATE USER 'testuser'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'testing123';
+CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'testing123';
 
 -- GRANT ADMIN/SELECT PRIVILEGES FOR THESE DATABASES
 GRANT ALL PRIVILEGES ON `dblib_test`.* TO 'testuser'@'localhost';

@@ -21,6 +21,19 @@ Statistics by type
 
 
 
+External dependencies
+---------------------
+::
+
+    pandas (dblib._dbi_base)
+    sqlalchemy (dblib._dbi_base)
+      \-exc (dblib._dbi_base)
+    utils4 
+      \-reporterror (dblib._dbi_base)
+      \-user_interface (dblib._dbi_base)
+
+
+
 226 lines have been analyzed
 
 Raw metrics

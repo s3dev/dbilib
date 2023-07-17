@@ -128,7 +128,7 @@ class _DBIMySQL(_DBIBase):
             :meth:~`call_procedure` method.
 
         Args:
-            proc_name (str): Name of the stored procedure to call.
+            proc (str): Name of the stored procedure to call.
             params (list, optional): A list of parameters to pass into
                 the USP. Defaults to None.
             return_id (bool, optional): Return the ID of the last
@@ -188,7 +188,7 @@ class _DBIMySQL(_DBIBase):
                 passed into the USP, in front of each iterable item.
                 Note: The parameters are passed into the USP in the
                 order received, followed by the iterable item.
-            proc_name (str): Name of the stored procedure to call.
+            proc (str): Name of the stored procedure to call.
             iterable (Union[list, tuple]): List of items to be loaded
                 into the database.
 
@@ -226,7 +226,7 @@ class _DBIMySQL(_DBIBase):
         USP call, for example a **duplicate key** error.
 
         Args:
-            proc_name (str): Name of the stored procedure to call.
+            proc (str): Name of the stored procedure to call.
             params (list, optional): A list of parameters to pass into
                 the USP. Defaults to None.
 
