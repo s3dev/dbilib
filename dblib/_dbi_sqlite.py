@@ -3,7 +3,7 @@
 """
 :Purpose:   This module contains the library's *SQLite* database methods
             and attribute accessors; which are a specialised version of
-            the :class:`_db_base._DBIBase` class methods.
+            the :class:`_dbi_base._DBIBase` class methods.
 
 :Platform:  Linux/Windows | Python 3.6+
 :Developer: J Berendt
@@ -13,7 +13,7 @@
 
 :Example:
 
-    For class-specific useage examples, please refer to the docstring
+    For class-specific usage examples, please refer to the docstring
     for the following classes:
 
         - :class:`_DBISQLite`

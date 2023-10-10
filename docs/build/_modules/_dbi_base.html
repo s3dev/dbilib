@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>_dbi_base &mdash; dblib - v0.3.0.dev3 Documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/s5defs-rules.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f8486064"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            dblib
+              <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.3.0.dev3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contact.html">Contact Us</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dblib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">_dbi_base</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for _dbi_base</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Purpose:   This module contains the library&#39;s *base* database methods</span>
+<span class="sd">            and attribute accessors, which are designed to be specialised</span>
+<span class="sd">            by the database-specific modules and classes.</span>
+
+<span class="sd">:Platform:  Linux/Windows | Python 3.6+</span>
+<span class="sd">:Developer: J Berendt</span>
+<span class="sd">:Email:     support@s3dev.uk</span>
+
+<span class="sd">:Comments:  This module contains *only* methods which can safely be</span>
+<span class="sd">            inherited and used by *any* of its subclasses.</span>
+
+<span class="sd">            In other words, this module should *not* contain any import</span>
+<span class="sd">            statement, or uses of these imports, which if used in a</span>
+<span class="sd">            database-specific module will cause a crash due to a missing</span>
+<span class="sd">            library.</span>
+
+<span class="sd">            Any database-specific functionality must be contained in that</span>
+<span class="sd">            module.</span>
+
+<span class="sd">:Example:</span>
+
+<span class="sd">    For class-specific usage examples, please refer to the docstring</span>
+<span class="sd">    for the following classes:</span>
+
+<span class="sd">        - :class:`_DBIBase`</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># pylint: disable=wrong-import-order</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="nn">sa</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.exc</span> <span class="kn">import</span> <span class="n">SQLAlchemyError</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">utils4.reporterror</span> <span class="kn">import</span> <span class="n">reporterror</span>
+<span class="kn">from</span> <span class="nn">utils4.user_interface</span> <span class="kn">import</span> <span class="n">ui</span>
+
+
+<div class="viewcode-block" id="_DBIBase">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase">[docs]</a>
+<span class="k">class</span> <span class="nc">_DBIBase</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class holds the methods and properties which are used across</span>
+<span class="sd">    all databases. Each of the database-specific constructors inherits</span>
+<span class="sd">    this class for its members.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        This class is *not* designed to be interacted with directly.</span>
+
+<span class="sd">        Rather, please use the :class:`database.DBInterface` class</span>
+<span class="sd">        instead, as the proper interface class has an automatic switch</span>
+<span class="sd">        for database interfaces, based on the ``sqlalchemy.Engine``</span>
+<span class="sd">        object which is created from the connection string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        connstr (str): The database-specific SQLAlchemy connection</span>
+<span class="sd">            string.</span>
+
+<span class="sd">    :Example Use:</span>
+
+<span class="sd">        This low-level generalised class is designed to be inherited by</span>
+<span class="sd">        the calling/wrapping class as::</span>
+
+<span class="sd">            &gt;&gt;&gt; from dblib.database import DBInterface</span>
+
+<span class="sd">            class MyDB(DBInterface):</span>
+
+<span class="sd">                def __init__(self, connstr: str):</span>
+<span class="sd">                    super().__init__(connstr=(&#39;mysql+mysqlconnector://&#39;</span>
+<span class="sd">                                              &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
+<span class="sd">                                              &#39;&lt;db_name&gt;&#39;))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_PREFIX</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">[DatabaseError]:&#39;</span>
+
+<div class="viewcode-block" id="_DBIBase.__init__">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Class initialiser.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connstr</span> <span class="o">=</span> <span class="n">connstr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">connstr</span><span class="p">:</span>
+            <span class="c1"># Testing: Enable an instance to be created without a</span>
+            <span class="c1"># connection string.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_engine</span><span class="p">()</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Accessor to the ``sqlalchemy.engine.base.Engine`` object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span>
+
+<div class="viewcode-block" id="_DBIBase.execute_query">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase.execute_query">[docs]</a>
+    <span class="k">def</span> <span class="nf">execute_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                      <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute a query statement.</span>
+
+<span class="sd">        If the query did not return results and the ``raw`` argument is</span>
+<span class="sd">        False, an empty DataFrame containing the column names only, is</span>
+<span class="sd">        returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stmt (str): Statement to be executed. The parameter bindings</span>
+<span class="sd">                are to be written in colon format.</span>
+<span class="sd">            params (dict, optional): Parameter key/value bindings as a</span>
+<span class="sd">                dictionary, if applicable. Defaults to None.</span>
+<span class="sd">            raw (bool, optional): Return the data in &#39;raw&#39; (tuple) format</span>
+<span class="sd">                rather than as a formatted DataFrame. Defaults to True</span>
+<span class="sd">                for efficiency.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            In the SQL query, the bind parameters are specified by name,</span>
+<span class="sd">            using the format ``:bind_name``. The ``params`` dictionary</span>
+<span class="sd">            argument must contain the associated parameter name/value</span>
+<span class="sd">            bindings.</span>
+
+<span class="sd">        Warning:</span>
+<span class="sd">            This method contains a ``commit`` call.</span>
+
+<span class="sd">            If a statement is passed into this method, and the user has</span>
+<span class="sd">            the appropriate permissions - the change</span>
+<span class="sd">            **will be committed**.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Union[list, pd.DataFrame, None): If the ``raw`` parameter is</span>
+<span class="sd">            True, a list of tuples containing values is returned.</span>
+<span class="sd">            Otherwise, a ``pandas.DataFrame`` object containing the</span>
+<span class="sd">            returned data is returned.</span>
+
+<span class="sd">            If this method is called with a script which does not return</span>
+<span class="sd">            results, for example a CREATE script, None is returned;</span>
+<span class="sd">            regardless of the value passed to the ``raw`` parameter.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Additional else and return used for clarity.</span>
+        <span class="c1"># pylint: disable=no-else-return</span>
+        <span class="c1"># The error does have a _message member.</span>
+        <span class="c1"># pylint: disable=no-member</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">stmt</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">raw</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;object does not return rows&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">err</span><span class="o">.</span><span class="n">_message</span><span class="p">():</span>
+                <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="_DBIBase._create_engine">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._create_engine">[docs]</a>
+    <span class="k">def</span> <span class="nf">_create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Engine</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a database engine using the provided environment.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            sqlalchemy.engine.base.Engine: A sqlalchemy database engine</span>
+<span class="sd">            object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Added in s3ddb v0.7.0:</span>
+        <span class="c1"># The pool_* arguments to prevent MySQL timeout which causes</span>
+        <span class="c1"># a broken pipe and lost connection errors.</span>
+        <span class="k">return</span> <span class="n">sa</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_connstr</span><span class="p">,</span>
+                                <span class="n">poolclass</span><span class="o">=</span><span class="n">sa</span><span class="o">.</span><span class="n">pool</span><span class="o">.</span><span class="n">QueuePool</span><span class="p">,</span>
+                                <span class="n">pool_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                                <span class="n">pool_recycle</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+                                <span class="n">pool_timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                                <span class="n">pool_pre_ping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                <span class="n">max_overflow</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_DBIBase._report_sa_error">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._report_sa_error">[docs]</a>
+    <span class="k">def</span> <span class="nf">_report_sa_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="n">SQLAlchemyError</span><span class="p">):</span>  <span class="c1"># pragma: nocover</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Report SQLAlchemy error to the terminal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (str): Additional error to be displayed. This message</span>
+<span class="sd">                will be automatically prefixed with &#39;[DatabaseError]: &#39;</span>
+<span class="sd">            error (sqlalchemy.exc.SQLAlchemyError): Caught error object</span>
+<span class="sd">                from the try/except block.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_PREFIX</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">stmt</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;- Statement: </span><span class="si">{</span><span class="n">error</span><span class="o">.</span><span class="n">statement</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">errr</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;- Error: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">orig</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">stmt</span><span class="p">)</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">errr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_DBIBase._result_to_df__cursor">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._result_to_df__cursor">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">CursorResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a ``CursorResult`` object to a DataFrame.</span>
+
+<span class="sd">        If the cursor did not return results, an empty DataFrame</span>
+<span class="sd">        containing the column names only, is returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            result (sqlalchemy.engine.cursor.CursorResult): Object to</span>
+<span class="sd">                be converted.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: A ``pandas.DataFrame`` object containing the</span>
+<span class="sd">            cursor&#39;s data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="_DBIBase._result_to_df__stored">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._result_to_df__stored">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_result_to_df__stored</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a ``MySQLCursor.stored_results`` object to a DataFrame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            result (object): The ``cursor.stored_results()`` object from</span>
+<span class="sd">            a ``sqlalchemy``/``mysql.connector`` procedure call.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: A DataFrame containing the results from the</span>
+<span class="sd">            procedure call.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># There is only one item in the iterable.</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

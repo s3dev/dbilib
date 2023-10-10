@@ -12,7 +12,7 @@
 
 :Example:
 
-    For class-specific useage examples, please refer to the docstring
+    For class-specific usage examples, please refer to the docstring
     for the following classes:
 
         - :class:`DBInterface`
@@ -38,8 +38,8 @@ class DBInterface:
     interface.
 
     Database-specific functionality is provided by this class'
-    :meth:``__new__`` method, which returns the appropriate instance of
-    the lower-level database-specifc class, depending on the connection
+    :meth:`__new__` method, which returns the appropriate instance of
+    the lower-level database-specific class, depending on the connection
     string provided. Or, more specifically, the ``sqlalchemy.Engine``
     object created from the provided connection string.
 
@@ -74,9 +74,9 @@ class DBInterface:
         interface class is returned.
 
         For example, if the ``.name`` attribute is ``'mysql'``, an
-        instance of the :class:`_db_mysql._DBIMySQL` private interface
+        instance of the :class:`_dbi_mysql._DBIMySQL` private interface
         class is returned. Likewise, if the ``.name`` attribute is
-        ``'oracle'``, an instance of the :class:`_db_oracle._DBIOracle`
+        ``'oracle'``, an instance of the :class:`_dbi_oracle._DBIOracle`
         private interface class is returned, etc.
 
         Args:

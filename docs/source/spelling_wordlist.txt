@@ -1,0 +1,14 @@
+Accessor
+accessors
+args
+Berendt
+boolean
+CPython
+DataFrame
+docstring
+generalised
+initialiser
+iterable
+specialised
+sqlalchemy
+subclasses

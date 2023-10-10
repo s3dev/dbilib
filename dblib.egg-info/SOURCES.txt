@@ -5,6 +5,7 @@ dblib/_dbi_mysql.py
 dblib/_dbi_oracle.py
 dblib/_dbi_sqlite.py
 dblib/_version.py
+dblib/changelog.py
 dblib/database.py
 dblib.egg-info/PKG-INFO
 dblib.egg-info/SOURCES.txt

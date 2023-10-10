@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>_dbi_oracle - Private database interface for Oracle &mdash; dblib - v0.3.0.dev3 Documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/s5defs-rules.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f8486064"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="_dbi_sqlite - Private database interface for SQLite" href="_dbi_sqlite.html" />
+    <link rel="prev" title="_dbi_mysql - Private database interface for MySQL and MariaDB" href="_dbi_mysql.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dblib
+              <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.3.0.dev3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="library.html">Library API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="database.html">database - Public database interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_base.html">_dbi_base - Private base module for all database interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_mysql.html">_dbi_mysql - Private database interface for MySQL and MariaDB</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">_dbi_oracle - Private database interface for Oracle</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dbi_oracle._DBIOracle"><code class="docutils literal notranslate"><span class="pre">_DBIOracle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._ERROR_NI"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._ERROR_NI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._PREFIX"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._PREFIX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.__annotations__"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.__init__"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._create_engine"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._create_engine()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._report_cxo_error"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._report_cxo_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._report_sa_error"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._report_sa_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._result_to_df__cursor"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._result_to_df__cursor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._result_to_df__refcursor"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._result_to_df__refcursor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle._result_to_df__stored"><code class="docutils literal notranslate"><span class="pre">_DBIOracle._result_to_df__stored()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.call_procedure"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.call_procedure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.call_procedure_update"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.call_procedure_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.call_procedure_update_many"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.call_procedure_update_many()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.call_procedure_update_raw"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.call_procedure_update_raw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.engine"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.engine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.execute_query"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.execute_query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_oracle._DBIOracle.table_exists"><code class="docutils literal notranslate"><span class="pre">_DBIOracle.table_exists()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_sqlite.html">_dbi_sqlite - Private database interface for SQLite</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact Us</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dblib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="library.html">Library API Documentation</a></li>
+      <li class="breadcrumb-item active">_dbi_oracle - Private database interface for Oracle</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-_dbi_oracle">
+<span id="dbi-oracle-private-database-interface-for-oracle"></span><h1>_dbi_oracle - Private database interface for Oracle<a class="headerlink" href="#module-_dbi_oracle" title="Link to this heading"></a></h1>
+<dl class="field-list">
+<dt class="field-odd">Purpose<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This module contains the library’s <em>Oracle</em> database methods
+and attribute accessors; which are a specialised version of
+the <a class="reference internal" href="_dbi_base.html#dbi_base._DBIBase" title="_dbi_base._DBIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_base._DBIBase</span></code></a> class methods.</p>
+</dd>
+<dt class="field-even">Platform<span class="colon">:</span></dt>
+<dd class="field-even"><p>Linux/Windows | Python 3.6+</p>
+</dd>
+<dt class="field-odd">Developer<span class="colon">:</span></dt>
+<dd class="field-odd"><p>J Berendt</p>
+</dd>
+<dt class="field-even">Email<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="mailto:support&#37;&#52;&#48;s3dev&#46;uk">support<span>&#64;</span>s3dev<span>&#46;</span>uk</a></p>
+</dd>
+<dt class="field-odd">Comments<span class="colon">:</span></dt>
+<dd class="field-odd"><p>n/a</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p>For class-specific usage examples, please refer to the docstring
+for the following classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#dbi_oracle._DBIOracle" title="_dbi_oracle._DBIOracle"><code class="xref py py-class docutils literal notranslate"><span class="pre">_DBIOracle</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">_dbi_oracle.</span></span><span class="sig-name descname"><span class="pre">_DBIOracle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="_dbi_base.html#dbi_base._DBIBase" title="_dbi_base._DBIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">_DBIBase</span></code></a></p>
+<p>This <em>private</em> class holds the methods and properties which are
+used for accessing Oracle databases.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is <em>not</em> designed to be interacted with directly.</p>
+<p>Rather, please use the <a class="reference internal" href="database.html#database.DBInterface" title="database.DBInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">database.DBInterface</span></code></a> class
+instead, as the proper interface class has an automatic switch
+for database interfaces, based on the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.Engine</span></code>
+object which is created from the connection string.</p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The database-specific SQLAlchemy connection
+string.</p>
+</dd>
+<dt class="field-even">Example Use<span class="colon">:</span></dt>
+<dd class="field-even"><p>This low-level generalised class is designed to be inherited by
+the calling/wrapping class as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dblib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
+
+<span class="go">class MyDB(DBInterface):</span>
+
+<span class="go">    def __init__(self, connstr: str):</span>
+<span class="go">        super().__init__(connstr=(&#39;oracle+cx_oracle://&#39;</span>
+<span class="go">                                  &#39;&lt;user&gt;:&lt;pwd&gt;&#39;</span>
+<span class="go">                                  &#39;@(DESCRIPTION=(ADDRESS=&#39;</span>
+<span class="go">                                  &#39;(PROTOCOL=TCP)&#39;</span>
+<span class="go">                                  &#39;(HOST=&lt;host&gt;)&#39;</span>
+<span class="go">                                  &#39;(PORT=&lt;port&gt;))&#39;</span>
+<span class="go">                                  &#39;(CONNECT_DATA=&#39;</span>
+<span class="go">                                  &#39;(SERVICE_NAME=&lt;svcname&gt;)))&#39;))</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._ERROR_NI">
+<span class="sig-name descname"><span class="pre">_ERROR_NI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Due</span> <span class="pre">to</span> <span class="pre">restrictions</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">development</span> <span class="pre">environment,</span> <span class="pre">this</span> <span class="pre">method</span> <span class="pre">is</span> <span class="pre">currently</span> <span class="pre">not</span> <span class="pre">implemented.'</span></em><a class="headerlink" href="#dbi_oracle._DBIOracle._ERROR_NI" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._PREFIX">
+<span class="sig-name descname"><span class="pre">_PREFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\n[DatabaseError]:'</span></em><a class="headerlink" href="#dbi_oracle._DBIOracle._PREFIX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#dbi_oracle._DBIOracle.__annotations__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_oracle._DBIOracle.__init__" title="Link to this definition"></a></dt>
+<dd><p>Class initialiser.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._create_engine">
+<span class="sig-name descname"><span class="pre">_create_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Engine</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle._create_engine" title="Link to this definition"></a></dt>
+<dd><p>Create a database engine using the provided environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A sqlalchemy database engine
+object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>sqlalchemy.engine.base.Engine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._report_cxo_error">
+<span class="sig-name descname"><span class="pre">_report_cxo_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DatabaseError</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle._report_cxo_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle._report_cxo_error" title="Link to this definition"></a></dt>
+<dd><p>Report cx_Oracle error to the terminal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>str</em>) – Additional error to be displayed. This message
+will be automatically prefixed with ‘[DatabaseError]: ‘</p></li>
+<li><p><strong>error</strong> (<em>cx_Oracle.DatabaseError</em>) – Caught error object from the
+try/except block.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._report_sa_error">
+<span class="sig-name descname"><span class="pre">_report_sa_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SQLAlchemyError</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_oracle._DBIOracle._report_sa_error" title="Link to this definition"></a></dt>
+<dd><p>Report SQLAlchemy error to the terminal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<em>str</em>) – Additional error to be displayed. This message
+will be automatically prefixed with ‘[DatabaseError]: ‘</p></li>
+<li><p><strong>error</strong> (<em>sqlalchemy.exc.SQLAlchemyError</em>) – Caught error object
+from the try/except block.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._result_to_df__cursor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CursorResult</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle._result_to_df__cursor" title="Link to this definition"></a></dt>
+<dd><p>Convert a <code class="docutils literal notranslate"><span class="pre">CursorResult</span></code> object to a DataFrame.</p>
+<p>If the cursor did not return results, an empty DataFrame
+containing the column names only, is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>result</strong> (<em>sqlalchemy.engine.cursor.CursorResult</em>) – Object to
+be converted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
+cursor’s data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._result_to_df__refcursor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__refcursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refcur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Cursor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle._result_to_df__refcursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle._result_to_df__refcursor" title="Link to this definition"></a></dt>
+<dd><p>Convert a <code class="docutils literal notranslate"><span class="pre">cx_Oracle.Cursor</span></code> object to a DataFrame.</p>
+<p>If the cursor did not return results, an empty DataFrame
+containing the column names only, is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>refcur</strong> (<em>cx_Oracle.Cursor</em>) – Object to be converted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
+cursor’s data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle._result_to_df__stored">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__stored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle._result_to_df__stored" title="Link to this definition"></a></dt>
+<dd><p>Convert a <code class="docutils literal notranslate"><span class="pre">MySQLCursor.stored_results</span></code> object to a DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> (<em>object</em>) – The <code class="docutils literal notranslate"><span class="pre">cursor.stored_results()</span></code> object from</p></li>
+<li><p><strong>call.</strong> (<em>a sqlalchemy/mysql.connector procedure</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing the results from the
+procedure call.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.call_procedure">
+<span class="sig-name descname"><span class="pre">call_procedure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle.call_procedure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle.call_procedure" title="Link to this definition"></a></dt>
+<dd><p>Call a stored procedure, and return as a DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>Union</em><em>[</em><em>list</em><em>, </em><em>tuple</em><em>]</em><em>, </em><em>optional</em>) – A list (or tuple) of
+parameters to pass into the procedure. Defaults to None.</p></li>
+<li><p><strong>return_status</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the method’s success
+status. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>If the <code class="docutils literal notranslate"><span class="pre">return_status</span></code> argument is True, a tuple of the
+data and the method’s return status is returned as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Otherwise, only the data is returned, as a pd.DataFrame.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[pd.DataFrame, Tuple[pd.DataFrame, bool]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.call_procedure_update">
+<span class="sig-name descname"><span class="pre">call_procedure_update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle.call_procedure_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle.call_procedure_update" title="Link to this definition"></a></dt>
+<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to the restrictions on the Oracle development
+environment, database UPDATE-like methods are not allowed.
+Therefore, this method is <em>currently</em> not implemented.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>NotImplementedError</strong> – Warn the user that this method is</p></li>
+<li><p><strong>currently not implemented.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.call_procedure_update_many">
+<span class="sig-name descname"><span class="pre">call_procedure_update_many</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle.call_procedure_update_many"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle.call_procedure_update_many" title="Link to this definition"></a></dt>
+<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure for an iterable.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to the restrictions on the Oracle development
+environment, database UPDATE-like methods are not allowed.
+Therefore, this method is <em>currently</em> not implemented.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>NotImplementedError</strong> – Warn the user that this method is</p></li>
+<li><p><strong>currently not implemented.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.call_procedure_update_raw">
+<span class="sig-name descname"><span class="pre">call_procedure_update_raw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle.call_procedure_update_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle.call_procedure_update_raw" title="Link to this definition"></a></dt>
+<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure, without error
+handling.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to the restrictions on the Oracle development
+environment, database UPDATE-like methods are not allowed.
+Therefore, this method is <em>currently</em> not implemented.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>NotImplementedError</strong> – Warn the user that this method is</p></li>
+<li><p><strong>currently not implemented.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.engine">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">engine</span></span><a class="headerlink" href="#dbi_oracle._DBIOracle.engine" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.execute_query">
+<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle.execute_query" title="Link to this definition"></a></dt>
+<dd><p>Execute a query statement.</p>
+<p>If the query did not return results and the <code class="docutils literal notranslate"><span class="pre">raw</span></code> argument is
+False, an empty DataFrame containing the column names only, is
+returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stmt</strong> (<em>str</em>) – Statement to be executed. The parameter bindings
+are to be written in colon format.</p></li>
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameter key/value bindings as a
+dictionary, if applicable. Defaults to None.</p></li>
+<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple) format
+rather than as a formatted DataFrame. Defaults to True
+for efficiency.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the SQL query, the bind parameters are specified by name,
+using the format <code class="docutils literal notranslate"><span class="pre">:bind_name</span></code>. The <code class="docutils literal notranslate"><span class="pre">params</span></code> dictionary
+argument must contain the associated parameter name/value
+bindings.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method contains a <code class="docutils literal notranslate"><span class="pre">commit</span></code> call.</p>
+<p>If a statement is passed into this method, and the user has
+the appropriate permissions - the change
+<strong>will be committed</strong>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>If the <code class="docutils literal notranslate"><span class="pre">raw</span></code> parameter is
+True, a list of tuples containing values is returned.
+Otherwise, a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
+returned data is returned.</p>
+<p>If this method is called with a script which does not return
+results, for example a CREATE script, None is returned;
+regardless of the value passed to the <code class="docutils literal notranslate"><span class="pre">raw</span></code> parameter.</p>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Union[list, pd.DataFrame, None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_oracle._DBIOracle.table_exists">
+<span class="sig-name descname"><span class="pre">table_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle.table_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle.table_exists" title="Link to this definition"></a></dt>
+<dd><p>Using the <code class="docutils literal notranslate"><span class="pre">engine</span></code> object, test if the given table exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_name</strong> (<em>str</em>) – Name of the table to test.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print a message if the table does
+not exist. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As most Oracle objects are UPPERCASE, the table name is converted
+to upper case before being passed into the query.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the given table exists, otherwise False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_dbi_mysql.html" class="btn btn-neutral float-left" title="_dbi_mysql - Private database interface for MySQL and MariaDB" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_dbi_sqlite.html" class="btn btn-neutral float-right" title="_dbi_sqlite - Private database interface for SQLite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

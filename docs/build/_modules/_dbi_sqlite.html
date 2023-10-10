@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>_dbi_sqlite &mdash; dblib - v0.3.0.dev3 Documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/s5defs-rules.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f8486064"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            dblib
+              <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.3.0.dev3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contact.html">Contact Us</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dblib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">_dbi_sqlite</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for _dbi_sqlite</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Purpose:   This module contains the library&#39;s *SQLite* database methods</span>
+<span class="sd">            and attribute accessors; which are a specialised version of</span>
+<span class="sd">            the :class:`_dbi_base._DBIBase` class methods.</span>
+
+<span class="sd">:Platform:  Linux/Windows | Python 3.6+</span>
+<span class="sd">:Developer: J Berendt</span>
+<span class="sd">:Email:     support@s3dev.uk</span>
+
+<span class="sd">:Comments:  n/a</span>
+
+<span class="sd">:Example:</span>
+
+<span class="sd">    For class-specific usage examples, please refer to the docstring</span>
+<span class="sd">    for the following classes:</span>
+
+<span class="sd">        - :class:`_DBISQLite`</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Silence the spurious IDE-based error.</span>
+<span class="c1"># pylint: disable=import-error</span>
+
+<span class="kn">from</span> <span class="nn">utils4</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">utils4.user_interface</span> <span class="kn">import</span> <span class="n">ui</span>
+<span class="c1"># locals</span>
+<span class="kn">from</span> <span class="nn">_dbi_base</span> <span class="kn">import</span> <span class="n">_DBIBase</span>
+
+
+<div class="viewcode-block" id="_DBISQLite">
+<a class="viewcode-back" href="../_dbi_sqlite.html#_dbi_sqlite._DBISQLite">[docs]</a>
+<span class="k">class</span> <span class="nc">_DBISQLite</span><span class="p">(</span><span class="n">_DBIBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This *private* class holds the methods and properties which are</span>
+<span class="sd">    used for accessing SQLite databases.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        This class is *not* designed to be interacted with directly.</span>
+
+<span class="sd">        Rather, please use the :class:`database.DBInterface` class</span>
+<span class="sd">        instead, as the proper interface class has an automatic switch</span>
+<span class="sd">        for database interfaces, based on the ``sqlalchemy.Engine``</span>
+<span class="sd">        object which is created from the connection string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        connstr (str): The database-specific SQLAlchemy connection</span>
+<span class="sd">            string.</span>
+
+<span class="sd">    :Example Use:</span>
+
+<span class="sd">        This low-level generalised class is designed to be inherited by</span>
+<span class="sd">        the calling/wrapping class as::</span>
+
+<span class="sd">            &gt;&gt;&gt; from dblib.database import DBInterface</span>
+
+<span class="sd">            class MyDB(DBInterface):</span>
+
+<span class="sd">                def __init__(self, connstr: str):</span>
+<span class="sd">                    super().__init__(connstr=(&#39;sqlite:////path/to/database.db&#39;))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="_DBISQLite.__init__">
+<a class="viewcode-back" href="../_dbi_sqlite.html#_dbi_sqlite._DBISQLite.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;SQLite database interface initialiser.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verify_db_exists</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="_DBISQLite.table_exists">
+<a class="viewcode-back" href="../_dbi_sqlite.html#_dbi_sqlite._DBISQLite.table_exists">[docs]</a>
+    <span class="k">def</span> <span class="nf">table_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Using the ``engine`` object, test if the given table exists.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            table_name (str): Name of the table to test.</span>
+<span class="sd">            verbose (bool, optional): Print a message if the table does</span>
+<span class="sd">                not exist. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the given table exists, otherwise False.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;table_name&#39;</span><span class="p">:</span> <span class="n">table_name</span><span class="p">}</span>
+        <span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;select count(*) from sqlite_master &#39;</span>
+                <span class="s1">&#39;where type = </span><span class="se">\&#39;</span><span class="s1">table</span><span class="se">\&#39;</span><span class="s1"> &#39;</span>
+                <span class="s1">&#39;and name = :table_name&#39;</span><span class="p">)</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exists</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Table does not exist: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">database</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">ui</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">exists</span></div>
+
+
+<div class="viewcode-block" id="_DBISQLite._verify_db_exists">
+<a class="viewcode-back" href="../_dbi_sqlite.html#_dbi_sqlite._DBISQLite._verify_db_exists">[docs]</a>
+    <span class="k">def</span> <span class="nf">_verify_db_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Verify the database file exists.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            FileNotFoundError: Raised if the database file passed via the</span>
+<span class="sd">            connection string does not exist.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">utils</span><span class="o">.</span><span class="n">fileexists</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">database</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

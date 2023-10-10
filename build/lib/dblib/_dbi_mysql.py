@@ -3,7 +3,7 @@
 """
 :Purpose:   This module contains the library's *MySQL* database methods
             and attribute accessors; which are a specialised version of
-            the :class:`_db_base._DBIBase` class methods.
+            the :class:`_dbi_base._DBIBase` class methods.
 
 :Platform:  Linux/Windows | Python 3.6+
 :Developer: J Berendt
@@ -13,7 +13,7 @@
 
 :Example:
 
-    For class-specific useage examples, please refer to the docstring
+    For class-specific usage examples, please refer to the docstring
     for the following classes:
 
         - :class:`_DBIMySQL`
@@ -178,7 +178,7 @@ class _DBIMySQL(_DBIBase):
         Note:
             The arguments are passed into the USP in the following order:
 
-                *args, iterable_item
+                \*args, iterable_item
 
             Ensure the USP is designed to accept the iterable item as
             the *last* parameter.

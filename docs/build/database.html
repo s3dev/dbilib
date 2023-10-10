@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>database - Public database interface &mdash; dblib - v0.3.0.dev3 Documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/s5defs-rules.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f8486064"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="_dbi_base - Private base module for all database interfaces" href="_dbi_base.html" />
+    <link rel="prev" title="Library API Documentation" href="library.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dblib
+              <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.3.0.dev3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="library.html">Library API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">database - Public database interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#database.DBInterface"><code class="docutils literal notranslate"><span class="pre">DBInterface</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#database.DBInterface._SUPPORTED_DBS"><code class="docutils literal notranslate"><span class="pre">DBInterface._SUPPORTED_DBS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database.DBInterface.__new__"><code class="docutils literal notranslate"><span class="pre">DBInterface.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database.DBInterface._create_engine__internal_only"><code class="docutils literal notranslate"><span class="pre">DBInterface._create_engine__internal_only()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_base.html">_dbi_base - Private base module for all database interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_mysql.html">_dbi_mysql - Private database interface for MySQL and MariaDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_oracle.html">_dbi_oracle - Private database interface for Oracle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_sqlite.html">_dbi_sqlite - Private database interface for SQLite</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact Us</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dblib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="library.html">Library API Documentation</a></li>
+      <li class="breadcrumb-item active">database - Public database interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-database">
+<span id="database-public-database-interface"></span><h1>database - Public database interface<a class="headerlink" href="#module-database" title="Link to this heading"></a></h1>
+<dl class="field-list">
+<dt class="field-odd">Purpose<span class="colon">:</span></dt>
+<dd class="field-odd"><p>This module provides the library’s primary entry-point for
+accessing the database methods and attributes.</p>
+</dd>
+<dt class="field-even">Platform<span class="colon">:</span></dt>
+<dd class="field-even"><p>Linux/Windows | Python 3.6+</p>
+</dd>
+<dt class="field-odd">Developer<span class="colon">:</span></dt>
+<dd class="field-odd"><p>J Berendt</p>
+</dd>
+<dt class="field-even">Email<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="mailto:support&#37;&#52;&#48;s3dev&#46;uk">support<span>&#64;</span>s3dev<span>&#46;</span>uk</a></p>
+</dd>
+<dt class="field-odd">Comments<span class="colon">:</span></dt>
+<dd class="field-odd"><p>n/a</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p>For class-specific usage examples, please refer to the docstring
+for the following classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#database.DBInterface" title="database.DBInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBInterface</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="database.DBInterface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">DBInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database.html#DBInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database.DBInterface" title="Link to this definition"></a></dt>
+<dd><p>This class holds the methods and properties which are used across
+all databases. This class is the primary entry-point for the database
+interface.</p>
+<p>Database-specific functionality is provided by this class’
+<a class="reference internal" href="#database.DBInterface.__new__" title="database.DBInterface.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a> method, which returns the appropriate instance of
+the lower-level database-specific class, depending on the connection
+string provided. Or, more specifically, the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.Engine</span></code>
+object created from the provided connection string.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The database-specific SQLAlchemy connection
+string.</p>
+</dd>
+<dt class="field-even">Example Use<span class="colon">:</span></dt>
+<dd class="field-even"><p>This low-level generalised class is designed to be inherited by
+the calling/wrapping class as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dblib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
+
+<span class="go">class MyDB(DBInterface):</span>
+
+<span class="go">    def __init__(self, connstr: str):</span>
+<span class="go">        super().__init__(connstr=(&#39;mysql+mysqlconnector://&#39;</span>
+<span class="go">                                  &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
+<span class="go">                                  &#39;&lt;db_name&gt;&#39;))</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="database.DBInterface._SUPPORTED_DBS">
+<span class="sig-name descname"><span class="pre">_SUPPORTED_DBS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['mysql',</span> <span class="pre">'oracle',</span> <span class="pre">'sqlite']</span></em><a class="headerlink" href="#database.DBInterface._SUPPORTED_DBS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database.DBInterface.__new__">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/database.html#DBInterface.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database.DBInterface.__new__" title="Link to this definition"></a></dt>
+<dd><p>Provide a database interface based on the connection string.</p>
+<p>Using the provided connection string, a
+<code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> object is created. Using the
+<code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute, an instance of the associated database
+interface class is returned.</p>
+<p>For example, if the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute is <code class="docutils literal notranslate"><span class="pre">'mysql'</span></code>, an
+instance of the <a class="reference internal" href="_dbi_mysql.html#dbi_mysql._DBIMySQL" title="_dbi_mysql._DBIMySQL"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_mysql._DBIMySQL</span></code></a> private interface
+class is returned. Likewise, if the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute is
+<code class="docutils literal notranslate"><span class="pre">'oracle'</span></code>, an instance of the <a class="reference internal" href="_dbi_oracle.html#dbi_oracle._DBIOracle" title="_dbi_oracle._DBIOracle"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_oracle._DBIOracle</span></code></a>
+private interface class is returned, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The SQLAlchemy-syle connection string, from
+which the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> is created
+for the database interface instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="database.DBInterface._create_engine__internal_only">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_create_engine__internal_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/database.html#DBInterface._create_engine__internal_only"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#database.DBInterface._create_engine__internal_only" title="Link to this definition"></a></dt>
+<dd><p>Create a database engine using the provided connection string.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method is <em>not</em> to be called independently as:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The engine itself is not returned.</p></li>
+<li><p>The connect is disposed immediately after creation.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">pool_*</span></code> objects are not set.</p></li>
+</ul>
+</div></blockquote>
+<p>The engine created here is <em>only</em> meant to providing
+database-class routing for this class’ <a class="reference internal" href="#database.DBInterface.__new__" title="database.DBInterface.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a>
+method.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The SQLAlchemy connection string.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The value of the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute from the database
+engine.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="library.html" class="btn btn-neutral float-left" title="Library API Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_dbi_base.html" class="btn btn-neutral float-right" title="_dbi_base - Private base module for all database interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -22,7 +22,7 @@
 
 :Example:
 
-    For class-specific useage examples, please refer to the docstring
+    For class-specific usage examples, please refer to the docstring
     for the following classes:
 
         - :class:`_DBIBase`

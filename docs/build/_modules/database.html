@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>database &mdash; dblib - v0.3.0.dev3 Documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/s5defs-rules.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=f8486064"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            dblib
+              <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.3.0.dev3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../library.html">Library API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contact.html">Contact Us</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dblib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">database</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for database</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Purpose:   This module provides the library&#39;s primary entry-point for</span>
+<span class="sd">            accessing the database methods and attributes.</span>
+
+<span class="sd">:Platform:  Linux/Windows | Python 3.6+</span>
+<span class="sd">:Developer: J Berendt</span>
+<span class="sd">:Email:     support@s3dev.uk</span>
+
+<span class="sd">:Comments:  n/a</span>
+
+<span class="sd">:Example:</span>
+
+<span class="sd">    For class-specific usage examples, please refer to the docstring</span>
+<span class="sd">    for the following classes:</span>
+
+<span class="sd">        - :class:`DBInterface`</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># This enables a single module installed test, rather than two.</span>
+<span class="c1"># pylint: disable=import-outside-toplevel</span>
+<span class="c1"># Silence the spurious IDE-based error.</span>
+<span class="c1"># pylint: disable=import-error</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="nn">sa</span>
+<span class="kn">from</span> <span class="nn">utils4</span> <span class="kn">import</span> <span class="n">utils</span>
+
+<span class="c1"># Set syspath to enable the private modules to import their db-specific class.</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+
+
+<div class="viewcode-block" id="DBInterface">
+<a class="viewcode-back" href="../database.html#database.DBInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">DBInterface</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class holds the methods and properties which are used across</span>
+<span class="sd">    all databases. This class is the primary entry-point for the database</span>
+<span class="sd">    interface.</span>
+
+<span class="sd">    Database-specific functionality is provided by this class&#39;</span>
+<span class="sd">    :meth:`__new__` method, which returns the appropriate instance of</span>
+<span class="sd">    the lower-level database-specific class, depending on the connection</span>
+<span class="sd">    string provided. Or, more specifically, the ``sqlalchemy.Engine``</span>
+<span class="sd">    object created from the provided connection string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        connstr (str): The database-specific SQLAlchemy connection</span>
+<span class="sd">            string.</span>
+
+<span class="sd">    :Example Use:</span>
+
+<span class="sd">        This low-level generalised class is designed to be inherited by</span>
+<span class="sd">        the calling/wrapping class as::</span>
+
+<span class="sd">            &gt;&gt;&gt; from dblib.database import DBInterface</span>
+
+<span class="sd">            class MyDB(DBInterface):</span>
+
+<span class="sd">                def __init__(self, connstr: str):</span>
+<span class="sd">                    super().__init__(connstr=(&#39;mysql+mysqlconnector://&#39;</span>
+<span class="sd">                                              &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
+<span class="sd">                                              &#39;&lt;db_name&gt;&#39;))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_SUPPORTED_DBS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mysql&#39;</span><span class="p">,</span> <span class="s1">&#39;oracle&#39;</span><span class="p">,</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="DBInterface.__new__">
+<a class="viewcode-back" href="../database.html#database.DBInterface.__new__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Provide a database interface based on the connection string.</span>
+
+<span class="sd">        Using the provided connection string, a</span>
+<span class="sd">        ``sqlalchemy.engine.base.Engine`` object is created. Using the</span>
+<span class="sd">        ``.name`` attribute, an instance of the associated database</span>
+<span class="sd">        interface class is returned.</span>
+
+<span class="sd">        For example, if the ``.name`` attribute is ``&#39;mysql&#39;``, an</span>
+<span class="sd">        instance of the :class:`_dbi_mysql._DBIMySQL` private interface</span>
+<span class="sd">        class is returned. Likewise, if the ``.name`` attribute is</span>
+<span class="sd">        ``&#39;oracle&#39;``, an instance of the :class:`_dbi_oracle._DBIOracle`</span>
+<span class="sd">        private interface class is returned, etc.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connstr (str): The SQLAlchemy-syle connection string, from</span>
+<span class="sd">                which the ``sqlalchemy.engine.base.Engine`` is created</span>
+<span class="sd">                for the database interface instance.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Enable the use of *args and **kwargs for class parameters.</span>
+        <span class="c1"># pylint: disable=unused-argument</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_create_engine__internal_only</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_SUPPORTED_DBS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;The only databases supported at this time are: &#39;</span>
+                                      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_SUPPORTED_DBS</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+        <span class="c1"># These are intentionally verbose as a ModuleNotFoundError will</span>
+        <span class="c1"># be raised during the test if operating on an environment without</span>
+        <span class="c1"># that driver installed.</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;mysql&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;mysql.connector&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="kn">from</span> <span class="nn">_dbi_mysql</span> <span class="kn">import</span> <span class="n">_DBIMySQL</span>
+                <span class="k">return</span> <span class="n">_DBIMySQL</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;oracle&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;cx_Oracle&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="kn">from</span> <span class="nn">_dbi_oracle</span> <span class="kn">import</span> <span class="n">_DBIOracle</span>
+                <span class="k">return</span> <span class="n">_DBIOracle</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;sqlite3&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="kn">from</span> <span class="nn">_dbi_sqlite</span> <span class="kn">import</span> <span class="n">_DBISQLite</span>
+                <span class="k">return</span> <span class="n">_DBISQLite</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+        <span class="c1"># Fallback if a module is not installed.</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;An error occurred while creating an instance of the database &#39;</span>
+                           <span class="s1">&#39;accessor class. Perhaps the appropriate database driver is not &#39;</span>
+                           <span class="s1">&#39;installed?&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DBInterface._create_engine__internal_only">
+<a class="viewcode-back" href="../database.html#database.DBInterface._create_engine__internal_only">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_engine__internal_only</span><span class="p">(</span><span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a database engine using the provided connection string.</span>
+
+<span class="sd">        Warning:</span>
+<span class="sd">            This method is *not* to be called independently as:</span>
+
+<span class="sd">                - The engine itself is not returned.</span>
+<span class="sd">                - The connect is disposed immediately after creation.</span>
+<span class="sd">                - The ``pool_*`` objects are not set.</span>
+
+<span class="sd">            The engine created here is *only* meant to providing</span>
+<span class="sd">            database-class routing for this class&#39; :meth:`__new__`</span>
+<span class="sd">            method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            connstr (str): The SQLAlchemy connection string.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The value of the ``.name`` attribute from the database</span>
+<span class="sd">            engine.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_engine</span> <span class="o">=</span> <span class="n">sa</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">_engine</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">_engine</span><span class="o">.</span><span class="n">dispose</span><span class="p">(</span><span class="n">close</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">name</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
