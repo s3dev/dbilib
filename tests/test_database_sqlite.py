@@ -22,11 +22,11 @@ import io
 import os
 import pandas as pd
 import subprocess
+# locals
 from base import TestBase
 from testlibs.constants import startoftest
 from testlibs.constants import templates
 from testlibs.utilities import utilities
-# local
 from dblib.database import DBInterface
 
 
@@ -59,7 +59,7 @@ class TestDatabaseSQLite(TestBase):
 
         """
         utilities.msgs.print_testing_start(msg=startoftest.database_sqlite)
-        if not cls()._db_setup():
+        if not cls._db_setup():
             msg = 'The database setup failed. All further module testing aborted.'
             print(msg)  # Not printed from the raise.
             raise cls().skipTest(msg)
@@ -72,7 +72,7 @@ class TestDatabaseSQLite(TestBase):
             - Delete the testing database file.
 
         """
-        cls()._db_teardown()
+        cls._db_teardown()
 
     def test01__engine(self):
         """Test the engine object created by ``sqlalchemy``.
@@ -197,7 +197,8 @@ class TestDatabaseSQLite(TestBase):
         self.assertTrue(all([tst1 is None, tst2 is None]),
                         msg=self._MSG1.format(exp, (tst1, tst2)))
 
-    def _db_setup(self) -> bool:
+    @classmethod
+    def _db_setup(cls) -> bool:
         """Run the database setup script, via a subproess.
 
         Returns:
@@ -205,20 +206,21 @@ class TestDatabaseSQLite(TestBase):
             False.
 
         """
-        args = ['resources/db_setup_sqlite.sh', self._CREDS.get('database')]
+        args = ['resources/db_setup_sqlite.sh', cls._CREDS.get('database')]
         with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
             _ = proc.communicate()
         # Invert the bit so exit code 0 is True, and visa versa.
         if proc.returncode ^ 1:
-            dbi = DBInterface(connstr=self._CONNSTR)
-            rtn = (pd.read_csv(os.path.join(self._DIR_RAW_DATA_SQLITE, 'data__guitars.csv'))
+            dbi = DBInterface(connstr=cls._CONNSTR)
+            rtn = (pd.read_csv(os.path.join(cls._DIR_RAW_DATA_SQLITE, 'data__guitars.csv'))
                    .to_sql('guitars', con=dbi.engine, index=False, if_exists='append'))
             # Verify the expected number of values were loaded.
             if rtn == 14:
                 return True
         return False
 
-    def _db_teardown(self) -> bool:
+    @classmethod
+    def _db_teardown(cls) -> bool:
         """Run the database deconstruct script, via a subprocess.
 
         Returns:
@@ -226,7 +228,7 @@ class TestDatabaseSQLite(TestBase):
             False.
 
         """
-        args = ['resources/db_teardown_sqlite.sh', self._CREDS.get('database')]
+        args = ['resources/db_teardown_sqlite.sh', cls._CREDS.get('database')]
         with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
             _ = proc.communicate()
         # Invert the bit so exit code 0 is True, and visa versa.

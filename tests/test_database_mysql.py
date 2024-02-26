@@ -22,11 +22,11 @@ import io
 import os
 import pandas as pd
 import subprocess
+# locals
 from base import TestBase
 from testlibs.constants import startoftest
 from testlibs.constants import templates
 from testlibs.utilities import utilities
-# local
 from dblib.database import DBInterface
 
 
@@ -62,10 +62,12 @@ class TestDatabaseMySQL(TestBase):
               testing is aborted.
 
         """
+        cls.ignore_warnings()
         utilities.msgs.print_testing_start(msg=startoftest.database_mysql)
-        if not cls()._db_setup():
+        if not cls._db_setup():
             msg = 'The database setup failed. All further module testing aborted.'
             print(msg)  # Not printed from the raise.
+            cls._db_teardown()
             raise cls().skipTest(msg)
 
     @classmethod
@@ -76,9 +78,9 @@ class TestDatabaseMySQL(TestBase):
             - Deconstruct the testing database.
 
         """
-        cls()._db_teardown()
+        cls._db_teardown()
 
-    def test01__engine(self):
+    def test01a__engine(self):
         """Test the engine object created by ``sqlalchemy``.
 
         :Test:
@@ -93,6 +95,19 @@ class TestDatabaseMySQL(TestBase):
             with self.subTest(msg=f'{key=}, {val=}'):
                 tst = dbi.engine.url.__getattribute__(key)
                 self.assertEqual(val, tst, msg=self._MSG1.format(val, tst))
+
+    def test01b__database_name(self):
+        """Test the database name property.
+
+        :Test:
+            - Verify the database name (as parsed from the ``engine``
+              object) is as expected.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        tst = dbi.database_name
+        exp = dbi.engine.url.database
+        self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
 
     def test02a__table_exists(self):
         """Test the table exists method returns True.
@@ -305,7 +320,24 @@ class TestDatabaseMySQL(TestBase):
         tst = buff.getvalue()
         self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
 
-    def _db_setup(self) -> bool:
+    def test08__database_not_supported(self):
+        """Test the error raised by providing a non-supported database.
+
+        Note: The ``pyodbc`` library must be installed for this test.
+
+        :Test:
+            - Using a valid connection string for a database which is
+              not currently supported, create an instance of the
+              ``DBInterface`` class, and test for a
+              ``NotImplementedError`` to be raised, listing the
+              supported databases.
+
+        """
+        with self.assertRaises(NotImplementedError):
+            DBInterface(connstr='mssql+pyodbc://user:pwd@localhost/spam')
+
+    @classmethod
+    def _db_setup(cls) -> bool:
         """Run the database setup script, via a subproess.
 
         Returns:
@@ -313,20 +345,26 @@ class TestDatabaseMySQL(TestBase):
             False.
 
         """
-        args = ['resources/db_setup_mysql.sh', self._CREDS.get('password')]
+        args = ['resources/db_setup_mysql.sh', cls._CREDS.get('password')]
+        p_data = os.path.join(cls._DIR_RAW_DATA_MYSQL, 'data__guitars.csv')
         with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
             _ = proc.communicate()
         # Invert the bit so exit code 0 is True, and visa versa.
         if proc.returncode ^ 1:
-            dbi = DBInterface(connstr=self._CONNSTR)
-            rtn = (pd.read_csv(os.path.join(self._DIR_RAW_DATA_MYSQL, 'data__guitars.csv'))
-                   .to_sql('guitars', con=dbi.engine, index=False, if_exists='append'))
+            dbi = DBInterface(connstr=cls._CONNSTR)
+            pd.read_csv(p_data).to_sql('guitars', con=dbi.engine, index=False, if_exists='append')
+            # Count records added.
+            rtn = pd.read_sql('select count(*) from guitars', con=dbi.engine).to_records()
+            # Count expected records.
+            with open(p_data, encoding='utf-8') as f:
+                exp_rows = len(f.readlines()) - 1  # Subtract the header.
             # Verify the expected number of values were loaded.
-            if rtn == 14:
+            if rtn[0][1] == exp_rows:
                 return True
         return False
 
-    def _db_teardown(self) -> bool:
+    @classmethod
+    def _db_teardown(cls) -> bool:
         """Run the database deconstruct script, via a subprocess.
 
         Returns:
@@ -334,7 +372,8 @@ class TestDatabaseMySQL(TestBase):
             False.
 
         """
-        args = ['resources/db_teardown_mysql.sh', self._CREDS.get('password')]
+        # args = ['resources/db_teardown_mysql.sh', self._CREDS.get('password')]
+        args = ['resources/db_teardown_mysql.sh', cls._CREDS.get('password')]
         with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
             _ = proc.communicate()
         # Invert the bit so exit code 0 is True, and visa versa.

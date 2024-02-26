@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>database - Public database interface &mdash; dblib - v0.3.0.dev3 Documentation</title>
+  <title>database - Public database interface &mdash; dblib - v0.4.0.dev1 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f8486064"></script>
+        <script src="_static/documentation_options.js?v=98c678ec"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -40,7 +40,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.3.0.dev3
+                0.4.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -95,9 +95,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-database">
-<span id="database-public-database-interface"></span><h1>database - Public database interface<a class="headerlink" href="#module-database" title="Link to this heading"></a></h1>
-<dl class="field-list">
+  <section id="database-public-database-interface">
+<h1>database - Public database interface<a class="headerlink" href="#database-public-database-interface" title="Link to this heading"></a></h1>
+<p>The database interface class <a class="reference internal" href="#database.DBInterface" title="database.DBInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">database.DBInterface</span></code></a> requires a valid
+connection string (or database URL) on instantiation. For convenience,
+the connection string templates and associated documentation can be
+found in the <a class="reference internal" href="index.html#using-the-library"><span class="std std-ref">Using the Library</span></a> –&gt; <a class="reference internal" href="index.html#connection-strings"><span class="std std-ref">Connection Strings</span></a>
+section of this documentation.</p>
+<dl class="field-list" id="module-database">
 <dt class="field-odd">Purpose<span class="colon">:</span></dt>
 <dd class="field-odd"><p>This module provides the library’s primary entry-point for
 accessing the database methods and attributes.</p>
@@ -135,22 +140,116 @@ interface.</p>
 the lower-level database-specific class, depending on the connection
 string provided. Or, more specifically, the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.Engine</span></code>
 object created from the provided connection string.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to the way this class is created - for specific design
+reasons - the inheriting class’ <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method <strong>will not
+be called</strong>. Therefore, specialisation is not as simple as
+inheritance and calling the <code class="docutils literal notranslate"><span class="pre">super()</span></code> function.</p>
+<p>See the examples below for a use-case in how to specialise this
+class with your own methods.</p>
+</div>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The database-specific SQLAlchemy connection
 string.</p>
 </dd>
 <dt class="field-even">Example Use<span class="colon">:</span></dt>
-<dd class="field-even"><p>This low-level generalised class is designed to be inherited by
-the calling/wrapping class as:</p>
+<dd class="field-even"><p>This low-level generalised class is designed to be instantiated
+by local program or database module, as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dblib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
 
-<span class="go">class MyDB(DBInterface):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dbi</span> <span class="o">=</span> <span class="n">DBInterface</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;mysql+mysqlconnector://&#39;</span>
+<span class="go">                               &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
+<span class="go">                               &#39;&lt;db_name&gt;&#39;))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dbi</span><span class="o">.</span><span class="n">engine</span>
+<span class="go">Engine(mysql+mysqlconnector://&lt;user&gt;:***@&lt;host&gt;:&lt;port&gt;/db_name)</span>
+</pre></div>
+</div>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">dbi</span></code> instance can be used to execute a
+query, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">dbi</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="s1">&#39;SELECT COUNT(*) FROM mytable&#39;</span><span class="p">);</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span>
+<span class="go">[(14,)]</span>
+</pre></div>
+</div>
+<p>Additionally, the <code class="docutils literal notranslate"><span class="pre">dbi.engine</span></code> object can be supplied to the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_sql()</span></code> function’s <code class="docutils literal notranslate"><span class="pre">con</span></code> parameter, as the
+database connection object, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="go">    def __init__(self, connstr: str):</span>
-<span class="go">        super().__init__(connstr=(&#39;mysql+mysqlconnector://&#39;</span>
-<span class="go">                                  &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
-<span class="go">                                  &#39;&lt;db_name&gt;&#39;))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sql</span> <span class="o">=</span> <span class="s1">&#39;select count(*) from mytable&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">dbi</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">    count(*)</span>
+<span class="go"> 0        14</span>
+</pre></div>
+</div>
+</dd>
+<dt class="field-odd">Subclass Specialisation<span class="colon">:</span></dt>
+<dd class="field-odd"><p>To <em>specialise the subclass</em>, a bit of ‘pseudo-inheritance’ is
+required due to the way the <a class="reference internal" href="#database.DBInterface" title="database.DBInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBInterface</span></code></a> class is
+created. A ‘standard inheritance’ with a call to <code class="docutils literal notranslate"><span class="pre">super()</span></code>
+does not work, as the subclass’ <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method is <strong>not</strong>
+called. Therefore, the subclass must add the parent’s attributes
+into its class, manually.</p>
+<p>This can be done as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dblib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
+
+<span class="k">class</span> <span class="nc">MyDBI</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1">#</span>
+        <span class="c1"># Pseudo-inherit the DBInterface class by &#39;copying&#39;</span>
+        <span class="c1"># the attributes into this subclass.</span>
+        <span class="c1">#</span>
+        <span class="c1"># There are many ways to do this. This is the most</span>
+        <span class="c1"># general, as functions, methods and properties are</span>
+        <span class="c1"># captured.</span>
+        <span class="c1">#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dbi</span> <span class="o">=</span> <span class="n">DBInterface</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+        <span class="n">fns</span> <span class="o">=</span> <span class="p">[</span><span class="n">fn</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dbi</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">fn</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">fns</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dbi</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;spam&#39;</span>
+
+    <span class="c1"># Continuation of class definition ...</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">db</span> <span class="o">=</span> <span class="n">MyDBI</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;mysql+mysqlconnector://&#39;</span>
+                        <span class="s1">&#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
+                        <span class="s1">&#39;&lt;db_name&gt;&#39;</span><span class="p">))</span>
+<span class="c1"># List the database interface class&#39; attributes.</span>
+<span class="c1"># Notice that &#39;spam&#39; is included in the list, along with the</span>
+<span class="c1"># methods from the :class:`DBInterface` class, thus</span>
+<span class="c1"># *simulating* inheritance.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;_PREFIX&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__class__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__delattr__&#39;</span><span class="p">,</span>
+ <span class="o">...</span><span class="p">,</span>
+ <span class="s1">&#39;__str__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__subclasshook__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__weakref__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_connstr&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_create_engine&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_dbi&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_engine&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_report_sa_error&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_result_to_df__cursor&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_result_to_df__stored&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;call_procedure&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;call_procedure_update&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;call_procedure_update_many&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;call_procedure_update_raw&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;database_name&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;engine&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;execute_query&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;spam&#39;</span><span class="p">,</span>           <span class="c1"># &lt;---</span>
+ <span class="s1">&#39;table_exists&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </dd>
@@ -229,7 +328,7 @@ engine.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
   </div>
 
    

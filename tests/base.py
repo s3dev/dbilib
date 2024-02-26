@@ -32,6 +32,7 @@ import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 import unittest
+import warnings
 
 
 class TestBase(unittest.TestCase):
@@ -56,3 +57,13 @@ class TestBase(unittest.TestCase):
     def tearDownClass(cls):
         """Teardown the testing class once all tests are complete."""
         pass
+
+    @classmethod
+    def ignore_warnings(cls):
+        """Central warning trapper for the testing suite."""
+        warnings.filterwarnings('ignore', message='.*SOCK_STREAM.*', category=ResourceWarning)
+
+    @classmethod
+    def reset_warnings(cls):
+        """Clear all warning filters."""
+        warnings.resetwarnings()

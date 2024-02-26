@@ -173,7 +173,7 @@ class _DBIMySQL(_DBIBase):
         return (rowid, success) if return_id else success
 
     def call_procedure_update_many(self, *args, proc: str, iterable: Union[list, tuple]) -> bool:
-        """Call an *update* or *insert* stored procedure for an iterable.
+        r"""Call an *update* or *insert* stored procedure for an iterable.
 
         Note:
             The arguments are passed into the USP in the following order:

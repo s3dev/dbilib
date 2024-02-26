@@ -83,6 +83,11 @@ class _DBIBase:
             self._engine = self._create_engine()
 
     @property
+    def database_name(self):
+        """Accessor to the database name used by the :attr:`engine` object."""
+        return self._engine.url.database
+
+    @property
     def engine(self):
         """Accessor to the ``sqlalchemy.engine.base.Engine`` object."""
         return self._engine

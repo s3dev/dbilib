@@ -21,22 +21,6 @@ Statistics by type
 
 
 
-External dependencies
----------------------
-::
-
-    mysql 
-      \-connector 
-        \-errors (dblib._dbi_mysql)
-    pandas (dblib._dbi_mysql)
-    sqlalchemy 
-      \-exc (dblib._dbi_mysql)
-    utils4 
-      \-reporterror (dblib._dbi_mysql)
-      \-user_interface (dblib._dbi_mysql)
-
-
-
 263 lines have been analyzed
 
 Raw metrics

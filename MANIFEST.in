@@ -1,0 +1,15 @@
+# Remove __pycache__
+prune *__pycache__*
+
+# Include the test suite.
+recursive-include tests *
+prune tests/__pycache__
+prune tests/testlibs/__pycache__
+
+# Include the documentation.
+recursive-include docs/build *
+
+# Include other files.
+include requirements.txt
+include build.sh
+

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>dblib Library Documentation &mdash; dblib - v0.3.0.dev3 Documentation</title>
+  <title>dblib Library Documentation &mdash; dblib - v0.4.0.dev1 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f8486064"></script>
+        <script src="_static/documentation_options.js?v=98c678ec"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.3.0.dev3
+                0.4.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -83,15 +83,15 @@
 <nav class="contents local" id="page-contents">
 <p class="topic-title">Page Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
-<li><p><a class="reference internal" href="#using-the-library" id="id4">Using the Library</a></p></li>
-<li><p><a class="reference internal" href="#troubleshooting" id="id5">Troubleshooting</a></p></li>
-<li><p><a class="reference internal" href="#documentation-contents" id="id6">Documentation Contents</a></p></li>
-<li><p><a class="reference internal" href="#indices-and-tables" id="id7">Indices and Tables</a></p></li>
+<li><p><a class="reference internal" href="#overview" id="id5">Overview</a></p></li>
+<li><p><a class="reference internal" href="#using-the-library" id="id6">Using the Library</a></p></li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id7">Troubleshooting</a></p></li>
+<li><p><a class="reference internal" href="#documentation-contents" id="id8">Documentation Contents</a></p></li>
+<li><p><a class="reference internal" href="#indices-and-tables" id="id9">Indices and Tables</a></p></li>
 </ul>
 </nav>
 <section id="overview">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">dblib</span></code> library is a mid-level CPython database interface project
 which is designed to fit between <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code> and <em>your</em> database
 interface library.</p>
@@ -109,26 +109,56 @@ if you spot any bugs, issues or have any recommendations, please feel free
 to <a class="reference internal" href="contact.html#contact-us"><span class="std std-ref">contact us</span></a>.</p>
 </section>
 <section id="using-the-library">
-<span id="id1"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">Using the Library</a><a class="headerlink" href="#using-the-library" title="Link to this heading"></a></h2>
+<span id="id2"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Using the Library</a><a class="headerlink" href="#using-the-library" title="Link to this heading"></a></h2>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#database-support" id="id10">Database Support</a></p></li>
+<li><p><a class="reference internal" href="#connection-strings" id="id11">Connection Strings</a></p></li>
+<li><p><a class="reference internal" href="#questions-or-issues" id="id12">Questions or Issues</a></p></li>
+</ul>
+</nav>
 <p>This documentation suite contains detailed explanation and example usage
 for each of the library’s importable modules.</p>
 <p>For detailed documentation, usage examples and links the source code
 itself, please refer to the <a class="reference internal" href="library.html#library-api"><span class="std std-ref">Library API Documentation</span></a> page.</p>
 <p>If there is a specific module or method which you cannot find, a
 <strong>search</strong> field is built into the navigation bar to the left.</p>
+<section id="database-support">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Database Support</a><a class="headerlink" href="#database-support" title="Link to this heading"></a></h3>
+<p>Our currently supported databases are listed in the <a class="reference internal" href="#overview"><span class="std std-ref">Overview</span></a>
+section on this page. However, for further detail regarding the
+databases supported by the <a class="reference external" href="https://www.sqlalchemy.org/">SQLAlchemy</a> library,
+please refer to <em>their</em> documentation, specifically their
+<a class="reference external" href="https://docs.sqlalchemy.org/en/20/dialects/index.html#included-dialects">Included Dialects</a> page, which lists the supported database dialects
+and their version(s).</p>
+</section>
+<section id="connection-strings">
+<span id="id3"></span><h3><a class="toc-backref" href="#id11" role="doc-backlink">Connection Strings</a><a class="headerlink" href="#connection-strings" title="Link to this heading"></a></h3>
+<p>For convenience, we have provided a link to the <a class="reference external" href="https://docs.sqlalchemy.org/en/20/core/engines.html#backend-specific-urls">connection string</a>
+(or database URL) templates for each database dialect supported by
+<code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code>. Generally, the <a class="reference external" href="https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls">database URLs</a> follow this convention:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dialect</span><span class="o">+</span><span class="n">driver</span><span class="p">:</span><span class="o">//</span><span class="n">username</span><span class="p">:</span><span class="n">password</span><span class="nd">@host</span><span class="p">:</span><span class="n">port</span><span class="o">/</span><span class="n">database</span>
+</pre></div>
+</div>
+<p>For example, the MySQL / MariaDB specific database URL using the
+<code class="docutils literal notranslate"><span class="pre">mysql-connector-python</span></code> driver, is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">+</span><span class="n">mysqlconnector</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">user</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">pwd</span><span class="o">&gt;@&lt;</span><span class="n">host</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">port</span><span class="o">&gt;/&lt;</span><span class="n">database</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
 <section id="questions-or-issues">
-<h3>Questions or Issues<a class="headerlink" href="#questions-or-issues" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Questions or Issues</a><a class="headerlink" href="#questions-or-issues" title="Link to this heading"></a></h3>
 <p>If you have any issues or questions with your installation, please refer
 to the <a class="reference internal" href="#troubleshooting"><span class="std std-ref">Troubleshooting</span></a> section, or feel free to
 <a class="reference internal" href="contact.html#contact-us"><span class="std std-ref">contact us</span></a>.</p>
 </section>
 </section>
 <section id="troubleshooting">
-<span id="id2"></span><h2><a class="toc-backref" href="#id5" role="doc-backlink">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<span id="id4"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Troubleshooting</a><a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
 <p>No guidance at this time.</p>
 </section>
 <section id="documentation-contents">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Documentation Contents</a><a class="headerlink" href="#documentation-contents" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Documentation Contents</a><a class="headerlink" href="#documentation-contents" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Library API Documentation</a></li>
@@ -138,13 +168,13 @@ to the <a class="reference internal" href="#troubleshooting"><span class="std st
 </div>
 </section>
 <section id="indices-and-tables">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Indices and Tables</a><a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Indices and Tables</a><a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 </ul>
 <p class="rubric">Footnotes</p>
-<p>Last updated: 25 Oct 2023</p>
+<p>Last updated: 26 Feb 2024</p>
 </section>
 </section>
 
@@ -158,7 +188,7 @@ to the <a class="reference internal" href="#troubleshooting"><span class="std st
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
   </div>
 
    

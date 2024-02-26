@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dblib
-Version: 0.3.0.dev3
+Version: 0.4.0.dev1
 Summary: Generalised and simple database interface library.
 Home-page: n/a
 Author: J. Berendt
@@ -14,6 +14,8 @@ Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
 Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: Microsoft :: Windows
 Classifier: Operating System :: POSIX :: Linux

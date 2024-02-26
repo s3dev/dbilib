@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mysql - Private database interface for MySQL and MariaDB &mdash; dblib - v0.3.0.dev3 Documentation</title>
+  <title>_dbi_mysql - Private database interface for MySQL and MariaDB &mdash; dblib - v0.4.0.dev1 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f8486064"></script>
+        <script src="_static/documentation_options.js?v=98c678ec"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -40,7 +40,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.3.0.dev3
+                0.4.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -57,7 +57,6 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">_dbi_mysql - Private database interface for MySQL and MariaDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dbi_mysql._DBIMySQL"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._PREFIX"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._PREFIX</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.__annotations__"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.__annotations__</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.__init__"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._create_engine"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._create_engine()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._report_sa_error"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._report_sa_error()</span></code></a></li>
@@ -67,6 +66,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update_many"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update_many()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update_raw"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update_raw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.database_name"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.database_name</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.engine"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.engine</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.execute_query"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.execute_query()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.table_exists"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.table_exists()</span></code></a></li>
@@ -173,11 +173,6 @@ the calling/wrapping class as:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="dbi_mysql._DBIMySQL._PREFIX">
 <span class="sig-name descname"><span class="pre">_PREFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\n[DatabaseError]:'</span></em><a class="headerlink" href="#dbi_mysql._DBIMySQL._PREFIX" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.__annotations__">
-<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#dbi_mysql._DBIMySQL.__annotations__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -388,6 +383,12 @@ the USP. Defaults to None.</p></li>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.database_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_name</span></span><a class="headerlink" href="#dbi_mysql._DBIMySQL.database_name" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the database name used by the <a class="reference internal" href="#dbi_mysql._DBIMySQL.engine" title="_dbi_mysql._DBIMySQL.engine"><code class="xref py py-attr docutils literal notranslate"><span class="pre">engine</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.engine">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">engine</span></span><a class="headerlink" href="#dbi_mysql._DBIMySQL.engine" title="Link to this definition"></a></dt>
 <dd><p>Accessor to the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> object.</p>
@@ -480,7 +481,7 @@ not exist. Defaults to False.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
   </div>
 
    

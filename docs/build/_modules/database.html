@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>database &mdash; dblib - v0.3.0.dev3 Documentation</title>
+  <title>database &mdash; dblib - v0.4.0.dev1 Documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -14,7 +14,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=f8486064"></script>
+        <script src="../_static/documentation_options.js?v=98c678ec"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.3.0.dev3
+                0.4.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -125,23 +125,120 @@
 <span class="sd">    string provided. Or, more specifically, the ``sqlalchemy.Engine``</span>
 <span class="sd">    object created from the provided connection string.</span>
 
+<span class="sd">    Note:</span>
+<span class="sd">        Due to the way this class is created - for specific design</span>
+<span class="sd">        reasons - the inheriting class&#39; ``__init__`` method **will not</span>
+<span class="sd">        be called**. Therefore, specialisation is not as simple as</span>
+<span class="sd">        inheritance and calling the ``super()`` function.</span>
+
+<span class="sd">        See the examples below for a use-case in how to specialise this</span>
+<span class="sd">        class with your own methods.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        connstr (str): The database-specific SQLAlchemy connection</span>
 <span class="sd">            string.</span>
 
 <span class="sd">    :Example Use:</span>
 
-<span class="sd">        This low-level generalised class is designed to be inherited by</span>
-<span class="sd">        the calling/wrapping class as::</span>
+<span class="sd">        This low-level generalised class is designed to be instantiated</span>
+<span class="sd">        by local program or database module, as::</span>
 
 <span class="sd">            &gt;&gt;&gt; from dblib.database import DBInterface</span>
 
-<span class="sd">            class MyDB(DBInterface):</span>
+<span class="sd">            &gt;&gt;&gt; dbi = DBInterface(connstr=(&#39;mysql+mysqlconnector://&#39;</span>
+<span class="sd">                                           &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
+<span class="sd">                                           &#39;&lt;db_name&gt;&#39;))</span>
+<span class="sd">            &gt;&gt;&gt; dbi.engine</span>
+<span class="sd">            Engine(mysql+mysqlconnector://&lt;user&gt;:***@&lt;host&gt;:&lt;port&gt;/db_name)</span>
+
+
+<span class="sd">        For example, the ``dbi`` instance can be used to execute a</span>
+<span class="sd">        query, as::</span>
+
+<span class="sd">            &gt;&gt;&gt; result = dbi.execute_query(&#39;SELECT COUNT(*) FROM mytable&#39;);</span>
+<span class="sd">            &gt;&gt;&gt; result</span>
+<span class="sd">            [(14,)]</span>
+
+
+<span class="sd">        Additionally, the ``dbi.engine`` object can be supplied to the</span>
+<span class="sd">        :func:`pandas.read_sql` function&#39;s ``con`` parameter, as the</span>
+<span class="sd">        database connection object, as::</span>
+
+<span class="sd">            &gt;&gt;&gt; import pandas as pd</span>
+
+<span class="sd">            &gt;&gt;&gt; sql = &#39;select count(*) from mytable&#39;</span>
+<span class="sd">            &gt;&gt;&gt; df = pd.read_sql(sql, con=dbi.engine)</span>
+
+<span class="sd">            &gt;&gt;&gt; df</span>
+<span class="sd">                count(*)</span>
+<span class="sd">             0        14</span>
+
+<span class="sd">    :Subclass Specialisation:</span>
+
+<span class="sd">        To *specialise the subclass*, a bit of &#39;pseudo-inheritance&#39; is</span>
+<span class="sd">        required due to the way the :class:`DBInterface` class is</span>
+<span class="sd">        created. A &#39;standard inheritance&#39; with a call to ``super()``</span>
+<span class="sd">        does not work, as the subclass&#39; ``__init__`` method is **not**</span>
+<span class="sd">        called. Therefore, the subclass must add the parent&#39;s attributes</span>
+<span class="sd">        into its class, manually.</span>
+
+<span class="sd">        This can be done as follows::</span>
+
+<span class="sd">            from dblib.database import DBInterface</span>
+
+<span class="sd">            class MyDBI:</span>
 
 <span class="sd">                def __init__(self, connstr: str):</span>
-<span class="sd">                    super().__init__(connstr=(&#39;mysql+mysqlconnector://&#39;</span>
-<span class="sd">                                              &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
-<span class="sd">                                              &#39;&lt;db_name&gt;&#39;))</span>
+<span class="sd">                    #</span>
+<span class="sd">                    # Pseudo-inherit the DBInterface class by &#39;copying&#39;</span>
+<span class="sd">                    # the attributes into this subclass.</span>
+<span class="sd">                    #</span>
+<span class="sd">                    # There are many ways to do this. This is the most</span>
+<span class="sd">                    # general, as functions, methods and properties are</span>
+<span class="sd">                    # captured.</span>
+<span class="sd">                    #</span>
+<span class="sd">                    self._dbi = DBInterface(connstr=connstr)</span>
+<span class="sd">                    fns = [fn for fn in dir(self._dbi) if not fn.startswith(&#39;__&#39;)]</span>
+<span class="sd">                    for fn in fns:</span>
+<span class="sd">                        setattr(self, fn, self._dbi.__getattribute__(fn))</span>
+
+<span class="sd">                @property</span>
+<span class="sd">                def spam(self):</span>
+<span class="sd">                    return &#39;spam&#39;</span>
+
+<span class="sd">                # Continuation of class definition ...</span>
+
+<span class="sd">            &gt;&gt;&gt; db = MyDBI(connstr=(&#39;mysql+mysqlconnector://&#39;</span>
+<span class="sd">                                    &#39;&lt;user&gt;:&lt;pwd&gt;@&lt;host&gt;:&lt;port&gt;/&#39;</span>
+<span class="sd">                                    &#39;&lt;db_name&gt;&#39;))</span>
+<span class="sd">            # List the database interface class&#39; attributes.</span>
+<span class="sd">            # Notice that &#39;spam&#39; is included in the list, along with the</span>
+<span class="sd">            # methods from the :class:`DBInterface` class, thus</span>
+<span class="sd">            # *simulating* inheritance.</span>
+<span class="sd">            &gt;&gt;&gt; dir(db)</span>
+<span class="sd">            [&#39;_PREFIX&#39;,</span>
+<span class="sd">             &#39;__class__&#39;,</span>
+<span class="sd">             &#39;__delattr__&#39;,</span>
+<span class="sd">             ...,</span>
+<span class="sd">             &#39;__str__&#39;,</span>
+<span class="sd">             &#39;__subclasshook__&#39;,</span>
+<span class="sd">             &#39;__weakref__&#39;,</span>
+<span class="sd">             &#39;_connstr&#39;,</span>
+<span class="sd">             &#39;_create_engine&#39;,</span>
+<span class="sd">             &#39;_dbi&#39;,</span>
+<span class="sd">             &#39;_engine&#39;,</span>
+<span class="sd">             &#39;_report_sa_error&#39;,</span>
+<span class="sd">             &#39;_result_to_df__cursor&#39;,</span>
+<span class="sd">             &#39;_result_to_df__stored&#39;,</span>
+<span class="sd">             &#39;call_procedure&#39;,</span>
+<span class="sd">             &#39;call_procedure_update&#39;,</span>
+<span class="sd">             &#39;call_procedure_update_many&#39;,</span>
+<span class="sd">             &#39;call_procedure_update_raw&#39;,</span>
+<span class="sd">             &#39;database_name&#39;,</span>
+<span class="sd">             &#39;engine&#39;,</span>
+<span class="sd">             &#39;execute_query&#39;,</span>
+<span class="sd">             &#39;spam&#39;,           # &lt;---</span>
+<span class="sd">             &#39;table_exists&#39;]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -181,15 +278,15 @@
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;mysql&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;mysql.connector&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="kn">from</span> <span class="nn">_dbi_mysql</span> <span class="kn">import</span> <span class="n">_DBIMySQL</span>
-                <span class="k">return</span> <span class="n">_DBIMySQL</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">_DBIMySQL</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;oracle&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;cx_Oracle&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="kn">from</span> <span class="nn">_dbi_oracle</span> <span class="kn">import</span> <span class="n">_DBIOracle</span>
-                <span class="k">return</span> <span class="n">_DBIOracle</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">_DBIOracle</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;sqlite3&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="kn">from</span> <span class="nn">_dbi_sqlite</span> <span class="kn">import</span> <span class="n">_DBISQLite</span>
-                <span class="k">return</span> <span class="n">_DBISQLite</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">_DBISQLite</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># Fallback if a module is not installed.</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;An error occurred while creating an instance of the database &#39;</span>
                            <span class="s1">&#39;accessor class. Perhaps the appropriate database driver is not &#39;</span>
@@ -236,7 +333,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.3.0.dev3.</p>
+    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
   </div>
 
    
