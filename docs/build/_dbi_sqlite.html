@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_sqlite - Private database interface for SQLite &mdash; dblib - v0.4.0.dev1 Documentation</title>
+  <title>_dbi_sqlite - Private database interface for SQLite &mdash; dblib - v0.4.0.dev2 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=98c678ec"></script>
+        <script src="_static/documentation_options.js?v=35960820"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -40,7 +40,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0.dev1
+                0.4.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -62,6 +62,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#dbi_sqlite._DBISQLite.__annotations__"><code class="docutils literal notranslate"><span class="pre">_DBISQLite.__annotations__</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_sqlite._DBISQLite.__init__"><code class="docutils literal notranslate"><span class="pre">_DBISQLite.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_sqlite._DBISQLite._create_engine"><code class="docutils literal notranslate"><span class="pre">_DBISQLite._create_engine()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_sqlite._DBISQLite._is_dangerous"><code class="docutils literal notranslate"><span class="pre">_DBISQLite._is_dangerous()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_sqlite._DBISQLite._report_sa_error"><code class="docutils literal notranslate"><span class="pre">_DBISQLite._report_sa_error()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_sqlite._DBISQLite._result_to_df__cursor"><code class="docutils literal notranslate"><span class="pre">_DBISQLite._result_to_df__cursor()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_sqlite._DBISQLite._result_to_df__stored"><code class="docutils literal notranslate"><span class="pre">_DBISQLite._result_to_df__stored()</span></code></a></li>
@@ -113,7 +114,7 @@ and attribute accessors; which are a specialised version of
 the <a class="reference internal" href="_dbi_base.html#dbi_base._DBIBase" title="_dbi_base._DBIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_base._DBIBase</span></code></a> class methods.</p>
 </dd>
 <dt class="field-even">Platform<span class="colon">:</span></dt>
-<dd class="field-even"><p>Linux/Windows | Python 3.6+</p>
+<dd class="field-even"><p>Linux/Windows | Python 3.10+</p>
 </dd>
 <dt class="field-odd">Developer<span class="colon">:</span></dt>
 <dd class="field-odd"><p>J Berendt</p>
@@ -193,6 +194,27 @@ object.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>sqlalchemy.engine.base.Engine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_sqlite._DBISQLite._is_dangerous">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_is_dangerous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#dbi_sqlite._DBISQLite._is_dangerous" title="Link to this definition"></a></dt>
+<dd><p>Perform a dirty security check for injection attempts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stmt</strong> (<em>str</em>) – SQL statement to be potentially executed.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="_dbi_base.html#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><strong>SecurityWarning</strong></a> – If there are multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>)
+    in the statement, or any comment delimiters (<code class="docutils literal notranslate"><span class="pre">--</span></code>).</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>False if the checks pass.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,9 +307,19 @@ procedure call.</p>
 <dt class="sig sig-object py" id="dbi_sqlite._DBISQLite.execute_query">
 <span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_sqlite._DBISQLite.execute_query" title="Link to this definition"></a></dt>
 <dd><p>Execute a query statement.</p>
-<p>If the query did not return results and the <code class="docutils literal notranslate"><span class="pre">raw</span></code> argument is
-False, an empty DataFrame containing the column names only, is
-returned.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The following are <em>not</em> allowed to be executed by this
+method:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Statements containing multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p></li>
+<li><p>Statements containing a comment delimiter (<code class="docutils literal notranslate"><span class="pre">--</span></code>).</p></li>
+</ul>
+</div></blockquote>
+<p>If found, a <code class="xref py py-class docutils literal notranslate"><span class="pre">SecurityWarning</span></code> will be raised by the
+<a class="reference internal" href="#dbi_sqlite._DBISQLite._is_dangerous" title="_dbi_sqlite._DBISQLite._is_dangerous"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_is_dangerous()</span></code></a> method.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -295,12 +327,15 @@ returned.</p>
 are to be written in colon format.</p></li>
 <li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameter key/value bindings as a
 dictionary, if applicable. Defaults to None.</p></li>
-<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple) format
-rather than as a formatted DataFrame. Defaults to True
-for efficiency.</p></li>
+<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
+format rather than as a formatted DataFrame.
+Defaults to True for efficiency.</p></li>
 </ul>
 </dd>
 </dl>
+<p>If the query did not return results and the <code class="docutils literal notranslate"><span class="pre">raw</span></code> argument is
+False, an empty DataFrame containing the column names only, is
+returned.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the SQL query, the bind parameters are specified by name,
@@ -310,10 +345,16 @@ bindings.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This method contains a <code class="docutils literal notranslate"><span class="pre">commit</span></code> call.</p>
+<ol class="arabic simple">
+<li><p>Generally, whatever statement is passed into this method
+<strong>will be executed</strong>, and may have <em>destructive
+implications.</em></p></li>
+<li><p>This method contains a <code class="docutils literal notranslate"><span class="pre">commit</span></code> call.</p></li>
+</ol>
 <p>If a statement is passed into this method, and the user has
 the appropriate permissions - the change
 <strong>will be committed</strong>.</p>
+<p><strong>… HC SVNT DRACONES.</strong></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -327,7 +368,7 @@ regardless of the value passed to the <code class="docutils literal notranslate"
 </p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Union[list, pd.DataFrame, None)</p>
+<dd class="field-even"><p>list | pd.DataFrame | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -368,7 +409,7 @@ not exist. Defaults to False.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0.dev2.</p>
   </div>
 
    

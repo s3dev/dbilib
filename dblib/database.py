@@ -4,7 +4,7 @@
 :Purpose:   This module provides the library's primary entry-point for
             accessing the database methods and attributes.
 
-:Platform:  Linux/Windows | Python 3.6+
+:Platform:  Linux/Windows | Python 3.10+
 :Developer: J Berendt
 :Email:     support@s3dev.uk
 

@@ -5,7 +5,7 @@
             and attribute accessors; which are a specialised version of
             the :class:`_dbi_base._DBIBase` class methods.
 
-:Platform:  Linux/Windows | Python 3.6+
+:Platform:  Linux/Windows | Python 3.10+
 :Developer: J Berendt
 :Email:     support@s3dev.uk
 
@@ -27,7 +27,6 @@ import pandas as pd
 import warnings
 from mysql.connector.errors import IntegrityError
 from sqlalchemy.exc import SQLAlchemyError
-from typing import Union, Tuple
 from utils4.reporterror import reporterror
 from utils4.user_interface import ui
 # locals
@@ -70,20 +69,19 @@ class _DBIMySQL(_DBIBase):
 
     def call_procedure(self,
                        proc: str,
-                       params: Union[list, tuple]=None,
-                       return_status: bool=False) -> Union[pd.DataFrame,
-                                                           Tuple[pd.DataFrame, bool]]:
+                       params: list | tuple = None,
+                       return_status: bool=False) -> pd.DataFrame | tuple[pd.DataFrame | bool]:
         """Call a stored procedure, and return as a DataFrame.
 
         Args:
             proc (str): Name of the stored procedure to call.
-            params (Union[list, tuple], optional): A list (or tuple) of
+            params (list | tuple, optional): A list (or tuple) of
                 parameters to pass into the procedure. Defaults to None.
             return_status (bool, optional): Return the method's success
                 status. Defaults to False.
 
         Returns:
-            Union[pd.DataFrame, Tuple[pd.DataFrame, bool]]:
+            pd.DataFrame | tuple[pd.DataFrame | bool]:
             If the ``return_status`` argument is True, a tuple of the
             data and the method's return status is returned as::
 
@@ -117,7 +115,7 @@ class _DBIMySQL(_DBIBase):
     def call_procedure_update(self,
                               proc: str,
                               params: list=None,
-                              return_id: bool=False) -> Union[bool, tuple]:
+                              return_id: bool=False) -> bool | tuple:
         """Call an *update* or *insert* stored procedure.
 
         Note:
@@ -135,7 +133,7 @@ class _DBIMySQL(_DBIBase):
                 inserted row. Defaults to False.
 
         Returns:
-            Union[bool, tuple]: If ``return_id`` is False, True is
+            bool | tuple: If ``return_id`` is False, True is
             returned if the procedure completed  successfully, otherwise
             False. If ``return_id`` is True, a tuple containing the
             ID of the last inserted row and the execution success flag
@@ -172,7 +170,7 @@ class _DBIMySQL(_DBIBase):
             reporterror(err)
         return (rowid, success) if return_id else success
 
-    def call_procedure_update_many(self, *args, proc: str, iterable: Union[list, tuple]) -> bool:
+    def call_procedure_update_many(self, *args, proc: str, iterable: list | tuple) -> bool:
         r"""Call an *update* or *insert* stored procedure for an iterable.
 
         Note:
@@ -189,8 +187,8 @@ class _DBIMySQL(_DBIBase):
                 Note: The parameters are passed into the USP in the
                 order received, followed by the iterable item.
             proc (str): Name of the stored procedure to call.
-            iterable (Union[list, tuple]): List of items to be loaded
-                into the database.
+            iterable (list | tuple): List of items to be loaded into
+                the database.
 
         Returns:
             bool: True if the update was successful, otherwise False.

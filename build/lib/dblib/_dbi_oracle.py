@@ -5,7 +5,7 @@
             and attribute accessors; which are a specialised version of
             the :class:`_dbi_base._DBIBase` class methods.
 
-:Platform:  Linux/Windows | Python 3.6+
+:Platform:  Linux/Windows | Python 3.10+
 :Developer: J Berendt
 :Email:     support@s3dev.uk
 
@@ -25,7 +25,6 @@
 
 import cx_Oracle
 import pandas as pd
-from typing import Union, Tuple
 from utils4.reporterror import reporterror
 from utils4.user_interface import ui
 # locals
@@ -76,20 +75,19 @@ class _DBIOracle(_DBIBase):
 
     def call_procedure(self,
                        proc: str,
-                       params: Union[list, tuple]=None,
-                       return_status: bool=False) -> Union[pd.DataFrame,
-                                                           Tuple[pd.DataFrame, bool]]:
+                       params: list | tuple = None,
+                       return_status: bool=False) -> pd.DataFrame | tuple[pd.DataFrame | bool]:
         """Call a stored procedure, and return as a DataFrame.
 
         Args:
             proc (str): Name of the stored procedure to call.
-            params (Union[list, tuple], optional): A list (or tuple) of
+            params (list | tuple, optional): A list (or tuple) of
                 parameters to pass into the procedure. Defaults to None.
             return_status (bool, optional): Return the method's success
                 status. Defaults to False.
 
         Returns:
-            Union[pd.DataFrame, Tuple[pd.DataFrame, bool]]:
+            pd.DataFrame | tuple[pd.DataFrame | bool]:
             If the ``return_status`` argument is True, a tuple of the
             data and the method's return status is returned as::
 

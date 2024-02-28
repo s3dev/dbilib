@@ -5,7 +5,7 @@
             and attribute accessors; which are a specialised version of
             the :class:`_dbi_base._DBIBase` class methods.
 
-:Platform:  Linux/Windows | Python 3.6+
+:Platform:  Linux/Windows | Python 3.10+
 :Developer: J Berendt
 :Email:     support@s3dev.uk
 

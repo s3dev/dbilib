@@ -1,12 +1,12 @@
 ************* Module dblib._dbi_oracle
-/var/devmt/py/dblib_0.4.0.dev1/dblib/_dbi_oracle.py:112:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dblib_0.4.0.dev1/dblib/_dbi_oracle.py:189:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dblib_0.4.0.dev1/dblib/_dbi_oracle.py:205:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dblib_0.4.0.dev2/dblib/_dbi_oracle.py:110:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dblib_0.4.0.dev2/dblib/_dbi_oracle.py:187:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dblib_0.4.0.dev2/dblib/_dbi_oracle.py:203:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
 
 
 Report
 ======
-47 statements analysed.
+46 statements analysed.
 
 Statistics by type
 ------------------
@@ -25,7 +25,7 @@ Statistics by type
 
 
 
-221 lines have been analyzed
+219 lines have been analyzed
 
 Raw metrics
 -----------
@@ -33,13 +33,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |54     |24.43 |54       |=          |
+|code      |52     |23.74 |52       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |148    |66.97 |148      |=          |
+|docstring |148    |67.58 |148      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |7      |3.17  |7        |=          |
+|comment   |7      |3.20  |7        |=          |
 +----------+-------+------+---------+-----------+
-|empty     |12     |5.43  |12       |=          |
+|empty     |12     |5.48  |12       |=          |
 +----------+-------+------+---------+-----------+
 
 

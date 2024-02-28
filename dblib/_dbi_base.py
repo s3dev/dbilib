@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """
 :Purpose:   This module contains the library's *base* database methods
-            and attribute accessors, which are designed to be specialised
-            by the database-specific modules and classes.
+            and attribute accessors, which are designed to be
+            specialised by the database-specific modules and classes.
 
-:Platform:  Linux/Windows | Python 3.6+
+:Platform:  Linux/Windows | Python 3.10+
 :Developer: J Berendt
 :Email:     support@s3dev.uk
 
@@ -17,8 +17,8 @@
             database-specific module will cause a crash due to a missing
             library.
 
-            Any database-specific functionality must be contained in that
-            module.
+            Any database-specific functionality must be contained in
+            that module.
 
 :Example:
 
@@ -31,11 +31,15 @@
 # pylint: disable=wrong-import-order
 
 import pandas as pd
+import traceback
 import sqlalchemy as sa
 from sqlalchemy.exc import SQLAlchemyError
-from typing import Union
 from utils4.reporterror import reporterror
 from utils4.user_interface import ui
+
+
+class SecurityWarning(Warning):
+    """Security warning stub-class."""
 
 
 class _DBIBase:
@@ -95,21 +99,31 @@ class _DBIBase:
     def execute_query(self,
                       stmt: str,
                       params: dict=None,
-                      raw: bool=True) -> Union[list, pd.DataFrame, None]:
+                      raw: bool=True) -> list | pd.DataFrame | None:
         """Execute a query statement.
 
-        If the query did not return results and the ``raw`` argument is
-        False, an empty DataFrame containing the column names only, is
-        returned.
+        Important:
+            The following are *not* allowed to be executed by this
+            method:
+
+                - Statements containing multiple semi-colons (``;``).
+                - Statements containing a comment delimiter (``--``).
+
+            If found, a :class:`SecurityWarning` will be raised by the
+            :meth:`_is_dangerous` method.
 
         Args:
             stmt (str): Statement to be executed. The parameter bindings
                 are to be written in colon format.
             params (dict, optional): Parameter key/value bindings as a
                 dictionary, if applicable. Defaults to None.
-            raw (bool, optional): Return the data in 'raw' (tuple) format
-                rather than as a formatted DataFrame. Defaults to True
-                for efficiency.
+            raw (bool, optional): Return the data in 'raw' (tuple)
+                format rather than as a formatted DataFrame.
+                Defaults to True for efficiency.
+
+        If the query did not return results and the ``raw`` argument is
+        False, an empty DataFrame containing the column names only, is
+        returned.
 
         Note:
             In the SQL query, the bind parameters are specified by name,
@@ -118,14 +132,21 @@ class _DBIBase:
             bindings.
 
         Warning:
-            This method contains a ``commit`` call.
+
+            1) Generally, whatever statement is passed into this method
+               **will be executed**, and may have *destructive
+               implications.*
+
+            2) This method contains a ``commit`` call.
 
             If a statement is passed into this method, and the user has
             the appropriate permissions - the change
             **will be committed**.
 
+            **... HC SVNT DRACONES.**
+
         Returns:
-            Union[list, pd.DataFrame, None): If the ``raw`` parameter is
+            list | pd.DataFrame | None: If the ``raw`` parameter is
             True, a list of tuples containing values is returned.
             Otherwise, a ``pandas.DataFrame`` object containing the
             returned data is returned.
@@ -140,14 +161,18 @@ class _DBIBase:
         # The error does have a _message member.
         # pylint: disable=no-member
         try:
-            with self._engine.connect() as conn:
-                result = conn.execute(sa.text(stmt), params)
-                conn.commit()
-                conn.close()
-            if raw:
-                return result.fetchall()
-            else:
-                return self._result_to_df__cursor(result=result)
+            # Perform a cursory 'security check.'
+            if not self._is_dangerous(stmt=stmt):
+                with self._engine.connect() as conn:
+                    result = conn.execute(sa.text(stmt), params)
+                    conn.commit()
+                    conn.close()
+                if raw:
+                    return result.fetchall()
+                else:
+                    return self._result_to_df__cursor(result=result)
+        except SecurityWarning:
+            print(traceback.format_exc())
         except Exception as err:
             if 'object does not return rows' not in err._message():
                 reporterror(err)
@@ -161,6 +186,7 @@ class _DBIBase:
             object.
 
         """
+        # ???: Do these values need to be moved to an external config?
         # Added in s3ddb v0.7.0:
         # The pool_* arguments to prevent MySQL timeout which causes
         # a broken pipe and lost connection errors.
@@ -171,6 +197,31 @@ class _DBIBase:
                                 pool_timeout=30,
                                 pool_pre_ping=True,
                                 max_overflow=0)
+
+    @staticmethod
+    def _is_dangerous(stmt: str) -> bool:
+        """Perform a dirty security check for injection attempts.
+
+        Args:
+            stmt (str): SQL statement to be potentially executed.
+
+        Raises:
+            SecurityWarning: If there are multiple semi-colons (``;``)
+                in the statement, or any comment delimiters (``--``).
+
+        Returns:
+            bool: False if the checks pass.
+
+        """
+        # import sys
+        if stmt.count(';') > 1:
+            msg = 'Multiple statements are disallowed for security reasons.'
+            raise SecurityWarning(msg)
+            # sys.exit(1)
+        if '--' in stmt:
+            msg = 'Comments are not allowed in the statement for security reasons.'
+            raise SecurityWarning(msg)
+        return False
 
     def _report_sa_error(self, msg: str, error: SQLAlchemyError):  # pragma: nocover
         """Report SQLAlchemy error to the terminal.

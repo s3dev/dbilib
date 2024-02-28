@@ -22,12 +22,14 @@ import io
 import os
 import pandas as pd
 import subprocess
+from mysql.connector.errors import ProgrammingError
 # locals
 from base import TestBase
 from testlibs.constants import startoftest
 from testlibs.constants import templates
 from testlibs.utilities import utilities
 from dblib.database import DBInterface
+
 
 
 class TestDatabaseMySQL(TestBase):
@@ -284,6 +286,51 @@ class TestDatabaseMySQL(TestBase):
         self.assertTrue(all([tst1 is None, tst2 is None]),
                         msg=self._MSG1.format(exp, (tst1, tst2)))
 
+    def test06d__execute_query__security01(self):
+        """Test the execute_query method with multiple semi-colon statement.
+
+        The statement used in this query was tested in its 'before' and
+        'after' state, and is a valid injection-like statement.
+
+        :Test:
+            - Call the ``execute_query`` method with a statement
+              containing multiple semi-colons - simulating an injection
+              attack.
+            - Verify a SecurityWarning is raised and nothing is
+              returned.
+
+        """
+        buff = io.StringIO()
+        dbi = DBInterface(connstr=self._CONNSTR)
+        stmt = "select * from guitars where colour = '{}'"
+        stmt_ = stmt.format("green'; delete from guitars; --")
+        with contextlib.redirect_stdout(buff):
+            tst = dbi.execute_query(stmt=stmt_)
+        self.assertIn('SecurityWarning: Multiple statements', buff.getvalue())
+        self.assertIs(None, tst, msg=self._MSG1.format(None, tst))
+
+    def test06e__execute_query__security02(self):
+        """Test the execute_query method with a comment string.
+
+        The statement used in this query was tested in its 'before' and
+        'after' state, and is a valid injection-like statement.
+
+        :Test:
+            - Call the ``execute_query`` method with a statement
+              containing a comment - simulating an injection attack.
+            - Verify a SecurityWarning is raised and nothing is
+              returned.
+
+        """
+        buff = io.StringIO()
+        dbi = DBInterface(connstr=self._CONNSTR)
+        stmt = "select * from guitars where colour = '{}'"
+        stmt_ = stmt.format("green'; --")
+        with contextlib.redirect_stdout(buff):
+            tst = dbi.execute_query(stmt=stmt_)
+        self.assertIn('SecurityWarning: Comments are not allowed', buff.getvalue())
+        self.assertIs(None, tst, msg=self._MSG1.format(None, tst))
+
     def test07a__call_procedure_update_raw__no_error(self):
         """Test the call_procedure_update_raw method, no errors.
 
@@ -315,7 +362,7 @@ class TestDatabaseMySQL(TestBase):
         with contextlib.redirect_stdout(buff):
             try:
                 dbi.call_procedure_update_raw(proc='sp_i_dont_exist', params=[])
-            except Exception as err:
+            except ProgrammingError as err:
                 print(err)
         tst = buff.getvalue()
         self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))

@@ -41,21 +41,17 @@ class Setup:
 
     PACKAGE         = 'dblib'
     VERSION         = __version__
-    PLATFORMS       = 'Python 3.6+'
+    PLATFORMS       = 'Python 3.10+'
     DESC            = 'Generalised and simple database interface library.'
     AUTHOR          = 'J. Berendt'
     AUTHOR_EMAIL    = 'development@s3dev.uk'
     URL             = 'n/a'
     LICENSE         = 'MIT'
-    MIN_PYTHON      = '>=3.6'
+    MIN_PYTHON      = '>=3.10'
     ROOT            = os.path.realpath(os.path.dirname(__file__))
     PACKAGE_ROOT    = os.path.join(ROOT, PACKAGE)
     INCL_PKG_DATA   = False
-    CLASSIFIERS     = ['Programming Language :: Python :: 3.6',
-                       'Programming Language :: Python :: 3.7',
-                       'Programming Language :: Python :: 3.8',
-                       'Programming Language :: Python :: 3.9',
-                       'Programming Language :: Python :: 3.10',
+    CLASSIFIERS     = ['Programming Language :: Python :: 3.10',
                        'Programming Language :: Python :: 3.11',
                        'Programming Language :: Python :: 3.12',
                        'License :: OSI Approved :: MIT License',

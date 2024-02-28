@@ -22,14 +22,13 @@ import sys
 from datetime import datetime as dt
 
 sys.path.insert(0, os.path.realpath('../../dblib'))
-#sys.path.insert(0, os.path.realpath('../../'))
 from _version import __version__
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'dblib'
-copyright = f'2023 | S3DEV | version {__version__}'
+copyright = f'2023-2024 | S3DEV | version {__version__}'
 author = 'S3DEV Development Team'
 version = __version__
 release = __version__

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mysql &mdash; dblib - v0.4.0.dev1 Documentation</title>
+  <title>_dbi_mysql &mdash; dblib - v0.4.0.dev2 Documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -14,7 +14,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=98c678ec"></script>
+        <script src="../_static/documentation_options.js?v=35960820"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0.dev1
+                0.4.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -85,7 +85,7 @@
 <span class="sd">            and attribute accessors; which are a specialised version of</span>
 <span class="sd">            the :class:`_dbi_base._DBIBase` class methods.</span>
 
-<span class="sd">:Platform:  Linux/Windows | Python 3.6+</span>
+<span class="sd">:Platform:  Linux/Windows | Python 3.10+</span>
 <span class="sd">:Developer: J Berendt</span>
 <span class="sd">:Email:     support@s3dev.uk</span>
 
@@ -107,7 +107,6 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">mysql.connector.errors</span> <span class="kn">import</span> <span class="n">IntegrityError</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.exc</span> <span class="kn">import</span> <span class="n">SQLAlchemyError</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">from</span> <span class="nn">utils4.reporterror</span> <span class="kn">import</span> <span class="n">reporterror</span>
 <span class="kn">from</span> <span class="nn">utils4.user_interface</span> <span class="kn">import</span> <span class="n">ui</span>
 <span class="c1"># locals</span>
@@ -154,20 +153,19 @@
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL.call_procedure">[docs]</a>
     <span class="k">def</span> <span class="nf">call_procedure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                        <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                       <span class="n">params</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">return_status</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-                                                           <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]:</span>
+                       <span class="n">params</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">return_status</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Call a stored procedure, and return as a DataFrame.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            proc (str): Name of the stored procedure to call.</span>
-<span class="sd">            params (Union[list, tuple], optional): A list (or tuple) of</span>
+<span class="sd">            params (list | tuple, optional): A list (or tuple) of</span>
 <span class="sd">                parameters to pass into the procedure. Defaults to None.</span>
 <span class="sd">            return_status (bool, optional): Return the method&#39;s success</span>
 <span class="sd">                status. Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Union[pd.DataFrame, Tuple[pd.DataFrame, bool]]:</span>
+<span class="sd">            pd.DataFrame | tuple[pd.DataFrame | bool]:</span>
 <span class="sd">            If the ``return_status`` argument is True, a tuple of the</span>
 <span class="sd">            data and the method&#39;s return status is returned as::</span>
 
@@ -204,7 +202,7 @@
     <span class="k">def</span> <span class="nf">call_procedure_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                               <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                               <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                              <span class="n">return_id</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
+                              <span class="n">return_id</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Call an *update* or *insert* stored procedure.</span>
 
 <span class="sd">        Note:</span>
@@ -222,7 +220,7 @@
 <span class="sd">                inserted row. Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Union[bool, tuple]: If ``return_id`` is False, True is</span>
+<span class="sd">            bool | tuple: If ``return_id`` is False, True is</span>
 <span class="sd">            returned if the procedure completed  successfully, otherwise</span>
 <span class="sd">            False. If ``return_id`` is True, a tuple containing the</span>
 <span class="sd">            ID of the last inserted row and the execution success flag</span>
@@ -262,7 +260,7 @@
 
 <div class="viewcode-block" id="_DBIMySQL.call_procedure_update_many">
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL.call_procedure_update_many">[docs]</a>
-    <span class="k">def</span> <span class="nf">call_procedure_update_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">call_procedure_update_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Call an *update* or *insert* stored procedure for an iterable.</span>
 
 <span class="sd">        Note:</span>
@@ -279,8 +277,8 @@
 <span class="sd">                Note: The parameters are passed into the USP in the</span>
 <span class="sd">                order received, followed by the iterable item.</span>
 <span class="sd">            proc (str): Name of the stored procedure to call.</span>
-<span class="sd">            iterable (Union[list, tuple]): List of items to be loaded</span>
-<span class="sd">                into the database.</span>
+<span class="sd">            iterable (list | tuple): List of items to be loaded into</span>
+<span class="sd">                the database.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: True if the update was successful, otherwise False.</span>
@@ -366,7 +364,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
+    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev2.</p>
   </div>
 
    

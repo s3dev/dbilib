@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_base &mdash; dblib - v0.4.0.dev1 Documentation</title>
+  <title>_dbi_base &mdash; dblib - v0.4.0.dev2 Documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -14,7 +14,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=98c678ec"></script>
+        <script src="../_static/documentation_options.js?v=35960820"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0.dev1
+                0.4.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -82,10 +82,10 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">:Purpose:   This module contains the library&#39;s *base* database methods</span>
-<span class="sd">            and attribute accessors, which are designed to be specialised</span>
-<span class="sd">            by the database-specific modules and classes.</span>
+<span class="sd">            and attribute accessors, which are designed to be</span>
+<span class="sd">            specialised by the database-specific modules and classes.</span>
 
-<span class="sd">:Platform:  Linux/Windows | Python 3.6+</span>
+<span class="sd">:Platform:  Linux/Windows | Python 3.10+</span>
 <span class="sd">:Developer: J Berendt</span>
 <span class="sd">:Email:     support@s3dev.uk</span>
 
@@ -97,8 +97,8 @@
 <span class="sd">            database-specific module will cause a crash due to a missing</span>
 <span class="sd">            library.</span>
 
-<span class="sd">            Any database-specific functionality must be contained in that</span>
-<span class="sd">            module.</span>
+<span class="sd">            Any database-specific functionality must be contained in</span>
+<span class="sd">            that module.</span>
 
 <span class="sd">:Example:</span>
 
@@ -111,11 +111,18 @@
 <span class="c1"># pylint: disable=wrong-import-order</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="nn">sa</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.exc</span> <span class="kn">import</span> <span class="n">SQLAlchemyError</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">utils4.reporterror</span> <span class="kn">import</span> <span class="n">reporterror</span>
 <span class="kn">from</span> <span class="nn">utils4.user_interface</span> <span class="kn">import</span> <span class="n">ui</span>
+
+
+<div class="viewcode-block" id="SecurityWarning">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base.SecurityWarning">[docs]</a>
+<span class="k">class</span> <span class="nc">SecurityWarning</span><span class="p">(</span><span class="ne">Warning</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Security warning stub-class.&quot;&quot;&quot;</span></div>
+
 
 
 <div class="viewcode-block" id="_DBIBase">
@@ -182,21 +189,31 @@
     <span class="k">def</span> <span class="nf">execute_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                       <span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                       <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+                      <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute a query statement.</span>
 
-<span class="sd">        If the query did not return results and the ``raw`` argument is</span>
-<span class="sd">        False, an empty DataFrame containing the column names only, is</span>
-<span class="sd">        returned.</span>
+<span class="sd">        Important:</span>
+<span class="sd">            The following are *not* allowed to be executed by this</span>
+<span class="sd">            method:</span>
+
+<span class="sd">                - Statements containing multiple semi-colons (``;``).</span>
+<span class="sd">                - Statements containing a comment delimiter (``--``).</span>
+
+<span class="sd">            If found, a :class:`SecurityWarning` will be raised by the</span>
+<span class="sd">            :meth:`_is_dangerous` method.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            stmt (str): Statement to be executed. The parameter bindings</span>
 <span class="sd">                are to be written in colon format.</span>
 <span class="sd">            params (dict, optional): Parameter key/value bindings as a</span>
 <span class="sd">                dictionary, if applicable. Defaults to None.</span>
-<span class="sd">            raw (bool, optional): Return the data in &#39;raw&#39; (tuple) format</span>
-<span class="sd">                rather than as a formatted DataFrame. Defaults to True</span>
-<span class="sd">                for efficiency.</span>
+<span class="sd">            raw (bool, optional): Return the data in &#39;raw&#39; (tuple)</span>
+<span class="sd">                format rather than as a formatted DataFrame.</span>
+<span class="sd">                Defaults to True for efficiency.</span>
+
+<span class="sd">        If the query did not return results and the ``raw`` argument is</span>
+<span class="sd">        False, an empty DataFrame containing the column names only, is</span>
+<span class="sd">        returned.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            In the SQL query, the bind parameters are specified by name,</span>
@@ -205,14 +222,21 @@
 <span class="sd">            bindings.</span>
 
 <span class="sd">        Warning:</span>
-<span class="sd">            This method contains a ``commit`` call.</span>
+
+<span class="sd">            1) Generally, whatever statement is passed into this method</span>
+<span class="sd">               **will be executed**, and may have *destructive</span>
+<span class="sd">               implications.*</span>
+
+<span class="sd">            2) This method contains a ``commit`` call.</span>
 
 <span class="sd">            If a statement is passed into this method, and the user has</span>
 <span class="sd">            the appropriate permissions - the change</span>
 <span class="sd">            **will be committed**.</span>
 
+<span class="sd">            **... HC SVNT DRACONES.**</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            Union[list, pd.DataFrame, None): If the ``raw`` parameter is</span>
+<span class="sd">            list | pd.DataFrame | None: If the ``raw`` parameter is</span>
 <span class="sd">            True, a list of tuples containing values is returned.</span>
 <span class="sd">            Otherwise, a ``pandas.DataFrame`` object containing the</span>
 <span class="sd">            returned data is returned.</span>
@@ -227,14 +251,18 @@
         <span class="c1"># The error does have a _message member.</span>
         <span class="c1"># pylint: disable=no-member</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">stmt</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
-                <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-                <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">raw</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+            <span class="c1"># Perform a cursory &#39;security check.&#39;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">):</span>
+                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">stmt</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">raw</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SecurityWarning</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;object does not return rows&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">err</span><span class="o">.</span><span class="n">_message</span><span class="p">():</span>
                 <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
@@ -251,6 +279,7 @@
 <span class="sd">            object.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ???: Do these values need to be moved to an external config?</span>
         <span class="c1"># Added in s3ddb v0.7.0:</span>
         <span class="c1"># The pool_* arguments to prevent MySQL timeout which causes</span>
         <span class="c1"># a broken pipe and lost connection errors.</span>
@@ -261,6 +290,34 @@
                                 <span class="n">pool_timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
                                 <span class="n">pool_pre_ping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                 <span class="n">max_overflow</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_DBIBase._is_dangerous">
+<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._is_dangerous">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform a dirty security check for injection attempts.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            stmt (str): SQL statement to be potentially executed.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            SecurityWarning: If there are multiple semi-colons (``;``)</span>
+<span class="sd">                in the statement, or any comment delimiters (``--``).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: False if the checks pass.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># import sys</span>
+        <span class="k">if</span> <span class="n">stmt</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Multiple statements are disallowed for security reasons.&#39;</span>
+            <span class="k">raise</span> <span class="n">SecurityWarning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="c1"># sys.exit(1)</span>
+        <span class="k">if</span> <span class="s1">&#39;--&#39;</span> <span class="ow">in</span> <span class="n">stmt</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Comments are not allowed in the statement for security reasons.&#39;</span>
+            <span class="k">raise</span> <span class="n">SecurityWarning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="_DBIBase._report_sa_error">
@@ -337,7 +394,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
+    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev2.</p>
   </div>
 
    

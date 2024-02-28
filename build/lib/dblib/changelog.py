@@ -1,5 +1,4 @@
-# Changed.
-# ENABLE SPHINX TO ACCESS THE GIT LOG
+# Enable sphinx to access the Git log.
 """
 .. git_changelog::
     :revisions: 99

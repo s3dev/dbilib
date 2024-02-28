@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>database &mdash; dblib - v0.4.0.dev1 Documentation</title>
+  <title>database &mdash; dblib - v0.4.0.dev2 Documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -14,7 +14,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=98c678ec"></script>
+        <script src="../_static/documentation_options.js?v=35960820"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0.dev1
+                0.4.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -84,7 +84,7 @@
 <span class="sd">:Purpose:   This module provides the library&#39;s primary entry-point for</span>
 <span class="sd">            accessing the database methods and attributes.</span>
 
-<span class="sd">:Platform:  Linux/Windows | Python 3.6+</span>
+<span class="sd">:Platform:  Linux/Windows | Python 3.10+</span>
 <span class="sd">:Developer: J Berendt</span>
 <span class="sd">:Email:     support@s3dev.uk</span>
 
@@ -279,7 +279,7 @@
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;mysql.connector&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="kn">from</span> <span class="nn">_dbi_mysql</span> <span class="kn">import</span> <span class="n">_DBIMySQL</span>
                 <span class="k">return</span> <span class="n">_DBIMySQL</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;oracle&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;oracle&#39;</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;cx_Oracle&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="kn">from</span> <span class="nn">_dbi_oracle</span> <span class="kn">import</span> <span class="n">_DBIOracle</span>
                 <span class="k">return</span> <span class="n">_DBIOracle</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -288,9 +288,10 @@
                 <span class="kn">from</span> <span class="nn">_dbi_sqlite</span> <span class="kn">import</span> <span class="n">_DBISQLite</span>
                 <span class="k">return</span> <span class="n">_DBISQLite</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># Fallback if a module is not installed.</span>
+        <span class="c1"># This is actually caught by the _create_engine__internal_only method.</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;An error occurred while creating an instance of the database &#39;</span>
                            <span class="s1">&#39;accessor class. Perhaps the appropriate database driver is not &#39;</span>
-                           <span class="s1">&#39;installed?&#39;</span><span class="p">)</span></div>
+                           <span class="s1">&#39;installed?&#39;</span><span class="p">)</span>  <span class="c1"># pragma: nocover  (never reached)</span></div>
 
 
 <div class="viewcode-block" id="DBInterface._create_engine__internal_only">
@@ -333,7 +334,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev1.</p>
+    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev2.</p>
   </div>
 
    
