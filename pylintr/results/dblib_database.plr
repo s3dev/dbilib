@@ -21,6 +21,16 @@ Statistics by type
 
 
 
+External dependencies
+---------------------
+::
+
+    sqlalchemy (dblib.database)
+    utils4 
+      \-utils (dblib.database)
+
+
+
 240 lines have been analyzed
 
 Raw metrics

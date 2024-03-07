@@ -21,20 +21,6 @@ Statistics by type
 
 
 
-External dependencies
----------------------
-::
-
-    base (test_database_sqlite)
-    dblib 
-      \-database (test_database_sqlite)
-    pandas (test_database_sqlite)
-    testlibs 
-      \-constants (test_database_sqlite)
-      \-utilities (test_database_sqlite)
-
-
-
 237 lines have been analyzed
 
 Raw metrics

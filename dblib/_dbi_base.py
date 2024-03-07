@@ -264,7 +264,7 @@ class _DBIBase:
 
         Args:
             result (object): The ``cursor.stored_results()`` object from
-            a ``sqlalchemy``/``mysql.connector`` procedure call.
+            a ``sqlalchemy`` or ``mysql.connector`` procedure call.
 
         Returns:
             pd.DataFrame: A DataFrame containing the results from the
@@ -273,8 +273,11 @@ class _DBIBase:
         """
         df = pd.DataFrame()
         try:
-            x = next(result)  # There is only one item in the iterable.
-            df = pd.DataFrame(data=x.fetchall(), columns=x.column_names)
+            # There is only one item in the iterable.
+            # However, if the iterable is empty, a StopIteration error is raised
+            # when using x = next(result); so a loop is used instead.
+            for x in result:
+                df = pd.DataFrame(data=x.fetchall(), columns=x.column_names)
         except Exception as err:
             reporterror(err)
         return df

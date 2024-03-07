@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_base &mdash; dblib - v0.4.0.dev2 Documentation</title>
+  <title>_dbi_base &mdash; dblib - v0.4.0.dev3 Documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -14,7 +14,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=35960820"></script>
+        <script src="../_static/documentation_options.js?v=5159d864"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0.dev2
+                0.4.0.dev3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -369,7 +369,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            result (object): The ``cursor.stored_results()`` object from</span>
-<span class="sd">            a ``sqlalchemy``/``mysql.connector`` procedure call.</span>
+<span class="sd">            a ``sqlalchemy`` or ``mysql.connector`` procedure call.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            pd.DataFrame: A DataFrame containing the results from the</span>
@@ -378,8 +378,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># There is only one item in the iterable.</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
+            <span class="c1"># There is only one item in the iterable.</span>
+            <span class="c1"># However, if the iterable is empty, a StopIteration error is raised</span>
+            <span class="c1"># when using x = next(result); so a loop is used instead.</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">fetchall</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span></div>
@@ -394,7 +397,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023 | S3DEV | version 0.4.0.dev2.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0.dev3.</p>
   </div>
 
    
