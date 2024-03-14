@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dblib
-Version: 0.4.0.dev3
+Version: 0.4.0.dev4
 Summary: Generalised and simple database interface library.
 Home-page: n/a
 Author: J. Berendt
@@ -19,6 +19,7 @@ Classifier: Topic :: Software Development
 Classifier: Topic :: Software Development :: Libraries
 Classifier: Topic :: Utilities
 Requires-Python: >=3.10
+License-File: LICENSE
 Requires-Dist: pandas
 Requires-Dist: utils4
 Requires-Dist: sqlalchemy

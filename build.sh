@@ -5,7 +5,7 @@ printf "\nRemoving old build ...\n"
 rm -rf ./build ./dist ./dblib.egg-info ./requirements.txt
 
 printf "\nUpdating requirements.txt file ...\n"
-pipreqs . --force --use-local
+pipreqs . --force
 
 printf "\nBuilding wheel ...\n"
 ./setup.py sdist bdist_wheel

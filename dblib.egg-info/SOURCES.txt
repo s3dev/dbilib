@@ -1,3 +1,4 @@
+LICENSE
 MANIFEST.in
 build.sh
 requirements.txt
@@ -99,20 +100,6 @@ tests/coverage.sh
 tests/run.sh
 tests/test_database_mysql.py
 tests/test_database_sqlite.py
-tests/htmlcov/.gitignore
-tests/htmlcov/coverage_html.js
-tests/htmlcov/d_87e53d66b4700063___init___py.html
-tests/htmlcov/d_87e53d66b4700063__dbi_base_py.html
-tests/htmlcov/d_87e53d66b4700063__dbi_mysql_py.html
-tests/htmlcov/d_87e53d66b4700063__dbi_sqlite_py.html
-tests/htmlcov/d_87e53d66b4700063__version_py.html
-tests/htmlcov/d_87e53d66b4700063_database_py.html
-tests/htmlcov/favicon_32.png
-tests/htmlcov/index.html
-tests/htmlcov/keybd_closed.png
-tests/htmlcov/keybd_open.png
-tests/htmlcov/status.json
-tests/htmlcov/style.css
 tests/resources/README
 tests/resources/db_setup_mysql.sh
 tests/resources/db_setup_sqlite.sh
