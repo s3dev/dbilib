@@ -5,7 +5,7 @@
 Library API Documentation
 =========================
 The page contains the low-level documentation for each of the importable
-modules in ``dblib``.
+modules in ``dbilib``.
 
 In addition to the documentation, most of the public methods come with one
 or more usage examples and access to the source code itself.

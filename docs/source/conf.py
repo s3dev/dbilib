@@ -21,13 +21,13 @@ import os
 import sys
 from datetime import datetime as dt
 
-sys.path.insert(0, os.path.realpath('../../dblib'))
+sys.path.insert(0, os.path.realpath('../../dbilib'))
 from _version import __version__
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'dblib'
+project = 'dbilib'
 copyright = f'2023-2024 | S3DEV | version {__version__}'
 author = 'S3DEV Development Team'
 version = __version__
@@ -47,6 +47,14 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.viewcode',
               'sphinx_copybutton',
               'sphinx_git']
+# https://stackoverflow.com/a/67486947/6340496
+autodoc_mock_imports = [
+                        'cx_Oracle', 
+#                        'pandas',  # Needs to be installed for typing.
+                        'mysql-connector-python',
+                        'sqlalchemy', 
+                        'utils4',
+                       ]
 html_copy_source = False
 html_css_files = ['css/s5defs-rules.css']
 html_logo = '_static/img/s3dev_tri_white_sm.png'

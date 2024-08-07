@@ -28,7 +28,7 @@ from base import TestBase
 from testlibs.constants import startoftest
 from testlibs.constants import templates
 from testlibs.utilities import utilities
-from dblib.database import DBInterface
+from dbilib.database import DBInterface
 
 
 
@@ -39,7 +39,7 @@ class TestDatabaseMySQL(TestBase):
 
         For specific testing details, refer to the docstring of each
         testing method. As a whole, the tests cover all methods in the
-        ``dblib.database`` module.
+        ``dbilib.database`` module.
 
     """
 

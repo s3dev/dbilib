@@ -61,7 +61,7 @@ class DBInterface:
         This low-level generalised class is designed to be instantiated
         by local program or database module, as::
 
-            >>> from dblib.database import DBInterface
+            >>> from dbilib.database import DBInterface
 
             >>> dbi = DBInterface(connstr=('mysql+mysqlconnector://'
                                            '<user>:<pwd>@<host>:<port>/'
@@ -102,7 +102,7 @@ class DBInterface:
 
         This can be done as follows::
 
-            from dblib.database import DBInterface
+            from dbilib.database import DBInterface
 
             class MyDBI:
 

@@ -21,6 +21,16 @@ Statistics by type
 
 
 
+External dependencies
+---------------------
+::
+
+    utils4 
+      \-user_interface (dblib._dbi_sqlite)
+      \-utils (dblib._dbi_sqlite)
+
+
+
 98 lines have been analyzed
 
 Raw metrics

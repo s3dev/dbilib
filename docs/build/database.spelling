@@ -1,0 +1,3 @@
+source/database.rst:6: (instantiation)  connection string (or database URL) on instantiation. For convenience,
+../dbilib/database.py:docstring of database.DBInterface:13: (specialisation)  . Therefore, specialisation is not as simple as
+../dbilib/database.py:docstring of database.DBInterface:18: (specialise)  See the examples below for a use-case in how to specialise this

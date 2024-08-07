@@ -64,7 +64,7 @@ class _DBIBase:
         This low-level generalised class is designed to be inherited by
         the calling/wrapping class as::
 
-            >>> from dblib.database import DBInterface
+            >>> from dbilib.database import DBInterface
 
             class MyDB(DBInterface):
 

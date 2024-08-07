@@ -1,0 +1,44 @@
+[build-system]
+requires = ["wheel", "setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dbilib"
+description = "A generalised and simple database interface library."
+authors = [{name = "The Developers", email = "development@s3dev.uk"}]
+classifiers = [
+               "Development Status :: 5 - Production/Stable",
+               "License :: OSI Approved :: MIT License",
+               "Intended Audience :: Developers",
+               "Operating System :: POSIX :: Linux",
+               "Operating System :: Microsoft :: Windows",
+               "Programming Language :: Python :: 3.10",
+               "Programming Language :: Python :: 3.11",
+               "Programming Language :: Python :: 3.12",
+               "Topic :: Software Development",
+               "Topic :: Software Development :: Libraries",
+               "Topic :: Utilities",
+              ]
+dependencies = ["pandas", "sqlalchemy", "utils4"]
+dynamic = ["version"]
+keywords = [
+            "database",
+            "interface",
+            "utilities",
+           ]
+license = {text = "MIT"}
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.10"
+
+[project.urls]
+Documentation = "https://dbilib.readthedocs.io/en/latest/"
+Homepage = "https://github.com/s3dev/dbilib"
+Repository = "https://github.com/s3dev/dbilib"
+
+[tool.setuptools.dynamic]
+version = {attr = "dbilib.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dbilib"]
+exclude = []

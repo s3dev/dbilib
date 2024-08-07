@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_oracle - Private database interface for Oracle &mdash; dblib - v0.4.0.dev3 Documentation</title>
+  <title>_dbi_oracle - Private database interface for Oracle &mdash; dbilib - v0.4.0rc1 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,8 +15,8 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=5159d864"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/documentation_options.js?v=f1bd860b"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="_static/copybutton.js?v=f281be69"></script>
@@ -36,11 +36,11 @@
           
           
           <a href="index.html" class="icon icon-home">
-            dblib
+            dbilib
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0.dev3
+                0.4.0rc1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -93,7 +93,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">dblib</a>
+          <a href="index.html">dbilib</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -115,7 +115,7 @@
 <span id="dbi-oracle-private-database-interface-for-oracle"></span><h1>_dbi_oracle - Private database interface for Oracle<a class="headerlink" href="#module-_dbi_oracle" title="Link to this heading"></a></h1>
 <dl class="field-list">
 <dt class="field-odd">Purpose<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This module contains the library’s <em>Oracle</em> database methods
+<dd class="field-odd"><p>This module contains the library's <em>Oracle</em> database methods
 and attribute accessors; which are a specialised version of
 the <a class="reference internal" href="_dbi_base.html#dbi_base._DBIBase" title="_dbi_base._DBIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_base._DBIBase</span></code></a> class methods.</p>
 </dd>
@@ -157,13 +157,13 @@ object which is created from the connection string.</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The database-specific SQLAlchemy connection
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) -- The database-specific SQLAlchemy connection
 string.</p>
 </dd>
 <dt class="field-even">Example Use<span class="colon">:</span></dt>
 <dd class="field-even"><p>This low-level generalised class is designed to be inherited by
 the calling/wrapping class as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dblib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dbilib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
 
 <span class="go">class MyDB(DBInterface):</span>
 
@@ -203,7 +203,7 @@ the calling/wrapping class as:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_oracle._DBIOracle._create_engine">
-<span class="sig-name descname"><span class="pre">_create_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Engine</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle._create_engine" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_create_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">sqlalchemy.engine.base.Engine</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle._create_engine" title="Link to this definition"></a></dt>
 <dd><p>Create a database engine using the provided environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -222,10 +222,10 @@ object.</p>
 <dd><p>Perform a dirty security check for injection attempts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stmt</strong> (<em>str</em>) – SQL statement to be potentially executed.</p>
+<dd class="field-odd"><p><strong>stmt</strong> (<em>str</em>) -- SQL statement to be potentially executed.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="_dbi_base.html#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><strong>SecurityWarning</strong></a> – If there are multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>)
+<dd class="field-even"><p><a class="reference internal" href="_dbi_base.html#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><strong>SecurityWarning</strong></a> -- If there are multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>)
     in the statement, or any comment delimiters (<code class="docutils literal notranslate"><span class="pre">--</span></code>).</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -239,14 +239,14 @@ object.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_oracle._DBIOracle._report_cxo_error">
-<span class="sig-name descname"><span class="pre">_report_cxo_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DatabaseError</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle._report_cxo_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle._report_cxo_error" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_report_cxo_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cx_Oracle.DatabaseError</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle._report_cxo_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle._report_cxo_error" title="Link to this definition"></a></dt>
 <dd><p>Report cx_Oracle error to the terminal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msg</strong> (<em>str</em>) – Additional error to be displayed. This message
-will be automatically prefixed with ‘[DatabaseError]: ‘</p></li>
-<li><p><strong>error</strong> (<em>cx_Oracle.DatabaseError</em>) – Caught error object from the
+<li><p><strong>msg</strong> (<em>str</em>) -- Additional error to be displayed. This message
+will be automatically prefixed with '[DatabaseError]: '</p></li>
+<li><p><strong>error</strong> (<em>cx_Oracle.DatabaseError</em>) -- Caught error object from the
 try/except block.</p></li>
 </ul>
 </dd>
@@ -255,14 +255,14 @@ try/except block.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_oracle._DBIOracle._report_sa_error">
-<span class="sig-name descname"><span class="pre">_report_sa_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SQLAlchemyError</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_oracle._DBIOracle._report_sa_error" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_report_sa_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sqlalchemy.exc.SQLAlchemyError</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_oracle._DBIOracle._report_sa_error" title="Link to this definition"></a></dt>
 <dd><p>Report SQLAlchemy error to the terminal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msg</strong> (<em>str</em>) – Additional error to be displayed. This message
-will be automatically prefixed with ‘[DatabaseError]: ‘</p></li>
-<li><p><strong>error</strong> (<em>sqlalchemy.exc.SQLAlchemyError</em>) – Caught error object
+<li><p><strong>msg</strong> (<em>str</em>) -- Additional error to be displayed. This message
+will be automatically prefixed with '[DatabaseError]: '</p></li>
+<li><p><strong>error</strong> (<em>sqlalchemy.exc.SQLAlchemyError</em>) -- Caught error object
 from the try/except block.</p></li>
 </ul>
 </dd>
@@ -271,18 +271,18 @@ from the try/except block.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_oracle._DBIOracle._result_to_df__cursor">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CursorResult</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle._result_to_df__cursor" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sqlalchemy.engine.cursor.CursorResult</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle._result_to_df__cursor" title="Link to this definition"></a></dt>
 <dd><p>Convert a <code class="docutils literal notranslate"><span class="pre">CursorResult</span></code> object to a DataFrame.</p>
 <p>If the cursor did not return results, an empty DataFrame
 containing the column names only, is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>result</strong> (<em>sqlalchemy.engine.cursor.CursorResult</em>) – Object to
+<dd class="field-odd"><p><strong>result</strong> (<em>sqlalchemy.engine.cursor.CursorResult</em>) -- Object to
 be converted.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
-cursor’s data.</p>
+cursor's data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
@@ -292,17 +292,17 @@ cursor’s data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_oracle._DBIOracle._result_to_df__refcursor">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__refcursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refcur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Cursor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle._result_to_df__refcursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle._result_to_df__refcursor" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__refcursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refcur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cx_Oracle.Cursor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle._result_to_df__refcursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle._result_to_df__refcursor" title="Link to this definition"></a></dt>
 <dd><p>Convert a <code class="docutils literal notranslate"><span class="pre">cx_Oracle.Cursor</span></code> object to a DataFrame.</p>
 <p>If the cursor did not return results, an empty DataFrame
 containing the column names only, is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>refcur</strong> (<em>cx_Oracle.Cursor</em>) – Object to be converted.</p>
+<dd class="field-odd"><p><strong>refcur</strong> (<em>cx_Oracle.Cursor</em>) -- Object to be converted.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
-cursor’s data.</p>
+cursor's data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
@@ -317,8 +317,8 @@ cursor’s data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>result</strong> (<em>object</em>) – The <code class="docutils literal notranslate"><span class="pre">cursor.stored_results()</span></code> object from</p></li>
-<li><p><strong>call.</strong> (<em>a sqlalchemy</em><em> or </em><em>mysql.connector procedure</em>) – </p></li>
+<li><p><strong>result</strong> (<em>object</em>) -- The <code class="docutils literal notranslate"><span class="pre">cursor.stored_results()</span></code> object from</p></li>
+<li><p><strong>call.</strong> (<em>a sqlalchemy</em><em> or </em><em>mysql.connector procedure</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -333,21 +333,21 @@ procedure call.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_oracle._DBIOracle.call_procedure">
-<span class="sig-name descname"><span class="pre">call_procedure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle.call_procedure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle.call_procedure" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">call_procedure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/_dbi_oracle.html#_DBIOracle.call_procedure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_oracle._DBIOracle.call_procedure" title="Link to this definition"></a></dt>
 <dd><p>Call a stored procedure, and return as a DataFrame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
-<li><p><strong>params</strong> (<em>list</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – A list (or tuple) of
+<li><p><strong>proc</strong> (<em>str</em>) -- Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) -- A list (or tuple) of
 parameters to pass into the procedure. Defaults to None.</p></li>
-<li><p><strong>return_status</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the method’s success
+<li><p><strong>return_status</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Return the method's success
 status. Defaults to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>If the <code class="docutils literal notranslate"><span class="pre">return_status</span></code> argument is True, a tuple of the
-data and the method’s return status is returned as:</p>
+data and the method's return status is returned as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -373,8 +373,8 @@ Therefore, this method is <em>currently</em> not implemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>NotImplementedError</strong> – Warn the user that this method is</p></li>
-<li><p><strong>currently not implemented.</strong> – </p></li>
+<li><p><strong>NotImplementedError</strong> -- Warn the user that this method is</p></li>
+<li><p><strong>currently not implemented.</strong> -- </p></li>
 </ul>
 </dd>
 </dl>
@@ -393,8 +393,8 @@ Therefore, this method is <em>currently</em> not implemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>NotImplementedError</strong> – Warn the user that this method is</p></li>
-<li><p><strong>currently not implemented.</strong> – </p></li>
+<li><p><strong>NotImplementedError</strong> -- Warn the user that this method is</p></li>
+<li><p><strong>currently not implemented.</strong> -- </p></li>
 </ul>
 </dd>
 </dl>
@@ -414,8 +414,8 @@ Therefore, this method is <em>currently</em> not implemented.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>NotImplementedError</strong> – Warn the user that this method is</p></li>
-<li><p><strong>currently not implemented.</strong> – </p></li>
+<li><p><strong>NotImplementedError</strong> -- Warn the user that this method is</p></li>
+<li><p><strong>currently not implemented.</strong> -- </p></li>
 </ul>
 </dd>
 </dl>
@@ -435,7 +435,7 @@ Therefore, this method is <em>currently</em> not implemented.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_oracle._DBIOracle.execute_query">
-<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle.execute_query" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_oracle._DBIOracle.execute_query" title="Link to this definition"></a></dt>
 <dd><p>Execute a query statement.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -453,11 +453,11 @@ method:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stmt</strong> (<em>str</em>) – Statement to be executed. The parameter bindings
+<li><p><strong>stmt</strong> (<em>str</em>) -- Statement to be executed. The parameter bindings
 are to be written in colon format.</p></li>
-<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameter key/value bindings as a
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) -- Parameter key/value bindings as a
 dictionary, if applicable. Defaults to None.</p></li>
-<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
+<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Return the data in 'raw' (tuple)
 format rather than as a formatted DataFrame.
 Defaults to True for efficiency.</p></li>
 </ul>
@@ -484,7 +484,7 @@ implications.</em></p></li>
 <p>If a statement is passed into this method, and the user has
 the appropriate permissions - the change
 <strong>will be committed</strong>.</p>
-<p><strong>… HC SVNT DRACONES.</strong></p>
+<p><strong>... HC SVNT DRACONES.</strong></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -510,8 +510,8 @@ regardless of the value passed to the <code class="docutils literal notranslate"
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<em>str</em>) – Name of the table to test.</p></li>
-<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print a message if the table does
+<li><p><strong>table_name</strong> (<em>str</em>) -- Name of the table to test.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Print a message if the table does
 not exist. Defaults to False.</p></li>
 </ul>
 </dd>
@@ -546,7 +546,7 @@ to upper case before being passed into the query.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0.dev3.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0rc1.</p>
   </div>
 
    

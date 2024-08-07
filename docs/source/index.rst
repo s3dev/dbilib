@@ -1,6 +1,6 @@
-===========================
-dblib Library Documentation
-===========================
+============================
+dbilib Library Documentation
+============================
 
 .. contents:: Page Contents
     :local:
@@ -11,7 +11,7 @@ dblib Library Documentation
 
 Overview
 ========
-The ``dblib`` library is a mid-level CPython database interface project
+The ``dbilib`` library is a mid-level CPython database interface project
 which is designed to fit between ``sqlalchemy`` and *your* database
 interface library.
 
