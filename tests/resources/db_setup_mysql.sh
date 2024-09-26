@@ -17,7 +17,7 @@ path=$( realpath $( dirname "$0" ) )
 path="${path}/mysql/setup/create"
 nargs=$#
 user=testuser
-dbname=dblib_test
+dbname=dbilib_test
 host=localhost
 
 # Any new scripts to be run are added here.

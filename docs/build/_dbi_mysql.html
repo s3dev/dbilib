@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mysql - Private database interface for MySQL and MariaDB &mdash; dbilib - v0.4.0rc1 Documentation</title>
+  <title>_dbi_mysql - Private database interface for MySQL and MariaDB &mdash; dbilib - v0.4.1b1 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f1bd860b"></script>
+        <script src="_static/documentation_options.js?v=43307b07"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -40,7 +40,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0rc1
+                0.4.1b1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -112,7 +112,7 @@
 <span id="dbi-mysql-private-database-interface-for-mysql-and-mariadb"></span><h1>_dbi_mysql - Private database interface for MySQL and MariaDB<a class="headerlink" href="#module-_dbi_mysql" title="Link to this heading"></a></h1>
 <dl class="field-list">
 <dt class="field-odd">Purpose<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This module contains the library's <em>MySQL</em> database methods
+<dd class="field-odd"><p>This module contains the library’s <em>MySQL</em> database methods
 and attribute accessors; which are a specialised version of
 the <a class="reference internal" href="_dbi_base.html#dbi_base._DBIBase" title="_dbi_base._DBIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_base._DBIBase</span></code></a> class methods.</p>
 </dd>
@@ -154,7 +154,7 @@ object which is created from the connection string.</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) -- The database-specific SQLAlchemy connection
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The database-specific SQLAlchemy connection
 string.</p>
 </dd>
 <dt class="field-even">Example Use<span class="colon">:</span></dt>
@@ -209,10 +209,10 @@ object.</p>
 <dd><p>Perform a dirty security check for injection attempts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stmt</strong> (<em>str</em>) -- SQL statement to be potentially executed.</p>
+<dd class="field-odd"><p><strong>stmt</strong> (<em>str</em>) – SQL statement to be potentially executed.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="_dbi_base.html#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><strong>SecurityWarning</strong></a> -- If there are multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>)
+<dd class="field-even"><p><a class="reference internal" href="_dbi_base.html#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><strong>SecurityWarning</strong></a> – If there are multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>)
     in the statement, or any comment delimiters (<code class="docutils literal notranslate"><span class="pre">--</span></code>).</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -231,9 +231,9 @@ object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msg</strong> (<em>str</em>) -- Additional error to be displayed. This message
-will be automatically prefixed with '[DatabaseError]: '</p></li>
-<li><p><strong>error</strong> (<em>sqlalchemy.exc.SQLAlchemyError</em>) -- Caught error object
+<li><p><strong>msg</strong> (<em>str</em>) – Additional error to be displayed. This message
+will be automatically prefixed with ‘[DatabaseError]: ‘</p></li>
+<li><p><strong>error</strong> (<em>sqlalchemy.exc.SQLAlchemyError</em>) – Caught error object
 from the try/except block.</p></li>
 </ul>
 </dd>
@@ -248,12 +248,12 @@ from the try/except block.</p></li>
 containing the column names only, is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>result</strong> (<em>sqlalchemy.engine.cursor.CursorResult</em>) -- Object to
+<dd class="field-odd"><p><strong>result</strong> (<em>sqlalchemy.engine.cursor.CursorResult</em>) – Object to
 be converted.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
-cursor's data.</p>
+cursor’s data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
@@ -268,7 +268,7 @@ cursor's data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>result</strong> (<em>object</em>) -- The <code class="docutils literal notranslate"><span class="pre">cursor.stored_results()</span></code> object from</p></li>
+<li><p><strong>result</strong> (<em>object</em>) – The <code class="docutils literal notranslate"><span class="pre">cursor.stored_results()</span></code> object from</p></li>
 <li><p><strong>call.</strong> (<em>a sqlalchemy</em><em> or </em><em>mysql.connector procedure</em>)</p></li>
 </ul>
 </dd>
@@ -289,16 +289,16 @@ procedure call.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc</strong> (<em>str</em>) -- Name of the stored procedure to call.</p></li>
-<li><p><strong>params</strong> (<em>list</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) -- A list (or tuple) of
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – A list (or tuple) of
 parameters to pass into the procedure. Defaults to None.</p></li>
-<li><p><strong>return_status</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Return the method's success
+<li><p><strong>return_status</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the method’s success
 status. Defaults to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>If the <code class="docutils literal notranslate"><span class="pre">return_status</span></code> argument is True, a tuple of the
-data and the method's return status is returned as:</p>
+data and the method’s return status is returned as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -325,10 +325,10 @@ status flag and the optional last row ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc</strong> (<em>str</em>) -- Name of the stored procedure to call.</p></li>
-<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) -- A list of parameters to pass into
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of parameters to pass into
 the USP. Defaults to None.</p></li>
-<li><p><strong>return_id</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Return the ID of the last
+<li><p><strong>return_id</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the ID of the last
 inserted row. Defaults to False.</p></li>
 </ul>
 </dd>
@@ -365,12 +365,12 @@ the <em>last</em> parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>, </em><em>float</em><em>]</em>) -- Positional arguments to be
+<li><p><strong>*args</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>float</em>) – Positional arguments to be
 passed into the USP, in front of each iterable item.
 Note: The parameters are passed into the USP in the
 order received, followed by the iterable item.</p></li>
-<li><p><strong>proc</strong> (<em>str</em>) -- Name of the stored procedure to call.</p></li>
-<li><p><strong>iterable</strong> (<em>list</em><em> | </em><em>tuple</em>) -- List of items to be loaded into
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>iterable</strong> (<em>list</em><em> | </em><em>tuple</em>) – List of items to be loaded into
 the database.</p></li>
 </ul>
 </dd>
@@ -392,7 +392,7 @@ handling.</p>
 <p class="admonition-title">Warning</p>
 <p>This method is <strong>unprotected</strong>, perhaps use
 <a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update" title="_dbi_mysql._DBIMySQL.call_procedure_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure_update()</span></code></a> instead.</p>
-<p>This 'raw' method <em>does not</em> contain an error handler. It is
+<p>This ‘raw’ method <em>does not</em> contain an error handler. It is
 (by design) the responsibility of the caller to contain and
 control the errors.</p>
 </div>
@@ -402,8 +402,8 @@ USP call, for example a <strong>duplicate key</strong> error.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>proc</strong> (<em>str</em>) -- Name of the stored procedure to call.</p></li>
-<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) -- A list of parameters to pass into
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of parameters to pass into
 the USP. Defaults to None.</p></li>
 </ul>
 </dd>
@@ -442,11 +442,11 @@ method:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stmt</strong> (<em>str</em>) -- Statement to be executed. The parameter bindings
+<li><p><strong>stmt</strong> (<em>str</em>) – Statement to be executed. The parameter bindings
 are to be written in colon format.</p></li>
-<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) -- Parameter key/value bindings as a
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameter key/value bindings as a
 dictionary, if applicable. Defaults to None.</p></li>
-<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Return the data in 'raw' (tuple)
+<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
 format rather than as a formatted DataFrame.
 Defaults to True for efficiency.</p></li>
 </ul>
@@ -473,7 +473,7 @@ implications.</em></p></li>
 <p>If a statement is passed into this method, and the user has
 the appropriate permissions - the change
 <strong>will be committed</strong>.</p>
-<p><strong>... HC SVNT DRACONES.</strong></p>
+<p><strong>… HC SVNT DRACONES.</strong></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -499,8 +499,8 @@ regardless of the value passed to the <code class="docutils literal notranslate"
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<em>str</em>) -- Name of the table to test.</p></li>
-<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Print a message if the table does
+<li><p><strong>table_name</strong> (<em>str</em>) – Name of the table to test.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print a message if the table does
 not exist. Defaults to False.</p></li>
 </ul>
 </dd>
@@ -528,7 +528,7 @@ not exist. Defaults to False.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0rc1.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.1b1.</p>
   </div>
 
    

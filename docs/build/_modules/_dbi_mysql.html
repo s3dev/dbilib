@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mysql &mdash; dbilib - v0.4.0rc1 Documentation</title>
+  <title>_dbi_mysql &mdash; dbilib - v0.4.1b1 Documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -14,7 +14,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=f1bd860b"></script>
+        <script src="../_static/documentation_options.js?v=43307b07"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0rc1
+                0.4.1b1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -178,14 +178,13 @@
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
         <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># Added in s3ddb v0.7.0.dev1:</span>
-            <span class="c1"># Updated to use a context manager in an attempt to</span>
-            <span class="c1"># alleviate the &#39;2055 Lost Connection&#39; and</span>
-            <span class="c1"># System Error 32 BrokenPipeError.</span>
+            <span class="c1"># Use a context manager in an attempt to alleviate the</span>
+            <span class="c1"># &#39;2055 Lost Connection&#39; and System Error 32 BrokenPipeError.</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
                 <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">(</span><span class="n">buffered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">cur</span><span class="o">.</span><span class="n">callproc</span><span class="p">(</span><span class="n">proc</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">stored_results</span><span class="p">()</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
                 <span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_to_df__stored</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
             <span class="n">success</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span>
@@ -232,10 +231,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">rowid</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="c1"># Added in s3ddb v0.7.0.dev1:</span>
-            <span class="c1"># Updated to use a context manager in an attempt to</span>
-            <span class="c1"># alleviate the &#39;2055 Lost Connection&#39; and</span>
-            <span class="c1"># System Error 32 BrokenPipeError.</span>
+            <span class="c1"># Use a context manager in an attempt to alleviate the</span>
+            <span class="c1"># &#39;2055 Lost Connection&#39; and System Error 32 BrokenPipeError.</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
                 <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
                 <span class="n">cur</span><span class="o">.</span><span class="n">callproc</span><span class="p">(</span><span class="n">proc</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -272,7 +269,7 @@
 <span class="sd">            the *last* parameter.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            *args (Union[str, int, float]): Positional arguments to be</span>
+<span class="sd">            *args (str | int | float): Positional arguments to be</span>
 <span class="sd">                passed into the USP, in front of each iterable item.</span>
 <span class="sd">                Note: The parameters are passed into the USP in the</span>
 <span class="sd">                order received, followed by the iterable item.</span>
@@ -364,7 +361,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0rc1.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.1b1.</p>
   </div>
 
    

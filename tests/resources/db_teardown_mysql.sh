@@ -17,7 +17,7 @@ path=$( realpath $( dirname "$0" ) )
 path="${path}/mysql/setup/drop"
 nargs=$#
 user=testuser
-dbname=dblib_test
+dbname=dbilib_test
 host=localhost
 
 declare -a scripts=("${path}/drop__all.sql")

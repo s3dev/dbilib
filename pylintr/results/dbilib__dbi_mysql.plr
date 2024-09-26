@@ -2,7 +2,7 @@
 
 Report
 ======
-29 statements analysed.
+73 statements analysed.
 
 Statistics by type
 ------------------
@@ -14,7 +14,7 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |class    |1      |1          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |2      |2          |=          |100.00      |0.00     |
+|method   |5      |5          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |function |0      |NC         |NC         |0           |0        |
 +---------+-------+-----------+-----------+------------+---------+
@@ -25,13 +25,19 @@ External dependencies
 ---------------------
 ::
 
-    sqlalchemy (dblib.database)
+    mysql 
+      \-connector 
+        \-errors (dbilib._dbi_mysql)
+    pandas (dbilib._dbi_mysql)
+    sqlalchemy 
+      \-exc (dbilib._dbi_mysql)
     utils4 
-      \-utils (dblib.database)
+      \-reporterror (dbilib._dbi_mysql)
+      \-user_interface (dbilib._dbi_mysql)
 
 
 
-240 lines have been analyzed
+258 lines have been analyzed
 
 Raw metrics
 -----------
@@ -39,13 +45,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |32     |13.33 |32       |=          |
+|code      |81     |31.40 |81       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |187    |77.92 |187      |=          |
+|docstring |152    |58.91 |152      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |14     |5.83  |14       |=          |
+|comment   |16     |6.20  |16       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |7      |2.92  |7        |=          |
+|empty     |9      |3.49  |9        |=          |
 +----------+-------+------+---------+-----------+
 
 

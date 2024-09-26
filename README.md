@@ -1,6 +1,16 @@
-[![Documentation Status](https://readthedocs.org/projects/dbilib/badge/?version=latest)](https://dbilib.readthedocs.io/en/latest/?badge=latest) ![Static Badge](https://img.shields.io/badge/tests-passing-brightgreen) ![Static Badge](https://img.shields.io/badge/coverage-100%25-brightgreen)   ![Static Badge](https://img.shields.io/badge/pylint_analysis-100%25-brightgreen)
 
 # A generalised and simple database interface library
+
+[![PyPI - Version](https://img.shields.io/pypi/v/dbilib?style=flat-square)](https://pypi.org/project/dbilib)
+[![PyPI - Implementation](https://img.shields.io/pypi/implementation/dbilib?style=flat-square)](https://pypi.org/project/dbilib)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dbilib?style=flat-square)](https://pypi.org/project/dbilib)
+[![PyPI - Status](https://img.shields.io/pypi/status/dbilib?style=flat-square)](https://pypi.org/project/dbilib)
+[![Static Badge](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)](https://pypi.org/project/dbilib)
+[![Static Badge](https://img.shields.io/badge/code_coverage-100%25-brightgreen?style=flat-square)](https://pypi.org/project/dbilib)
+[![Static Badge](https://img.shields.io/badge/pylint_analysis-100%25-brightgreen?style=flat-square)](https://pypi.org/project/dbilib)
+[![Documentation Status](https://readthedocs.org/projects/dbilib/badge/?version=latest&style=flat-square)](https://dbilib.readthedocs.io/en/latest/)
+[![PyPI - License](https://img.shields.io/pypi/l/dbilib?style=flat-square)](https://opensource.org/licenses/MIT)
+[![PyPI - Wheel](https://img.shields.io/pypi/wheel/dbilib?style=flat-square)](https://pypi.org/project/dbilib)
 
 The ``dbilib`` project is a mid-level CPython database interface library which is designed to fit between ``sqlalchemy`` and *your* database interface library.
 

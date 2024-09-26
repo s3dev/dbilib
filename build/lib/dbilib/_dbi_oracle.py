@@ -103,6 +103,7 @@ class _DBIOracle(_DBIBase):
                 cur = conn.connection.cursor()
                 refcur = conn.connection.cursor()
                 cur.callproc(proc, params + [refcur])
+                conn.connection.connection.commit()
             df = self._result_to_df__refcursor(refcur=refcur)
             cur.close()
             refcur.close()

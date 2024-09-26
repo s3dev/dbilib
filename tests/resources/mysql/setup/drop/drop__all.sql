@@ -8,11 +8,11 @@
     1:  Written.
 */
 
-DROP VIEW `dblib_test`.`v_guitars_fender`;
-DROP PROCEDURE `dblib_test`.`sp_get_guitars_colour`;
-DROP PROCEDURE `dblib_test`.`sp_insert_guitars_add_new`;
-DROP PROCEDURE `dblib_test`.`sp_insert_players_add_new`;
-DROP PROCEDURE `dblib_test`.`sp_update_guitars_colour`;
-DROP TABLE `dblib_test`.`guitars`;
-DROP TABLE `dblib_test`.`players`;
+DROP VIEW `dbilib_test`.`v_guitars_fender`;
+DROP PROCEDURE `dbilib_test`.`sp_get_guitars_colour`;
+DROP PROCEDURE `dbilib_test`.`sp_insert_guitars_add_new`;
+DROP PROCEDURE `dbilib_test`.`sp_insert_players_add_new`;
+DROP PROCEDURE `dbilib_test`.`sp_update_guitars_colour`;
+DROP TABLE `dbilib_test`.`guitars`;
+DROP TABLE `dbilib_test`.`players`;
 

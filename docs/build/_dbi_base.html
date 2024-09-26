@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_base - Private base module for all database interfaces &mdash; dbilib - v0.4.0rc1 Documentation</title>
+  <title>_dbi_base - Private base module for all database interfaces &mdash; dbilib - v0.4.1b1 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f1bd860b"></script>
+        <script src="_static/documentation_options.js?v=43307b07"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -40,7 +40,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0rc1
+                0.4.1b1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -125,7 +125,7 @@
 <span id="dbi-base-private-base-module-for-all-database-interfaces"></span><h1>_dbi_base - Private base module for all database interfaces<a class="headerlink" href="#module-_dbi_base" title="Link to this heading"></a></h1>
 <dl class="field-list">
 <dt class="field-odd">Purpose<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This module contains the library's <em>base</em> database methods
+<dd class="field-odd"><p>This module contains the library’s <em>base</em> database methods
 and attribute accessors, which are designed to be
 specialised by the database-specific modules and classes.</p>
 </dd>
@@ -239,7 +239,7 @@ for the following classes:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_base.SecurityWarning.add_note">
 <span class="sig-name descname"><span class="pre">add_note</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.add_note" title="Link to this definition"></a></dt>
-<dd><p>Exception.add_note(note) --
+<dd><p>Exception.add_note(note) –
 add a note to the exception</p>
 </dd></dl>
 
@@ -251,7 +251,7 @@ add a note to the exception</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_base.SecurityWarning.with_traceback">
 <span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.with_traceback" title="Link to this definition"></a></dt>
-<dd><p>Exception.with_traceback(tb) --
+<dd><p>Exception.with_traceback(tb) –
 set self.__traceback__ to tb and return self.</p>
 </dd></dl>
 
@@ -274,7 +274,7 @@ object which is created from the connection string.</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) -- The database-specific SQLAlchemy connection
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The database-specific SQLAlchemy connection
 string.</p>
 </dd>
 <dt class="field-even">Example Use<span class="colon">:</span></dt>
@@ -324,10 +324,10 @@ object.</p>
 <dd><p>Perform a dirty security check for injection attempts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stmt</strong> (<em>str</em>) -- SQL statement to be potentially executed.</p>
+<dd class="field-odd"><p><strong>stmt</strong> (<em>str</em>) – SQL statement to be potentially executed.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><strong>SecurityWarning</strong></a> -- If there are multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>)
+<dd class="field-even"><p><a class="reference internal" href="#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><strong>SecurityWarning</strong></a> – If there are multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>)
     in the statement, or any comment delimiters (<code class="docutils literal notranslate"><span class="pre">--</span></code>).</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -346,9 +346,9 @@ object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msg</strong> (<em>str</em>) -- Additional error to be displayed. This message
-will be automatically prefixed with '[DatabaseError]: '</p></li>
-<li><p><strong>error</strong> (<em>sqlalchemy.exc.SQLAlchemyError</em>) -- Caught error object
+<li><p><strong>msg</strong> (<em>str</em>) – Additional error to be displayed. This message
+will be automatically prefixed with ‘[DatabaseError]: ‘</p></li>
+<li><p><strong>error</strong> (<em>sqlalchemy.exc.SQLAlchemyError</em>) – Caught error object
 from the try/except block.</p></li>
 </ul>
 </dd>
@@ -363,12 +363,12 @@ from the try/except block.</p></li>
 containing the column names only, is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>result</strong> (<em>sqlalchemy.engine.cursor.CursorResult</em>) -- Object to
+<dd class="field-odd"><p><strong>result</strong> (<em>sqlalchemy.engine.cursor.CursorResult</em>) – Object to
 be converted.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
-cursor's data.</p>
+cursor’s data.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pd.DataFrame</p>
@@ -383,7 +383,7 @@ cursor's data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>result</strong> (<em>object</em>) -- The <code class="docutils literal notranslate"><span class="pre">cursor.stored_results()</span></code> object from</p></li>
+<li><p><strong>result</strong> (<em>object</em>) – The <code class="docutils literal notranslate"><span class="pre">cursor.stored_results()</span></code> object from</p></li>
 <li><p><strong>call.</strong> (<em>a sqlalchemy</em><em> or </em><em>mysql.connector procedure</em>)</p></li>
 </ul>
 </dd>
@@ -429,11 +429,11 @@ method:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stmt</strong> (<em>str</em>) -- Statement to be executed. The parameter bindings
+<li><p><strong>stmt</strong> (<em>str</em>) – Statement to be executed. The parameter bindings
 are to be written in colon format.</p></li>
-<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) -- Parameter key/value bindings as a
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameter key/value bindings as a
 dictionary, if applicable. Defaults to None.</p></li>
-<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) -- Return the data in 'raw' (tuple)
+<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
 format rather than as a formatted DataFrame.
 Defaults to True for efficiency.</p></li>
 </ul>
@@ -460,7 +460,7 @@ implications.</em></p></li>
 <p>If a statement is passed into this method, and the user has
 the appropriate permissions - the change
 <strong>will be committed</strong>.</p>
-<p><strong>... HC SVNT DRACONES.</strong></p>
+<p><strong>… HC SVNT DRACONES.</strong></p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -494,7 +494,7 @@ regardless of the value passed to the <code class="docutils literal notranslate"
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0rc1.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.1b1.</p>
   </div>
 
    

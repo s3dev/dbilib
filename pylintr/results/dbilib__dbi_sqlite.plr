@@ -2,7 +2,7 @@
 
 Report
 ======
-72 statements analysed.
+17 statements analysed.
 
 Statistics by type
 ------------------
@@ -10,11 +10,11 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |type     |number |old number |difference |%documented |%badname |
 +=========+=======+===========+===========+============+=========+
-|module   |1      |1          |=          |100.00      |0.00     |
+|module   |1      |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|class    |1      |1          |=          |100.00      |0.00     |
+|class    |1      |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |5      |5          |=          |100.00      |0.00     |
+|method   |3      |NC         |NC         |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |function |0      |NC         |NC         |0           |0        |
 +---------+-------+-----------+-----------+------------+---------+
@@ -25,19 +25,13 @@ External dependencies
 ---------------------
 ::
 
-    mysql 
-      \-connector 
-        \-errors (dblib._dbi_mysql)
-    pandas (dblib._dbi_mysql)
-    sqlalchemy 
-      \-exc (dblib._dbi_mysql)
     utils4 
-      \-reporterror (dblib._dbi_mysql)
-      \-user_interface (dblib._dbi_mysql)
+      \-user_interface (dbilib._dbi_sqlite)
+      \-utils (dbilib._dbi_sqlite)
 
 
 
-261 lines have been analyzed
+98 lines have been analyzed
 
 Raw metrics
 -----------
@@ -45,13 +39,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |80     |30.65 |80       |=          |
+|code      |19     |19.39 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|docstring |152    |58.24 |152      |=          |
+|docstring |68     |69.39 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|comment   |20     |7.66  |20       |=          |
+|comment   |5      |5.10  |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|empty     |9      |3.45  |9        |=          |
+|empty     |6      |6.12  |NC       |NC         |
 +----------+-------+------+---------+-----------+
 
 
@@ -62,9 +56,9 @@ Duplication
 +-------------------------+------+---------+-----------+
 |                         |now   |previous |difference |
 +=========================+======+=========+===========+
-|nb duplicated lines      |0     |0        |0          |
+|nb duplicated lines      |0     |NC       |NC         |
 +-------------------------+------+---------+-----------+
-|percent duplicated lines |0.000 |0.000    |=          |
+|percent duplicated lines |0.000 |NC       |NC         |
 +-------------------------+------+---------+-----------+
 
 
@@ -75,13 +69,13 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |0      |0        |0          |
+|convention |0      |NC       |NC         |
 +-----------+-------+---------+-----------+
-|refactor   |0      |0        |0          |
+|refactor   |0      |NC       |NC         |
 +-----------+-------+---------+-----------+
-|warning    |0      |0        |0          |
+|warning    |0      |NC       |NC         |
 +-----------+-------+---------+-----------+
-|error      |0      |0        |0          |
+|error      |0      |NC       |NC         |
 +-----------+-------+---------+-----------+
 
 
@@ -96,6 +90,6 @@ Messages
 
 
 
---------------------------------------------------------------------
-Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+------------------------------------
+Your code has been rated at 10.00/10
 

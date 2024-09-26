@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>database - Public database interface &mdash; dbilib - v0.4.0rc1 Documentation</title>
+  <title>database - Public database interface &mdash; dbilib - v0.4.1b1 Documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=f1bd860b"></script>
+        <script src="_static/documentation_options.js?v=43307b07"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -40,7 +40,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0rc1
+                0.4.1b1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -100,11 +100,11 @@
 <p>The database interface class <a class="reference internal" href="#database.DBInterface" title="database.DBInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">database.DBInterface</span></code></a> requires a valid
 connection string (or database URL) on instantiation. For convenience,
 the connection string templates and associated documentation can be
-found in the <a class="reference internal" href="index.html#using-the-library"><span class="std std-ref">Using the Library</span></a> --&gt; <a class="reference internal" href="index.html#connection-strings"><span class="std std-ref">Connection Strings</span></a>
+found in the <a class="reference internal" href="index.html#using-the-library"><span class="std std-ref">Using the Library</span></a> –&gt; <a class="reference internal" href="index.html#connection-strings"><span class="std std-ref">Connection Strings</span></a>
 section of this documentation.</p>
 <dl class="field-list" id="module-database">
 <dt class="field-odd">Purpose<span class="colon">:</span></dt>
-<dd class="field-odd"><p>This module provides the library's primary entry-point for
+<dd class="field-odd"><p>This module provides the library’s primary entry-point for
 accessing the database methods and attributes.</p>
 </dd>
 <dt class="field-even">Platform<span class="colon">:</span></dt>
@@ -135,7 +135,7 @@ for the following classes:</p>
 <dd><p>This class holds the methods and properties which are used across
 all databases. This class is the primary entry-point for the database
 interface.</p>
-<p>Database-specific functionality is provided by this class'
+<p>Database-specific functionality is provided by this class’
 <a class="reference internal" href="#database.DBInterface.__new__" title="database.DBInterface.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a> method, which returns the appropriate instance of
 the lower-level database-specific class, depending on the connection
 string provided. Or, more specifically, the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.Engine</span></code>
@@ -143,7 +143,7 @@ object created from the provided connection string.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Due to the way this class is created - for specific design
-reasons - the inheriting class' <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method <strong>will not
+reasons - the inheriting class’ <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method <strong>will not
 be called</strong>. Therefore, specialisation is not as simple as
 inheritance and calling the <code class="docutils literal notranslate"><span class="pre">super()</span></code> function.</p>
 <p>See the examples below for a use-case in how to specialise this
@@ -151,7 +151,7 @@ class with your own methods.</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) -- The database-specific SQLAlchemy connection
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The database-specific SQLAlchemy connection
 string.</p>
 </dd>
 <dt class="field-even">Example Use<span class="colon">:</span></dt>
@@ -174,7 +174,7 @@ query, as:</p>
 </pre></div>
 </div>
 <p>Additionally, the <code class="docutils literal notranslate"><span class="pre">dbi.engine</span></code> object can be supplied to the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_sql()</span></code> function's <code class="docutils literal notranslate"><span class="pre">con</span></code> parameter, as the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_sql()</span></code> function’s <code class="docutils literal notranslate"><span class="pre">con</span></code> parameter, as the
 database connection object, as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -188,11 +188,11 @@ database connection object, as:</p>
 </div>
 </dd>
 <dt class="field-odd">Subclass Specialisation<span class="colon">:</span></dt>
-<dd class="field-odd"><p>To <em>specialise the subclass</em>, a bit of 'pseudo-inheritance' is
+<dd class="field-odd"><p>To <em>specialise the subclass</em>, a bit of ‘pseudo-inheritance’ is
 required due to the way the <a class="reference internal" href="#database.DBInterface" title="database.DBInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBInterface</span></code></a> class is
-created. A 'standard inheritance' with a call to <code class="docutils literal notranslate"><span class="pre">super()</span></code>
-does not work, as the subclass' <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method is <strong>not</strong>
-called. Therefore, the subclass must add the parent's attributes
+created. A ‘standard inheritance’ with a call to <code class="docutils literal notranslate"><span class="pre">super()</span></code>
+does not work, as the subclass’ <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method is <strong>not</strong>
+called. Therefore, the subclass must add the parent’s attributes
 into its class, manually.</p>
 <p>This can be done as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dbilib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
@@ -274,7 +274,7 @@ class is returned. Likewise, if the <code class="docutils literal notranslate"><
 private interface class is returned, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) -- The SQLAlchemy-syle connection string, from
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The SQLAlchemy-syle connection string, from
 which the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> is created
 for the database interface instance.</p>
 </dd>
@@ -296,12 +296,12 @@ for the database interface instance.</p>
 </ul>
 </div></blockquote>
 <p>The engine created here is <em>only</em> meant to providing
-database-class routing for this class' <a class="reference internal" href="#database.DBInterface.__new__" title="database.DBInterface.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a>
+database-class routing for this class’ <a class="reference internal" href="#database.DBInterface.__new__" title="database.DBInterface.__new__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__new__()</span></code></a>
 method.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) -- The SQLAlchemy connection string.</p>
+<dd class="field-odd"><p><strong>connstr</strong> (<em>str</em>) – The SQLAlchemy connection string.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The value of the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute from the database
@@ -328,7 +328,7 @@ engine.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0rc1.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.1b1.</p>
   </div>
 
    

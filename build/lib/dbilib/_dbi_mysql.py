@@ -94,14 +94,13 @@ class _DBIMySQL(_DBIBase):
         df = pd.DataFrame()
         success = False
         try:
-            # Added in s3ddb v0.7.0.dev1:
-            # Updated to use a context manager in an attempt to
-            # alleviate the '2055 Lost Connection' and
-            # System Error 32 BrokenPipeError.
+            # Use a context manager in an attempt to alleviate the
+            # '2055 Lost Connection' and System Error 32 BrokenPipeError.
             with self.engine.connect() as conn:
                 cur = conn.connection.cursor(buffered=True)
                 cur.callproc(proc, params)
                 result = cur.stored_results()
+                conn.connection.connection.commit()
                 cur.close()
             df = self._result_to_df__stored(result=result)
             success = not df.empty
@@ -145,10 +144,8 @@ class _DBIMySQL(_DBIBase):
         try:
             rowid = None
             success = False
-            # Added in s3ddb v0.7.0.dev1:
-            # Updated to use a context manager in an attempt to
-            # alleviate the '2055 Lost Connection' and
-            # System Error 32 BrokenPipeError.
+            # Use a context manager in an attempt to alleviate the
+            # '2055 Lost Connection' and System Error 32 BrokenPipeError.
             with self.engine.connect() as conn:
                 cur = conn.connection.cursor()
                 cur.callproc(proc, params)
@@ -182,7 +179,7 @@ class _DBIMySQL(_DBIBase):
             the *last* parameter.
 
         Args:
-            *args (Union[str, int, float]): Positional arguments to be
+            *args (str | int | float): Positional arguments to be
                 passed into the USP, in front of each iterable item.
                 Note: The parameters are passed into the USP in the
                 order received, followed by the iterable item.

@@ -44,7 +44,7 @@ class TestDatabaseMySQL(TestBase):
     """
 
     _MSG1 = templates.not_as_expected.database
-    _CREDS = {'database': 'dblib_test',
+    _CREDS = {'database': 'dbilib_test',
               'drivername': 'mysql+mysqlconnector',
               'host': 'localhost',
               'password': 'testing123',
@@ -154,12 +154,12 @@ class TestDatabaseMySQL(TestBase):
         tst2 = buff.getvalue()
         exp1 = False
         exp2 = 'Table does not exist'
-        exp3 = 'dblib_test.some_table'
+        exp3 = 'dbilib_test.some_table'
         self.assertFalse(tst1, msg=self._MSG1.format(exp1, tst1))
         self.assertIn(exp2, tst2, msg=self._MSG1.format(exp2, tst2))
         self.assertIn(exp3, tst2, msg=self._MSG1.format(exp3, tst2))
 
-    def test03__call_procedure(self):
+    def test03a__call_procedure(self):
         """Test the call_procedure method.
 
         :Test:
@@ -172,6 +172,25 @@ class TestDatabaseMySQL(TestBase):
         df = dbi.call_procedure(proc='sp_get_guitars_colour', params=['black'])
         exp = pd.read_pickle(os.path.join(self._DIR_DATA, fname))
         self.assertTrue(exp.equals(df.iloc[:,1:]), msg=self._MSG1.format(exp, df))
+
+    def test03b__call_procedure__insert(self):
+        """Test the call_procedure method for an INSERT USP.
+
+        This test case is designed to test the method's ``conn.commit()``
+        call inserts and commits the new data.
+
+        :Test:
+            - Call the ``call_procedure`` method to insert new data.
+            - Query the table to verify the returned results are as
+              expected.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = 'Natural'
+        params = ('Taylor', 'Presentation', 'Natural')
+        _ = dbi.call_procedure(proc='sp_insert_guitars_add_new', params=params, return_status=False)
+        tst = dbi.execute_query('select colour from guitars where model = \'Presentation\'')[0][0]
+        self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
 
     def test04__call_procedure_update(self):
         """Test the call_procedure_update method, without a return ID.
@@ -217,7 +236,7 @@ class TestDatabaseMySQL(TestBase):
         players  = ['David Gilmour', 'Eric Clapton', 'Eric Johnson', 'Mark Knopfler']
         dbi = DBInterface(connstr=self._CONNSTR)
         # Add new guitar.
-        exp1 = (15, True)
+        exp1 = (16, True)
         tst1 = dbi.call_procedure_update(proc='sp_insert_guitars_add_new',
                                          params=['Fender', 'Stratocaster', 'Various'],
                                          return_id=True)
@@ -357,7 +376,7 @@ class TestDatabaseMySQL(TestBase):
 
         """
         buff = io.StringIO()
-        exp = '1305 (42000): PROCEDURE dblib_test.sp_i_dont_exist does not exist\n'
+        exp = '1305 (42000): PROCEDURE dbilib_test.sp_i_dont_exist does not exist\n'
         dbi = DBInterface(connstr=self._CONNSTR)
         with contextlib.redirect_stdout(buff):
             try:
