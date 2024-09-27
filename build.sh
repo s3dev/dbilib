@@ -16,7 +16,7 @@ done
 printf "\n"
 
 # Get requirements.
-#preqs . --replace  # Force a replacement if needed.
+preqs . --replace  # Force a replacement if needed.
 
 # Package it!
 python -m build --wheel --sdist --installer pip

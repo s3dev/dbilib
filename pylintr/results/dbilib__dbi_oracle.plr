@@ -1,7 +1,7 @@
 ************* Module dbilib._dbi_oracle
-/var/devmt/py/dbilib_0.4.1b1/dbilib/_dbi_oracle.py:111:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dbilib_0.4.1b1/dbilib/_dbi_oracle.py:188:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dbilib_0.4.1b1/dbilib/_dbi_oracle.py:204:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dbilib_0.4.1/dbilib/_dbi_oracle.py:111:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dbilib_0.4.1/dbilib/_dbi_oracle.py:188:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dbilib_0.4.1/dbilib/_dbi_oracle.py:204:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
 
 
 Report
@@ -14,11 +14,11 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |type     |number |old number |difference |%documented |%badname |
 +=========+=======+===========+===========+============+=========+
-|module   |1      |NC         |NC         |100.00      |0.00     |
+|module   |1      |1          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|class    |1      |NC         |NC         |100.00      |0.00     |
+|class    |1      |1          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |7      |NC         |NC         |100.00      |0.00     |
+|method   |7      |7          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |function |0      |NC         |NC         |0           |0        |
 +---------+-------+-----------+-----------+------------+---------+
@@ -45,13 +45,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |53     |24.09 |NC       |NC         |
+|code      |53     |24.09 |53       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |148    |67.27 |NC       |NC         |
+|docstring |148    |67.27 |148      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |7      |3.18  |NC       |NC         |
+|comment   |7      |3.18  |7        |=          |
 +----------+-------+------+---------+-----------+
-|empty     |12     |5.45  |NC       |NC         |
+|empty     |12     |5.45  |12       |=          |
 +----------+-------+------+---------+-----------+
 
 
@@ -62,9 +62,9 @@ Duplication
 +-------------------------+------+---------+-----------+
 |                         |now   |previous |difference |
 +=========================+======+=========+===========+
-|nb duplicated lines      |0     |NC       |NC         |
+|nb duplicated lines      |0     |0        |0          |
 +-------------------------+------+---------+-----------+
-|percent duplicated lines |0.000 |NC       |NC         |
+|percent duplicated lines |0.000 |0.000    |=          |
 +-------------------------+------+---------+-----------+
 
 
@@ -75,13 +75,13 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |0      |NC       |NC         |
+|convention |0      |0        |0          |
 +-----------+-------+---------+-----------+
-|refactor   |0      |NC       |NC         |
+|refactor   |0      |0        |0          |
 +-----------+-------+---------+-----------+
-|warning    |0      |NC       |NC         |
+|warning    |0      |0        |0          |
 +-----------+-------+---------+-----------+
-|error      |0      |NC       |NC         |
+|error      |0      |0        |0          |
 +-----------+-------+---------+-----------+
 
 
@@ -98,6 +98,6 @@ Messages
 
 
 
-------------------------------------
-Your code has been rated at 10.00/10
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
 
