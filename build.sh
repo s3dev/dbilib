@@ -18,9 +18,18 @@ printf "\n"
 # Get requirements.
 preqs . --replace  # Force a replacement if needed.
 
+cat << EOF >> requirements.txt
+
+# Manual additions:
+importlib_metadata>=8.0.0
+mysql-connector-python>=9.0.0
+zipp>=3.19.1
+
+EOF
+
 # Package it!
 python -m build --wheel --sdist --installer pip
 
 # Notification(s)
 printf "\nBuild complete.\n\n"
-printf "Reminders:\n  - Add mysql-connector-python to the requirements file\n\n"
+
