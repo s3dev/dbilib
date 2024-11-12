@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dbilib
-Version: 0.4.1
+Version: 0.4.2
 Summary: A generalised and simple database interface library.
 Author-email: The Developers <development@s3dev.uk>
 License: MIT
@@ -22,9 +22,10 @@ Classifier: Topic :: Utilities
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: pandas
-Requires-Dist: sqlalchemy
-Requires-Dist: utils4
+Requires-Dist: pandas>=2.0
+Requires-Dist: sqlalchemy>=2.0
+Requires-Dist: utils4>=1.0.0
+Requires-Dist: zipp>=3.19.1
 
 
 # A generalised and simple database interface library

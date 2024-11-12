@@ -1,3 +1,4 @@
-pandas
-sqlalchemy
-utils4
+pandas>=2.0
+sqlalchemy>=2.0
+utils4>=1.0.0
+zipp>=3.19.1

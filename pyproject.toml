@@ -19,7 +19,12 @@ classifiers = [
                "Topic :: Software Development :: Libraries",
                "Topic :: Utilities",
               ]
-dependencies = ["pandas", "sqlalchemy", "utils4"]
+dependencies = [
+                "pandas>=2.0", 
+                "sqlalchemy>=2.0", 
+                "utils4>=1.0.0",
+                "zipp>=3.19.1",  # Per Snyk (transient dependency)
+               ]
 dynamic = ["version"]
 keywords = [
             "database",
