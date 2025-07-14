@@ -20,10 +20,10 @@ calling stored procedures - with minimal setup.
 
 As of this release, the following database engines are supported:
 
-- MySQL / MariaDB
-- Oracle
+- MySQL / MariaDB (via ``mysql-connector-python``)
+- Oracle (via ``cx_Oracle``)
 - SQLite3
-- SQL Server (coming soon)
+- Microsoft SQL Server (via ``pyodbc``)
 
 If you have any questions that are not covered by this documentation, or
 if you spot any bugs, issues or have any recommendations, please feel free

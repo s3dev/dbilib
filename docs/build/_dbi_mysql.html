@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mysql - Private database interface for MySQL and MariaDB &mdash; dbilib - v0.4.2 Documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/s5defs-rules.css" type="text/css" />
+  <title>_dbi_mysql - Private database interface for MySQL and MariaDB &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/css/s5defs-rules.css?v=0345028d" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=bcebf14d"></script>
+        <script src="_static/documentation_options.js?v=e5bd2af7"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -24,7 +26,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="_dbi_oracle - Private database interface for Oracle" href="_dbi_oracle.html" />
-    <link rel="prev" title="_dbi_base - Private base module for all database interfaces" href="_dbi_base.html" /> 
+    <link rel="prev" title="_dbi_mssql - Private database interface for MS SQL Server" href="_dbi_mssql.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -40,7 +42,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.2
+                0.5.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -54,24 +56,22 @@
 <li class="toctree-l1 current"><a class="reference internal" href="library.html">Library API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="database.html">database - Public database interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_dbi_base.html">_dbi_base - Private base module for all database interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_mssql.html">_dbi_mssql - Private database interface for MS SQL Server</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">_dbi_mysql - Private database interface for MySQL and MariaDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dbi_mysql._DBIMySQL"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._PREFIX"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._PREFIX</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.__annotations__"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.__annotations__</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.__init__"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update_many"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update_many()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update_raw"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update_raw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.table_exists"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.table_exists()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._create_engine"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._create_engine()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._is_dangerous"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._is_dangerous()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._report_sa_error"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._report_sa_error()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._result_to_df__cursor"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._result_to_df__cursor()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL._result_to_df__stored"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL._result_to_df__stored()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update_many"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update_many()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update_raw"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.call_procedure_update_raw()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.database_name"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.database_name</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.engine"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.engine</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.execute_query"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.execute_query()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mysql._DBIMySQL.table_exists"><code class="docutils literal notranslate"><span class="pre">_DBIMySQL.table_exists()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -140,7 +140,7 @@ for the following classes:</p>
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="dbi_mysql._DBIMySQL">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">_dbi_mysql.</span></span><span class="sig-name descname"><span class="pre">_DBIMySQL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_DBIMySQL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="_dbi_base.html#dbi_base._DBIBase" title="_dbi_base._DBIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">_DBIBase</span></code></a></p>
 <p>This <em>private</em> class holds the methods and properties which are
 used for accessing MySQL-like databases, including MariaDB.</p>
@@ -160,7 +160,7 @@ string.</p>
 <dt class="field-even">Example Use<span class="colon">:</span></dt>
 <dd class="field-even"><p>This low-level generalised class is designed to be inherited by
 the calling/wrapping class as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dbilib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">dbilib.database</span><span class="w"> </span><span class="kn">import</span> <span class="n">DBInterface</span>
 
 <span class="go">class MyDB(DBInterface):</span>
 
@@ -172,20 +172,153 @@ the calling/wrapping class as:</p>
 </div>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL._PREFIX">
-<span class="sig-name descname"><span class="pre">_PREFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\n[DatabaseError]:'</span></em><a class="headerlink" href="#dbi_mysql._DBIMySQL._PREFIX" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.__annotations__">
-<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#dbi_mysql._DBIMySQL.__annotations__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure">
+<span class="sig-name descname"><span class="pre">call_procedure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure" title="Link to this definition"></a></dt>
+<dd><p>Call a stored procedure, and return as a DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – A list (or tuple) of
+parameters to pass into the procedure. Defaults to None.</p></li>
+<li><p><strong>return_status</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the method’s success
+status. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>If the <code class="docutils literal notranslate"><span class="pre">return_status</span></code> argument is True, a tuple of the
+data and the method’s return status is returned as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Otherwise, only the data is returned, as a pd.DataFrame.</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame | tuple[pd.DataFrame | bool]</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_mysql._DBIMySQL.__init__" title="Link to this definition"></a></dt>
-<dd><p>Class initialiser.</p>
+<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure_update">
+<span class="sig-name descname"><span class="pre">call_procedure_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure_update" title="Link to this definition"></a></dt>
+<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Results are <em>not</em> returned from this call, only a boolean
+status flag and the optional last row ID.</p>
+<p>If results are desired, please use the
+<a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure" title="_dbi_mysql._DBIMySQL.call_procedure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure()</span></code></a> method.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of parameters to pass into
+the USP. Defaults to None.</p></li>
+<li><p><strong>return_id</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the ID of the last
+inserted row. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>If <code class="docutils literal notranslate"><span class="pre">return_id</span></code> is False, True is
+returned if the procedure completed  successfully, otherwise
+False. If <code class="docutils literal notranslate"><span class="pre">return_id</span></code> is True, a tuple containing the
+ID of the last inserted row and the execution success flag
+are returned as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">success_flag</span><span class="p">)</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool | tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure_update_many">
+<span class="sig-name descname"><span class="pre">call_procedure_update_many</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure_update_many"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure_update_many" title="Link to this definition"></a></dt>
+<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure for an iterable.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The arguments are passed into the USP in the following order:</p>
+<blockquote>
+<div><p>*args, iterable_item</p>
+</div></blockquote>
+<p>Ensure the USP is designed to accept the iterable item as
+the <em>last</em> parameter.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>float</em>) – Positional arguments to be
+passed into the USP, in front of each iterable item.
+Note: The parameters are passed into the USP in the
+order received, followed by the iterable item.</p></li>
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>iterable</strong> (<em>list</em><em> | </em><em>tuple</em>) – List of items to be loaded into
+the database.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the update was successful, otherwise False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure_update_raw">
+<span class="sig-name descname"><span class="pre">call_procedure_update_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure_update_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure_update_raw" title="Link to this definition"></a></dt>
+<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure, without error
+handling.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method is <strong>unprotected</strong>, perhaps use
+<a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update" title="_dbi_mysql._DBIMySQL.call_procedure_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure_update()</span></code></a> instead.</p>
+<p>This ‘raw’ method <em>does not</em> contain an error handler. It is
+(by design) the responsibility of the caller to contain and
+control the errors.</p>
+</div>
+<p>The purpose of this raw method is to enable the caller method to
+contain and control the errors which might be generated from a
+USP call, for example a <strong>duplicate key</strong> error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
+<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of parameters to pass into
+the USP. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.table_exists">
+<span class="sig-name descname"><span class="pre">table_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.table_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.table_exists" title="Link to this definition"></a></dt>
+<dd><p>Using the <code class="docutils literal notranslate"><span class="pre">engine</span></code> object, test if the given table exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_name</strong> (<em>str</em>) – Name of the table to test.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print a message if the table does
+not exist. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the given table exists, otherwise False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -282,134 +415,6 @@ procedure call.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure">
-<span class="sig-name descname"><span class="pre">call_procedure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure" title="Link to this definition"></a></dt>
-<dd><p>Call a stored procedure, and return as a DataFrame.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
-<li><p><strong>params</strong> (<em>list</em><em> | </em><em>tuple</em><em>, </em><em>optional</em>) – A list (or tuple) of
-parameters to pass into the procedure. Defaults to None.</p></li>
-<li><p><strong>return_status</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the method’s success
-status. Defaults to False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>If the <code class="docutils literal notranslate"><span class="pre">return_status</span></code> argument is True, a tuple of the
-data and the method’s return status is returned as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Otherwise, only the data is returned, as a pd.DataFrame.</p>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame | tuple[pd.DataFrame | bool]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure_update">
-<span class="sig-name descname"><span class="pre">call_procedure_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure_update" title="Link to this definition"></a></dt>
-<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Results are <em>not</em> returned from this call, only a boolean
-status flag and the optional last row ID.</p>
-<p>If results are desired, please use the
-:meth:~`call_procedure` method.</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
-<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of parameters to pass into
-the USP. Defaults to None.</p></li>
-<li><p><strong>return_id</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the ID of the last
-inserted row. Defaults to False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p>If <code class="docutils literal notranslate"><span class="pre">return_id</span></code> is False, True is
-returned if the procedure completed  successfully, otherwise
-False. If <code class="docutils literal notranslate"><span class="pre">return_id</span></code> is True, a tuple containing the
-ID of the last inserted row and the execution success flag
-are returned as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">success_flag</span><span class="p">)</span>
-</pre></div>
-</div>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool | tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure_update_many">
-<span class="sig-name descname"><span class="pre">call_procedure_update_many</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure_update_many"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure_update_many" title="Link to this definition"></a></dt>
-<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure for an iterable.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The arguments are passed into the USP in the following order:</p>
-<blockquote>
-<div><p>*args, iterable_item</p>
-</div></blockquote>
-<p>Ensure the USP is designed to accept the iterable item as
-the <em>last</em> parameter.</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> (<em>str</em><em> | </em><em>int</em><em> | </em><em>float</em>) – Positional arguments to be
-passed into the USP, in front of each iterable item.
-Note: The parameters are passed into the USP in the
-order received, followed by the iterable item.</p></li>
-<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
-<li><p><strong>iterable</strong> (<em>list</em><em> | </em><em>tuple</em>) – List of items to be loaded into
-the database.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the update was successful, otherwise False.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.call_procedure_update_raw">
-<span class="sig-name descname"><span class="pre">call_procedure_update_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.call_procedure_update_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.call_procedure_update_raw" title="Link to this definition"></a></dt>
-<dd><p>Call an <em>update</em> or <em>insert</em> stored procedure, without error
-handling.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This method is <strong>unprotected</strong>, perhaps use
-<a class="reference internal" href="#dbi_mysql._DBIMySQL.call_procedure_update" title="_dbi_mysql._DBIMySQL.call_procedure_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure_update()</span></code></a> instead.</p>
-<p>This ‘raw’ method <em>does not</em> contain an error handler. It is
-(by design) the responsibility of the caller to contain and
-control the errors.</p>
-</div>
-<p>The purpose of this raw method is to enable the caller method to
-contain and control the errors which might be generated from a
-USP call, for example a <strong>duplicate key</strong> error.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
-<li><p><strong>params</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of parameters to pass into
-the USP. Defaults to None.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.database_name">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_name</span></span><a class="headerlink" href="#dbi_mysql._DBIMySQL.database_name" title="Link to this definition"></a></dt>
@@ -424,7 +429,7 @@ the USP. Defaults to None.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.execute_query">
-<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_mysql._DBIMySQL.execute_query" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_unsafe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_mysql._DBIMySQL.execute_query" title="Link to this definition"></a></dt>
 <dd><p>Execute a query statement.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -449,6 +454,11 @@ dictionary, if applicable. Defaults to None.</p></li>
 <li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
 format rather than as a formatted DataFrame.
 Defaults to True for efficiency.</p></li>
+<li><p><strong>ignore_unsafe</strong> (<em>bool</em><em>, </em><em>optional</em>) – <p>Bypass the ‘is dangerous’
+check and the run query anyway. This may be required if
+a script contains multiple statements. Defaults to False.</p>
+<p>WARNING: <strong>HC SVNT DRACONES</strong></p>
+</p></li>
 </ul>
 </dd>
 </dl>
@@ -492,27 +502,6 @@ regardless of the value passed to the <code class="docutils literal notranslate"
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_mysql._DBIMySQL.table_exists">
-<span class="sig-name descname"><span class="pre">table_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mysql.html#_DBIMySQL.table_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mysql._DBIMySQL.table_exists" title="Link to this definition"></a></dt>
-<dd><p>Using the <code class="docutils literal notranslate"><span class="pre">engine</span></code> object, test if the given table exists.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<em>str</em>) – Name of the table to test.</p></li>
-<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print a message if the table does
-not exist. Defaults to False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the given table exists, otherwise False.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -521,14 +510,14 @@ not exist. Defaults to False.</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="_dbi_base.html" class="btn btn-neutral float-left" title="_dbi_base - Private base module for all database interfaces" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_dbi_mssql.html" class="btn btn-neutral float-left" title="_dbi_mssql - Private database interface for MS SQL Server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="_dbi_oracle.html" class="btn btn-neutral float-right" title="_dbi_oracle - Private database interface for Oracle" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.2.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev1.</p>
   </div>
 
    

@@ -1,4 +1,3 @@
-
 # A generalised and simple database interface library
 
 [![PyPI - Version](https://img.shields.io/pypi/v/dbilib?style=flat-square)](https://pypi.org/project/dbilib)
@@ -18,10 +17,10 @@ The interface exposes methods for easily accessing the database engine, executin
 
 As of this release, the following database engines are supported:
 
-- MySQL / MariaDB
-- Oracle
+- MySQL / MariaDB (via `mysql-connector-python`)
+- Oracle (via `cx_Oracle`)
 - SQLite3
-- SQL Server (coming soon)
+- Microsoft SQL Server (via `pyodbc`)
 
 
 ## Installation
@@ -30,7 +29,7 @@ Installing the library is as easy as:
 ```
 pip install dbilib
 ```
-This will install the library's required dependencies (e.g. `sqlalchemy`, etc.). However, it will *not* install the database-specific libraries, (e.g. `cx_Oracle`, `mysql-connector-python`, etc).  This design feature helps to not bloat your environment with unneeded packages and keeps cross-platform capability and flexibility.
+This will install the library's required dependencies (e.g. `sqlalchemy`, etc.). However, it will *not* install the database-specific libraries, (e.g. `cx_Oracle`, `mysql-connector-python`, `pyodbc`, etc).  This design feature helps to not bloat your environment with unneeded packages and keeps cross-platform capability and flexibility.
 
 
 ## Using the Library
@@ -52,4 +51,3 @@ For example, the MySQL / MariaDB specific database URL using the ``mysql-connect
 ```
 mysql+mysqlconnector://<user>:<pwd>@<host>:<port>/<database>
 ```
-

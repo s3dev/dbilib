@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mysql &mdash; dbilib - v0.4.1b1 Documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/s5defs-rules.css" type="text/css" />
+  <title>_dbi_mysql &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/s5defs-rules.css?v=0345028d" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=43307b07"></script>
+        <script src="../_static/documentation_options.js?v=e5bd2af7"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.1b1
+                0.5.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -103,19 +105,19 @@
 <span class="c1"># Silence the spurious IDE-based error.</span>
 <span class="c1"># pylint: disable=import-error</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">mysql.connector.errors</span> <span class="kn">import</span> <span class="n">IntegrityError</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy.exc</span> <span class="kn">import</span> <span class="n">SQLAlchemyError</span>
-<span class="kn">from</span> <span class="nn">utils4.reporterror</span> <span class="kn">import</span> <span class="n">reporterror</span>
-<span class="kn">from</span> <span class="nn">utils4.user_interface</span> <span class="kn">import</span> <span class="n">ui</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mysql.connector.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegrityError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils4.reporterror</span><span class="w"> </span><span class="kn">import</span> <span class="n">reporterror</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils4.user_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">ui</span>
 <span class="c1"># locals</span>
-<span class="kn">from</span> <span class="nn">_dbi_base</span> <span class="kn">import</span> <span class="n">_DBIBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIBase</span>
 
 
 <div class="viewcode-block" id="_DBIMySQL">
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL">[docs]</a>
-<span class="k">class</span> <span class="nc">_DBIMySQL</span><span class="p">(</span><span class="n">_DBIBase</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_DBIMySQL</span><span class="p">(</span><span class="n">_DBIBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This *private* class holds the methods and properties which are</span>
 <span class="sd">    used for accessing MySQL-like databases, including MariaDB.</span>
 
@@ -151,7 +153,7 @@
 
 <div class="viewcode-block" id="_DBIMySQL.call_procedure">
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL.call_procedure">[docs]</a>
-    <span class="k">def</span> <span class="nf">call_procedure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_procedure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                        <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                        <span class="n">params</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                        <span class="n">return_status</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">]:</span>
@@ -198,7 +200,7 @@
 
 <div class="viewcode-block" id="_DBIMySQL.call_procedure_update">
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL.call_procedure_update">[docs]</a>
-    <span class="k">def</span> <span class="nf">call_procedure_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_procedure_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                               <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                               <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                               <span class="n">return_id</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">:</span>
@@ -209,7 +211,7 @@
 <span class="sd">            status flag and the optional last row ID.</span>
 
 <span class="sd">            If results are desired, please use the</span>
-<span class="sd">            :meth:~`call_procedure` method.</span>
+<span class="sd">            :meth:`~call_procedure` method.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            proc (str): Name of the stored procedure to call.</span>
@@ -257,7 +259,7 @@
 
 <div class="viewcode-block" id="_DBIMySQL.call_procedure_update_many">
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL.call_procedure_update_many">[docs]</a>
-    <span class="k">def</span> <span class="nf">call_procedure_update_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_procedure_update_many</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">iterable</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Call an *update* or *insert* stored procedure for an iterable.</span>
 
 <span class="sd">        Note:</span>
@@ -297,7 +299,7 @@
 
 <div class="viewcode-block" id="_DBIMySQL.call_procedure_update_raw">
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL.call_procedure_update_raw">[docs]</a>
-    <span class="k">def</span> <span class="nf">call_procedure_update_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call_procedure_update_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Call an *update* or *insert* stored procedure, without error</span>
 <span class="sd">        handling.</span>
 
@@ -328,7 +330,7 @@
 
 <div class="viewcode-block" id="_DBIMySQL.table_exists">
 <a class="viewcode-back" href="../_dbi_mysql.html#_dbi_mysql._DBIMySQL.table_exists">[docs]</a>
-    <span class="k">def</span> <span class="nf">table_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">table_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Using the ``engine`` object, test if the given table exists.</span>
 
 <span class="sd">        Args:</span>
@@ -361,7 +363,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.1b1.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.5.0.dev1.</p>
   </div>
 
    

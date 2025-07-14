@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_base - Private base module for all database interfaces &mdash; dbilib - v0.4.2 Documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/s5defs-rules.css" type="text/css" />
+  <title>_dbi_base - Private base module for all database interfaces &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/css/s5defs-rules.css?v=0345028d" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=bcebf14d"></script>
+        <script src="_static/documentation_options.js?v=e5bd2af7"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -23,7 +25,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="_dbi_mysql - Private database interface for MySQL and MariaDB" href="_dbi_mysql.html" />
+    <link rel="next" title="_dbi_mssql - Private database interface for MS SQL Server" href="_dbi_mssql.html" />
     <link rel="prev" title="database - Public database interface" href="database.html" /> 
 </head>
 
@@ -40,7 +42,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.2
+                0.5.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -55,39 +57,24 @@
 <li class="toctree-l2"><a class="reference internal" href="database.html">database - Public database interface</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">_dbi_base - Private base module for all database interfaces</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dbi_base.SecurityWarning"><code class="docutils literal notranslate"><span class="pre">SecurityWarning</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__cause__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__cause__</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__context__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__context__</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__delattr__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__delattr__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__getattribute__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__getattribute__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__init__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__new__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__new__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__reduce__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__reduce__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__repr__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__repr__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__setattr__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__setattr__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__setstate__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__setstate__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__str__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__str__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__suppress_context__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__suppress_context__</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.__traceback__"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.__traceback__</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.add_note"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.add_note()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.args"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.args</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_base.SecurityWarning.with_traceback"><code class="docutils literal notranslate"><span class="pre">SecurityWarning.with_traceback()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#dbi_base._DBIBase"><code class="docutils literal notranslate"><span class="pre">_DBIBase</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase._PREFIX"><code class="docutils literal notranslate"><span class="pre">_DBIBase._PREFIX</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase.__init__"><code class="docutils literal notranslate"><span class="pre">_DBIBase.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase.database_name"><code class="docutils literal notranslate"><span class="pre">_DBIBase.database_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase.engine"><code class="docutils literal notranslate"><span class="pre">_DBIBase.engine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase.execute_query"><code class="docutils literal notranslate"><span class="pre">_DBIBase.execute_query()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase._create_engine"><code class="docutils literal notranslate"><span class="pre">_DBIBase._create_engine()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase._is_dangerous"><code class="docutils literal notranslate"><span class="pre">_DBIBase._is_dangerous()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase._report_sa_error"><code class="docutils literal notranslate"><span class="pre">_DBIBase._report_sa_error()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase._result_to_df__cursor"><code class="docutils literal notranslate"><span class="pre">_DBIBase._result_to_df__cursor()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase._result_to_df__stored"><code class="docutils literal notranslate"><span class="pre">_DBIBase._result_to_df__stored()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase.database_name"><code class="docutils literal notranslate"><span class="pre">_DBIBase.database_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase.engine"><code class="docutils literal notranslate"><span class="pre">_DBIBase.engine</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_base._DBIBase.execute_query"><code class="docutils literal notranslate"><span class="pre">_DBIBase.execute_query()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="_dbi_mssql.html">_dbi_mssql - Private database interface for MS SQL Server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_dbi_mysql.html">_dbi_mysql - Private database interface for MySQL and MariaDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_dbi_oracle.html">_dbi_oracle - Private database interface for Oracle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_dbi_sqlite.html">_dbi_sqlite - Private database interface for SQLite</a></li>
@@ -160,93 +147,15 @@ for the following classes:</p>
 </dl>
 <dl class="py exception">
 <dt class="sig sig-object py" id="dbi_base.SecurityWarning">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">_dbi_base.</span></span><span class="sig-name descname"><span class="pre">SecurityWarning</span></span><a class="reference internal" href="_modules/_dbi_base.html#SecurityWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_base.SecurityWarning" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SecurityWarning</span></span><a class="reference internal" href="_modules/_dbi_base.html#SecurityWarning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_base.SecurityWarning" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Warning</span></code></p>
 <p>Security warning stub-class.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__cause__">
-<span class="sig-name descname"><span class="pre">__cause__</span></span><a class="headerlink" href="#dbi_base.SecurityWarning.__cause__" title="Link to this definition"></a></dt>
-<dd><p>exception cause</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__context__">
-<span class="sig-name descname"><span class="pre">__context__</span></span><a class="headerlink" href="#dbi_base.SecurityWarning.__context__" title="Link to this definition"></a></dt>
-<dd><p>exception context</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__delattr__">
-<span class="sig-name descname"><span class="pre">__delattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__delattr__" title="Link to this definition"></a></dt>
-<dd><p>Implement delattr(self, name).</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__getattribute__">
-<span class="sig-name descname"><span class="pre">__getattribute__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__getattribute__" title="Link to this definition"></a></dt>
-<dd><p>Return getattr(self, name).</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__init__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__new__">
-<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__new__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__reduce__">
-<span class="sig-name descname"><span class="pre">__reduce__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__reduce__" title="Link to this definition"></a></dt>
-<dd><p>Helper for pickle.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__repr__">
-<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__repr__" title="Link to this definition"></a></dt>
-<dd><p>Return repr(self).</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__setattr__">
-<span class="sig-name descname"><span class="pre">__setattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__setattr__" title="Link to this definition"></a></dt>
-<dd><p>Implement setattr(self, name, value).</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__setstate__">
-<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__setstate__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__str__">
-<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.__str__" title="Link to this definition"></a></dt>
-<dd><p>Return str(self).</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__suppress_context__">
-<span class="sig-name descname"><span class="pre">__suppress_context__</span></span><a class="headerlink" href="#dbi_base.SecurityWarning.__suppress_context__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.__traceback__">
-<span class="sig-name descname"><span class="pre">__traceback__</span></span><a class="headerlink" href="#dbi_base.SecurityWarning.__traceback__" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_base.SecurityWarning.add_note">
 <span class="sig-name descname"><span class="pre">add_note</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbi_base.SecurityWarning.add_note" title="Link to this definition"></a></dt>
 <dd><p>Exception.add_note(note) –
 add a note to the exception</p>
 </dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_base.SecurityWarning.args">
-<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#dbi_base.SecurityWarning.args" title="Link to this definition"></a></dt>
-<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_base.SecurityWarning.with_traceback">
@@ -259,7 +168,7 @@ set self.__traceback__ to tb and return self.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="dbi_base._DBIBase">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">_dbi_base.</span></span><span class="sig-name descname"><span class="pre">_DBIBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_base.html#_DBIBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_base._DBIBase" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_DBIBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_base.html#_DBIBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_base._DBIBase" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This class holds the methods and properties which are used across
 all databases. Each of the database-specific constructors inherits
@@ -280,7 +189,7 @@ string.</p>
 <dt class="field-even">Example Use<span class="colon">:</span></dt>
 <dd class="field-even"><p>This low-level generalised class is designed to be inherited by
 the calling/wrapping class as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dbilib.database</span> <span class="kn">import</span> <span class="n">DBInterface</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">dbilib.database</span><span class="w"> </span><span class="kn">import</span> <span class="n">DBInterface</span>
 
 <span class="go">class MyDB(DBInterface):</span>
 
@@ -292,15 +201,91 @@ the calling/wrapping class as:</p>
 </div>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dbi_base._DBIBase._PREFIX">
-<span class="sig-name descname"><span class="pre">_PREFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\n[DatabaseError]:'</span></em><a class="headerlink" href="#dbi_base._DBIBase._PREFIX" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dbi_base._DBIBase.database_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_name</span></span><a class="headerlink" href="#dbi_base._DBIBase.database_name" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the database name used by the <a class="reference internal" href="#dbi_base._DBIBase.engine" title="_dbi_base._DBIBase.engine"><code class="xref py py-attr docutils literal notranslate"><span class="pre">engine</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dbi_base._DBIBase.engine">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">engine</span></span><a class="headerlink" href="#dbi_base._DBIBase.engine" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> object.</p>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_base._DBIBase.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_base.html#_DBIBase.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_base._DBIBase.__init__" title="Link to this definition"></a></dt>
-<dd><p>Class initialiser.</p>
+<dt class="sig sig-object py" id="dbi_base._DBIBase.execute_query">
+<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_unsafe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/_dbi_base.html#_DBIBase.execute_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_base._DBIBase.execute_query" title="Link to this definition"></a></dt>
+<dd><p>Execute a query statement.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The following are <em>not</em> allowed to be executed by this
+method:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Statements containing multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p></li>
+<li><p>Statements containing a comment delimiter (<code class="docutils literal notranslate"><span class="pre">--</span></code>).</p></li>
+</ul>
+</div></blockquote>
+<p>If found, a <a class="reference internal" href="#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">SecurityWarning</span></code></a> will be raised by the
+<a class="reference internal" href="#dbi_base._DBIBase._is_dangerous" title="_dbi_base._DBIBase._is_dangerous"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_is_dangerous()</span></code></a> method.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stmt</strong> (<em>str</em>) – Statement to be executed. The parameter bindings
+are to be written in colon format.</p></li>
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameter key/value bindings as a
+dictionary, if applicable. Defaults to None.</p></li>
+<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
+format rather than as a formatted DataFrame.
+Defaults to True for efficiency.</p></li>
+<li><p><strong>ignore_unsafe</strong> (<em>bool</em><em>, </em><em>optional</em>) – <p>Bypass the ‘is dangerous’
+check and the run query anyway. This may be required if
+a script contains multiple statements. Defaults to False.</p>
+<p>WARNING: <strong>HC SVNT DRACONES</strong></p>
+</p></li>
+</ul>
+</dd>
+</dl>
+<p>If the query did not return results and the <code class="docutils literal notranslate"><span class="pre">raw</span></code> argument is
+False, an empty DataFrame containing the column names only, is
+returned.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the SQL query, the bind parameters are specified by name,
+using the format <code class="docutils literal notranslate"><span class="pre">:bind_name</span></code>. The <code class="docutils literal notranslate"><span class="pre">params</span></code> dictionary
+argument must contain the associated parameter name/value
+bindings.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ol class="arabic simple">
+<li><p>Generally, whatever statement is passed into this method
+<strong>will be executed</strong>, and may have <em>destructive
+implications.</em></p></li>
+<li><p>This method contains a <code class="docutils literal notranslate"><span class="pre">commit</span></code> call.</p></li>
+</ol>
+<p>If a statement is passed into this method, and the user has
+the appropriate permissions - the change
+<strong>will be committed</strong>.</p>
+<p><strong>… HC SVNT DRACONES.</strong></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>If the <code class="docutils literal notranslate"><span class="pre">raw</span></code> parameter is
+True, a list of tuples containing values is returned.
+Otherwise, a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
+returned data is returned.</p>
+<p>If this method is called with a script which does not return
+results, for example a CREATE script, None is returned;
+regardless of the value passed to the <code class="docutils literal notranslate"><span class="pre">raw</span></code> parameter.</p>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list | pd.DataFrame | None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -397,88 +382,6 @@ procedure call.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="dbi_base._DBIBase.database_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_name</span></span><a class="headerlink" href="#dbi_base._DBIBase.database_name" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the database name used by the <a class="reference internal" href="#dbi_base._DBIBase.engine" title="_dbi_base._DBIBase.engine"><code class="xref py py-attr docutils literal notranslate"><span class="pre">engine</span></code></a> object.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="dbi_base._DBIBase.engine">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">engine</span></span><a class="headerlink" href="#dbi_base._DBIBase.engine" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> object.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="dbi_base._DBIBase.execute_query">
-<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/_dbi_base.html#_DBIBase.execute_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_base._DBIBase.execute_query" title="Link to this definition"></a></dt>
-<dd><p>Execute a query statement.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The following are <em>not</em> allowed to be executed by this
-method:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Statements containing multiple semi-colons (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p></li>
-<li><p>Statements containing a comment delimiter (<code class="docutils literal notranslate"><span class="pre">--</span></code>).</p></li>
-</ul>
-</div></blockquote>
-<p>If found, a <a class="reference internal" href="#dbi_base.SecurityWarning" title="_dbi_base.SecurityWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">SecurityWarning</span></code></a> will be raised by the
-<a class="reference internal" href="#dbi_base._DBIBase._is_dangerous" title="_dbi_base._DBIBase._is_dangerous"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_is_dangerous()</span></code></a> method.</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stmt</strong> (<em>str</em>) – Statement to be executed. The parameter bindings
-are to be written in colon format.</p></li>
-<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameter key/value bindings as a
-dictionary, if applicable. Defaults to None.</p></li>
-<li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
-format rather than as a formatted DataFrame.
-Defaults to True for efficiency.</p></li>
-</ul>
-</dd>
-</dl>
-<p>If the query did not return results and the <code class="docutils literal notranslate"><span class="pre">raw</span></code> argument is
-False, an empty DataFrame containing the column names only, is
-returned.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In the SQL query, the bind parameters are specified by name,
-using the format <code class="docutils literal notranslate"><span class="pre">:bind_name</span></code>. The <code class="docutils literal notranslate"><span class="pre">params</span></code> dictionary
-argument must contain the associated parameter name/value
-bindings.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ol class="arabic simple">
-<li><p>Generally, whatever statement is passed into this method
-<strong>will be executed</strong>, and may have <em>destructive
-implications.</em></p></li>
-<li><p>This method contains a <code class="docutils literal notranslate"><span class="pre">commit</span></code> call.</p></li>
-</ol>
-<p>If a statement is passed into this method, and the user has
-the appropriate permissions - the change
-<strong>will be committed</strong>.</p>
-<p><strong>… HC SVNT DRACONES.</strong></p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><p>If the <code class="docutils literal notranslate"><span class="pre">raw</span></code> parameter is
-True, a list of tuples containing values is returned.
-Otherwise, a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object containing the
-returned data is returned.</p>
-<p>If this method is called with a script which does not return
-results, for example a CREATE script, None is returned;
-regardless of the value passed to the <code class="docutils literal notranslate"><span class="pre">raw</span></code> parameter.</p>
-</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>list | pd.DataFrame | None</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -488,13 +391,13 @@ regardless of the value passed to the <code class="docutils literal notranslate"
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="database.html" class="btn btn-neutral float-left" title="database - Public database interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="_dbi_mysql.html" class="btn btn-neutral float-right" title="_dbi_mysql - Private database interface for MySQL and MariaDB" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="_dbi_mssql.html" class="btn btn-neutral float-right" title="_dbi_mssql - Private database interface for MS SQL Server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.2.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev1.</p>
   </div>
 
    

@@ -28,7 +28,10 @@
         - :class:`_DBIBase`
 
 """
+# pylint: disable=import-error
 # pylint: disable=wrong-import-order
+
+from __future__ import annotations
 
 import pandas as pd
 import traceback
@@ -99,7 +102,8 @@ class _DBIBase:
     def execute_query(self,
                       stmt: str,
                       params: dict=None,
-                      raw: bool=True) -> list | pd.DataFrame | None:
+                      raw: bool=True,
+                      ignore_unsafe: bool=False) -> list | pd.DataFrame | None:
         """Execute a query statement.
 
         Important:
@@ -120,6 +124,11 @@ class _DBIBase:
             raw (bool, optional): Return the data in 'raw' (tuple)
                 format rather than as a formatted DataFrame.
                 Defaults to True for efficiency.
+            ignore_unsafe (bool, optional): Bypass the 'is dangerous'
+              check and the run query anyway. This may be required if
+              a script contains multiple statements. Defaults to False.
+
+              WARNING: **HC SVNT DRACONES**
 
         If the query did not return results and the ``raw`` argument is
         False, an empty DataFrame containing the column names only, is
@@ -156,27 +165,27 @@ class _DBIBase:
             regardless of the value passed to the ``raw`` parameter.
 
         """
-        # Additional else and return used for clarity.
-        # pylint: disable=no-else-return
-        # The error does have a _message member.
-        # pylint: disable=no-member
+        # pylint: disable=line-too-long     # Kept for clarity.
+        # pylint: disable=no-else-return    # Additional else and return used for clarity.
+        # pylint: disable=no-member         # The error does have a _message member.
         try:
+            rtn = None
             # Perform a cursory 'security check.'
-            if not self._is_dangerous(stmt=stmt):
+            if ignore_unsafe or not self._is_dangerous(stmt=stmt):
                 with self._engine.connect() as conn:
                     result = conn.execute(sa.text(stmt), params)
+                    # ???: Added for SQL Server support.
+                    #       Does this work for other engines?
+                    if result.returns_rows:
+                        rtn = result.fetchall() if raw else self._result_to_df__cursor(result=result)
                     conn.commit()
                     conn.close()
-                if raw:
-                    return result.fetchall()
-                else:
-                    return self._result_to_df__cursor(result=result)
         except SecurityWarning:
             print(traceback.format_exc())
         except Exception as err:
             if 'object does not return rows' not in err._message():
                 reporterror(err)
-        return None
+        return rtn
 
     def _create_engine(self) -> sa.engine.base.Engine:
         """Create a database engine using the provided environment.

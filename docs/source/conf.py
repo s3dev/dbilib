@@ -28,15 +28,24 @@ from _version import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'dbilib'
-copyright = f'2023-2024 | S3DEV | version {__version__}'
-author = 'S3DEV Development Team'
+copyright = f'2023-2025 | s3dev | version {__version__}'
+author = 'The Developers'
 version = __version__
 release = __version__
-
 
 # -- General configuration ---------------------------------------------------
 
 html_theme = 'sphinx_rtd_theme'
+# Shorten doc'd method names to the name only, not the path.
+add_module_names = False
+autodoc_default_options = {
+                           'exclude-members': ('__dict__, __module__, __weakref__'),
+                           'inherited-members': True,
+                           'members': True,
+                           'member-order': 'bysource',
+                           'private-members': True,
+                           'show-inheritance': True,
+                          }
 #exclude_patterns = ['htg__*.rst', 'auth.rst']
 extensions = ['sphinx.ext.autodoc', 
               'sphinx.ext.ifconfig', 
@@ -52,6 +61,7 @@ autodoc_mock_imports = [
                         'cx_Oracle', 
 #                        'pandas',  # Needs to be installed for typing.
                         'mysql-connector-python',
+                        'pyodbc', 
                         'sqlalchemy', 
                         'utils4',
                        ]

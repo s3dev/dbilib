@@ -1,7 +1,0 @@
-../dbilib/_dbi_base.py:docstring of _dbi_base.SecurityWarning.__delattr__:1: (delattr)  Implement delattr(self, name).
-../dbilib/_dbi_base.py:docstring of _dbi_base.SecurityWarning.__getattribute__:1: (getattr)  Return getattr(self, name).
-../dbilib/_dbi_base.py:docstring of _dbi_base.SecurityWarning.__repr__:1: (repr)  Return repr(self).
-../dbilib/_dbi_base.py:docstring of _dbi_base.SecurityWarning.__setattr__:1: (setattr)  Implement setattr(self, name, value).
-../dbilib/_dbi_base.py:docstring of _dbi_base.SecurityWarning.__str__:1: (str)  Return str(self).
-../dbilib/_dbi_base.py:docstring of _dbi_base.SecurityWarning.with_traceback:1: (traceback)  Exception.with_traceback(tb) --
-../dbilib/_dbi_base.py:docstring of _dbi_base.SecurityWarning.with_traceback:2: (traceback)  set self.__traceback__ to tb and return self.

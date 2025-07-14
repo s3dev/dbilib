@@ -16,6 +16,7 @@ or more usage examples and access to the source code itself.
 
    database
    _dbi_base
+   _dbi_mssql
    _dbi_mysql
    _dbi_oracle
    _dbi_sqlite

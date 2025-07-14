@@ -22,7 +22,7 @@ cat << EOF >> requirements.txt
 
 # Manual additions:
 importlib_metadata>=8.0.0
-mysql-connector-python>=9.0.0
+pyodbc>=5.0.0
 zipp>=3.19.1
 
 EOF

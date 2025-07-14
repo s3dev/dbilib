@@ -1,21 +1,21 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: dbilib
-Version: 0.4.2
+Version: 0.5.0.dev1
 Summary: A generalised and simple database interface library.
 Author-email: The Developers <development@s3dev.uk>
-License: MIT
+License-Expression: MIT
 Project-URL: Documentation, https://dbilib.readthedocs.io/en/latest/
 Project-URL: Homepage, https://github.com/s3dev/dbilib
 Project-URL: Repository, https://github.com/s3dev/dbilib
 Keywords: database,interface,utilities
-Classifier: Development Status :: 5 - Production/Stable
-Classifier: License :: OSI Approved :: MIT License
+Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Developers
 Classifier: Operating System :: POSIX :: Linux
 Classifier: Operating System :: Microsoft :: Windows
 Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
 Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
 Classifier: Topic :: Software Development
 Classifier: Topic :: Software Development :: Libraries
 Classifier: Topic :: Utilities
@@ -25,7 +25,7 @@ License-File: LICENSE
 Requires-Dist: pandas>=2.0
 Requires-Dist: sqlalchemy>=2.0
 Requires-Dist: utils4>=1.0.0
-
+Dynamic: license-file
 
 # A generalised and simple database interface library
 
@@ -46,10 +46,10 @@ The interface exposes methods for easily accessing the database engine, executin
 
 As of this release, the following database engines are supported:
 
-- MySQL / MariaDB
-- Oracle
+- MySQL / MariaDB (via `mysql-connector-python`)
+- Oracle (via `cx_Oracle`)
 - SQLite3
-- SQL Server (coming soon)
+- Microsoft SQL Server (via `pyodbc`)
 
 
 ## Installation
@@ -58,7 +58,7 @@ Installing the library is as easy as:
 ```
 pip install dbilib
 ```
-This will install the library's required dependencies (e.g. `sqlalchemy`, etc.). However, it will *not* install the database-specific libraries, (e.g. `cx_Oracle`, `mysql-connector-python`, etc).  This design feature helps to not bloat your environment with unneeded packages and keeps cross-platform capability and flexibility.
+This will install the library's required dependencies (e.g. `sqlalchemy`, etc.). However, it will *not* install the database-specific libraries, (e.g. `cx_Oracle`, `mysql-connector-python`, `pyodbc`, etc).  This design feature helps to not bloat your environment with unneeded packages and keeps cross-platform capability and flexibility.
 
 
 ## Using the Library
@@ -80,4 +80,3 @@ For example, the MySQL / MariaDB specific database URL using the ``mysql-connect
 ```
 mysql+mysqlconnector://<user>:<pwd>@<host>:<port>/<database>
 ```
-

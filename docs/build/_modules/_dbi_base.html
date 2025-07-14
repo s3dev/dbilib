@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_base &mdash; dbilib - v0.4.0rc1 Documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/s5defs-rules.css" type="text/css" />
+  <title>_dbi_base &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/s5defs-rules.css?v=0345028d" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=f1bd860b"></script>
+        <script src="../_static/documentation_options.js?v=e5bd2af7"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0rc1
+                0.5.0.dev1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -108,26 +110,29 @@
 <span class="sd">        - :class:`_DBIBase`</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># pylint: disable=import-error</span>
 <span class="c1"># pylint: disable=wrong-import-order</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">traceback</span>
-<span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="nn">sa</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy.exc</span> <span class="kn">import</span> <span class="n">SQLAlchemyError</span>
-<span class="kn">from</span> <span class="nn">utils4.reporterror</span> <span class="kn">import</span> <span class="n">reporterror</span>
-<span class="kn">from</span> <span class="nn">utils4.user_interface</span> <span class="kn">import</span> <span class="n">ui</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils4.reporterror</span><span class="w"> </span><span class="kn">import</span> <span class="n">reporterror</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils4.user_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">ui</span>
 
 
 <div class="viewcode-block" id="SecurityWarning">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base.SecurityWarning">[docs]</a>
-<span class="k">class</span> <span class="nc">SecurityWarning</span><span class="p">(</span><span class="ne">Warning</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SecurityWarning</span><span class="p">(</span><span class="ne">Warning</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Security warning stub-class.&quot;&quot;&quot;</span></div>
 
 
 
 <div class="viewcode-block" id="_DBIBase">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase">[docs]</a>
-<span class="k">class</span> <span class="nc">_DBIBase</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_DBIBase</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class holds the methods and properties which are used across</span>
 <span class="sd">    all databases. Each of the database-specific constructors inherits</span>
 <span class="sd">    this class for its members.</span>
@@ -164,7 +169,7 @@
 
 <div class="viewcode-block" id="_DBIBase.__init__">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase.__init__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Class initialiser.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connstr</span> <span class="o">=</span> <span class="n">connstr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="kc">None</span>
@@ -175,21 +180,22 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">database_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">database_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Accessor to the database name used by the :attr:`engine` object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">database</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Accessor to the ``sqlalchemy.engine.base.Engine`` object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span>
 
 <div class="viewcode-block" id="_DBIBase.execute_query">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase.execute_query">[docs]</a>
-    <span class="k">def</span> <span class="nf">execute_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                       <span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                       <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+                      <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">ignore_unsafe</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute a query statement.</span>
 
 <span class="sd">        Important:</span>
@@ -210,6 +216,11 @@
 <span class="sd">            raw (bool, optional): Return the data in &#39;raw&#39; (tuple)</span>
 <span class="sd">                format rather than as a formatted DataFrame.</span>
 <span class="sd">                Defaults to True for efficiency.</span>
+<span class="sd">            ignore_unsafe (bool, optional): Bypass the &#39;is dangerous&#39;</span>
+<span class="sd">              check and the run query anyway. This may be required if</span>
+<span class="sd">              a script contains multiple statements. Defaults to False.</span>
+
+<span class="sd">              WARNING: **HC SVNT DRACONES**</span>
 
 <span class="sd">        If the query did not return results and the ``raw`` argument is</span>
 <span class="sd">        False, an empty DataFrame containing the column names only, is</span>
@@ -246,32 +257,32 @@
 <span class="sd">            regardless of the value passed to the ``raw`` parameter.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Additional else and return used for clarity.</span>
-        <span class="c1"># pylint: disable=no-else-return</span>
-        <span class="c1"># The error does have a _message member.</span>
-        <span class="c1"># pylint: disable=no-member</span>
+        <span class="c1"># pylint: disable=line-too-long     # Kept for clarity.</span>
+        <span class="c1"># pylint: disable=no-else-return    # Additional else and return used for clarity.</span>
+        <span class="c1"># pylint: disable=no-member         # The error does have a _message member.</span>
         <span class="k">try</span><span class="p">:</span>
+            <span class="n">rtn</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="c1"># Perform a cursory &#39;security check.&#39;</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ignore_unsafe</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">):</span>
                 <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
                     <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">stmt</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
+                    <span class="c1"># ???: Added for SQL Server support.</span>
+                    <span class="c1">#       Does this work for other engines?</span>
+                    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returns_rows</span><span class="p">:</span>
+                        <span class="n">rtn</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> <span class="k">if</span> <span class="n">raw</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
                     <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
                     <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">raw</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">SecurityWarning</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;object does not return rows&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">err</span><span class="o">.</span><span class="n">_message</span><span class="p">():</span>
                 <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="n">rtn</span></div>
 
 
 <div class="viewcode-block" id="_DBIBase._create_engine">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._create_engine">[docs]</a>
-    <span class="k">def</span> <span class="nf">_create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Engine</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">Engine</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a database engine using the provided environment.</span>
 
 <span class="sd">        Returns:</span>
@@ -295,7 +306,7 @@
 <div class="viewcode-block" id="_DBIBase._is_dangerous">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._is_dangerous">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform a dirty security check for injection attempts.</span>
 
 <span class="sd">        Args:</span>
@@ -322,7 +333,7 @@
 
 <div class="viewcode-block" id="_DBIBase._report_sa_error">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._report_sa_error">[docs]</a>
-    <span class="k">def</span> <span class="nf">_report_sa_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="n">SQLAlchemyError</span><span class="p">):</span>  <span class="c1"># pragma: nocover</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_report_sa_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="n">SQLAlchemyError</span><span class="p">):</span>  <span class="c1"># pragma: nocover</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Report SQLAlchemy error to the terminal.</span>
 
 <span class="sd">        Args:</span>
@@ -343,7 +354,7 @@
 <div class="viewcode-block" id="_DBIBase._result_to_df__cursor">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._result_to_df__cursor">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">CursorResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="n">sa</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">CursorResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a ``CursorResult`` object to a DataFrame.</span>
 
 <span class="sd">        If the cursor did not return results, an empty DataFrame</span>
@@ -364,7 +375,7 @@
 <div class="viewcode-block" id="_DBIBase._result_to_df__stored">
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase._result_to_df__stored">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_result_to_df__stored</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_result_to_df__stored</span><span class="p">(</span><span class="n">result</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a ``MySQLCursor.stored_results`` object to a DataFrame.</span>
 
 <span class="sd">        Args:</span>
@@ -397,7 +408,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0rc1.</p>
+    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.5.0.dev1.</p>
   </div>
 
    

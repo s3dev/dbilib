@@ -1,7 +1,3 @@
-************* Module dbilib._dbi_oracle
-/var/devmt/py/dbilib_0.4.1/dbilib/_dbi_oracle.py:111:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dbilib_0.4.1/dbilib/_dbi_oracle.py:188:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dbilib_0.4.1/dbilib/_dbi_oracle.py:204:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
 
 
 Report
@@ -29,7 +25,6 @@ External dependencies
 ---------------------
 ::
 
-    cx_Oracle (dbilib._dbi_oracle)
     pandas (dbilib._dbi_oracle)
     utils4 
       \-reporterror (dbilib._dbi_oracle)
@@ -89,11 +84,9 @@ Messages by category
 Messages
 --------
 
-+----------------------+------------+
-|message id            |occurrences |
-+======================+============+
-|c-extension-no-member |3           |
-+----------------------+------------+
++-----------+------------+
+|message id |occurrences |
++===========+============+
 
 
 

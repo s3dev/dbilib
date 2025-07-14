@@ -45,8 +45,10 @@ class TestBase(unittest.TestCase):
     _DIR_ROOT = os.path.realpath(os.path.dirname(__file__))
     _DIR_RESC = os.path.join(_DIR_ROOT, 'resources')
     _DIR_DATA = os.path.join(_DIR_RESC, 'data')
+    _DIR_RAW_DATA_MSSQL = os.path.join(_DIR_RESC, 'mssql', 'raw_data')
     _DIR_RAW_DATA_MYSQL = os.path.join(_DIR_RESC, 'mysql', 'raw_data')
     _DIR_RAW_DATA_SQLITE = os.path.join(_DIR_RESC, 'sqlite', 'raw_data')
+    _DIR_SETUP_MSSQL = os.path.join(_DIR_RESC, 'mssql', 'setup')
 
     @classmethod
     def setUpClass(cls):

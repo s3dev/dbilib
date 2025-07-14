@@ -23,6 +23,11 @@ class _StartOfTest:
     """Start of test messages class."""
 
     @property
+    def database_mssql(self):
+        """SQL Server database functionality testing start of test message."""
+        return 'MS SQL Server database interface'
+
+    @property
     def database_mysql(self):
         """MySQL database functionality testing start of test message."""
         return 'MySQL database interface'

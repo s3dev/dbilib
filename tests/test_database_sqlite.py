@@ -13,8 +13,8 @@
 :Comments:  n/a
 
 """
+# pylint: disable=import-error
 # pylint: disable=invalid-name
-# pylint: disable=no-member
 # pylint: disable=wrong-import-order
 
 import contextlib

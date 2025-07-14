@@ -25,9 +25,6 @@ External dependencies
 ---------------------
 ::
 
-    mysql 
-      \-connector 
-        \-errors (dbilib._dbi_mysql)
     pandas (dbilib._dbi_mysql)
     sqlalchemy 
       \-exc (dbilib._dbi_mysql)

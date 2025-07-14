@@ -26,8 +26,6 @@ External dependencies
 ::
 
     base (test_database_sqlite)
-    dbilib 
-      \-database (test_database_sqlite)
     pandas (test_database_sqlite)
     testlibs 
       \-constants (test_database_sqlite)
@@ -47,7 +45,7 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |docstring |116    |48.95 |116      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |10     |4.22  |10       |=          |
+|comment   |10     |4.22  |9        |+1.00      |
 +----------+-------+------+---------+-----------+
 |empty     |16     |6.75  |16       |=          |
 +----------+-------+------+---------+-----------+
@@ -73,7 +71,7 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |0      |0        |0          |
+|convention |0      |1        |1          |
 +-----------+-------+---------+-----------+
 |refactor   |0      |0        |0          |
 +-----------+-------+---------+-----------+
@@ -94,6 +92,6 @@ Messages
 
 
 
---------------------------------------------------------------------
-Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+-------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 9.88/10, +0.12)
 

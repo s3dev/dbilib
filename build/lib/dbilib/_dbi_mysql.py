@@ -122,7 +122,7 @@ class _DBIMySQL(_DBIBase):
             status flag and the optional last row ID.
 
             If results are desired, please use the
-            :meth:~`call_procedure` method.
+            :meth:`~call_procedure` method.
 
         Args:
             proc (str): Name of the stored procedure to call.

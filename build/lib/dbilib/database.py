@@ -160,7 +160,7 @@ class DBInterface:
 
     """
 
-    _SUPPORTED_DBS = ['mysql', 'oracle', 'sqlite']
+    _SUPPORTED_DBS = ['mssql', 'mysql', 'oracle', 'sqlite']
 
     def __new__(cls, connstr: str, *args, **kwargs):
         """Provide a database interface based on the connection string.
@@ -191,6 +191,10 @@ class DBInterface:
         # These are intentionally verbose as a ModuleNotFoundError will
         # be raised during the test if operating on an environment without
         # that driver installed.
+        if name == 'mssql':
+            if utils.testimport('pyodbc', verbose=False):
+                from _dbi_sqlserver import _DBISQLServer
+                return _DBISQLServer(connstr=connstr, *args, **kwargs)
         if name == 'mysql':
             if utils.testimport('mysql.connector', verbose=False):
                 from _dbi_mysql import _DBIMySQL

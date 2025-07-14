@@ -13,8 +13,8 @@
 :Comments:  n/a
 
 """
+# pylint: disable=import-error
 # pylint: disable=invalid-name
-# pylint: disable=no-member
 # pylint: disable=wrong-import-order
 
 import contextlib
@@ -23,6 +23,7 @@ import os
 import pandas as pd
 import subprocess
 from mysql.connector.errors import ProgrammingError
+from utils4 import utils
 # locals
 from base import TestBase
 from testlibs.constants import startoftest
@@ -399,8 +400,9 @@ class TestDatabaseMySQL(TestBase):
               supported databases.
 
         """
-        with self.assertRaises(NotImplementedError):
-            DBInterface(connstr='mssql+pyodbc://user:pwd@localhost/spam')
+        if utils.testimport('pyodbc'):
+            with self.assertRaises(NotImplementedError):
+                DBInterface(connstr='mssql+pyodbc://user:pwd@localhost/spam')
 
     @classmethod
     def _db_setup(cls) -> bool:

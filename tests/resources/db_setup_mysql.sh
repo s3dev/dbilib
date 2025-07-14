@@ -5,6 +5,12 @@
 # Desc:     Script wrapper for performing the pre-testing MySQL database 
 #           setup operations.
 #
+#           Notes:
+#               - Before this script can be run, the database and testuser
+#                 account must exist on the localhost. These can be 
+#                 created by running the create_db_user.sql script on the
+#                 database *as root*.
+#
 # Use:      $ ./db_setup_mysql.sh <db_test_user_pwd>
 #
 # Updates:
