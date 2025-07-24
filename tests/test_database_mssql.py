@@ -31,7 +31,7 @@ from testlibs.utilities import utilities
 from dbilib.database import DBInterface
 
 
-class TestDatabaseSQLServer(TestBase):
+class TestDatabaseMSSQL(TestBase):
     """Testing class used to test the MS SQL Server database interface.
 
     :Tests Overview:
@@ -133,7 +133,7 @@ class TestDatabaseSQLServer(TestBase):
         tst = dbi.table_exists(table_name='guitars', verbose=False)
         self.assertTrue(tst, msg=self._MSG1.format(True, tst))
 
-    def test02b__table_exists(self):
+    def test02b__table_exists__not_exist(self):
         """Test the table exists method returns False.
 
         :Test:
@@ -146,7 +146,7 @@ class TestDatabaseSQLServer(TestBase):
         tst = dbi.table_exists(table_name='some_table', verbose=False)
         self.assertFalse(tst, msg=self._MSG1.format(False, tst))
 
-    def test02c__table_exists(self):
+    def test02c__table_exists__not_exist_w_msg(self):
         """Test the table exists method returns False, in verbose mode.
 
         :Test:
@@ -167,6 +167,42 @@ class TestDatabaseSQLServer(TestBase):
         self.assertFalse(tst1, msg=self._MSG1.format(exp1, tst1))
         self.assertIn(exp2, tst2, msg=self._MSG1.format(exp2, tst2))
         self.assertIn(exp3, tst2, msg=self._MSG1.format(exp3, tst2))
+
+    def test02d__checksum(self):
+        """Test the checksum method.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``checksum`` method returns the expected value
+              for the initial load of the 'guitars' table.
+
+        Note: This method is named ``test02d_`` as the test must come
+              before the 'test03' cases which begin altering the table
+              data.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = -1220601258
+        tst = dbi.checksum(table_name='guitars')
+        self.assertEqual(exp, tst)
+
+    def test02e__checksum__not_exist(self):
+        """Test the checksum method, for a table which does not exist.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``checksum`` method returns the expected value
+              for a non-existant table.
+
+        Note: This method is named ``test02d_`` as the test must come
+              before the 'test03' cases which begin altering the table
+              data.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = None
+        tst = dbi.checksum(table_name='idontexist')
+        self.assertEqual(exp, tst)
 
     def test03a__call_procedure(self):
         """Test the call_procedure method.
@@ -202,7 +238,7 @@ class TestDatabaseSQLServer(TestBase):
         tst = dbi.execute_query('select colour from guitars where model = \'Presentation\'')[0][0]
         self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
 
-    def test04__call_procedure_update(self):
+    def test04a__call_procedure_update(self):
         """Test the call_procedure_update method, without a return ID.
 
         :Test:
@@ -220,7 +256,7 @@ class TestDatabaseSQLServer(TestBase):
         self.assertEqual(exp1, tst1, msg=self._MSG1.format(exp1, tst1))
         self.assertEqual(exp2, tst2, msg=self._MSG1.format(exp2, tst2))
 
-    def test05__call_procedure_update__with_row_id(self):
+    def test05a__call_procedure_update__with_row_id(self):
         """Test the call_procedure_update method, with a return ID.
 
         :Test:
@@ -406,6 +442,147 @@ class TestDatabaseSQLServer(TestBase):
                 print(err)
         tst = buff.getvalue()
         self.assertIn(exp, tst)
+
+    def test08a__database_exists(self):
+        """Test the database exists method returns True.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``database_exists`` method returns True for the
+              'dbilib_test' and '__bak__dbilib_test' tables.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        for db in ('dbilib_test', '__bak__dbilib_test'):
+            tst = dbi.database_exists(database_name=db, verbose=False)
+            self.assertTrue(tst)
+
+    def test08b__database_exists__not_exist(self):
+        """Test the database exists method returns False.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``database_exists`` method returns False for a
+              database which does not exist.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        tst = dbi.database_exists(database_name='idontexist', verbose=False)
+        self.assertFalse(tst)
+
+    def test08c__database_exists__not_exist_w_msg(self):
+        """Test the database exists method returns False, in verbose mode.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``database_exists`` method returns False for a
+              database which does not exist.
+            - Verify the stdout text is as expected.
+
+        """
+        buff = io.StringIO()
+        dbi = DBInterface(connstr=self._CONNSTR)
+        with contextlib.redirect_stdout(buff):
+            tst1 = dbi.database_exists(database_name='idontexist', verbose=True)
+        tst2 = buff.getvalue()
+        exp1 = False
+        exp2 = 'Database does not exist'
+        exp3 = 'idontexist'
+        self.assertFalse(tst1, msg=self._MSG1.format(exp1, tst1))
+        self.assertIn(exp2, tst2, msg=self._MSG1.format(exp2, tst2))
+        self.assertIn(exp3, tst2, msg=self._MSG1.format(exp3, tst2))
+
+    def test09a__get_parameter_name__not_exist(self):
+        """Test the ``get_parameter_name`` method.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``get_parameter_name`` method returns the
+              expected results.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = ('_id', '_colour')
+        tst = dbi.get_parameter_names(proc='usp_update_guitars_colour')
+        self.assertEqual(exp, tst)
+
+    def test09b__get_parameter_name__not_exist(self):
+        """Test the ``get_parameter_name`` method for a USP which does
+        not exist.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``get_parameter_name`` method raises the
+              expected error.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        with self.assertRaises(RuntimeError):
+            _ = dbi.get_parameter_names(proc='sp_idontexist')
+
+    def test10a__backup(self):
+        """Test the ``backup`` method.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``backup`` method can backup a table
+              successfully.
+
+        """
+        buff = io.StringIO()
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = 'backup successful'
+        with contextlib.redirect_stdout(buff):
+            dbi.backup(table_name='guitars')
+        tst = buff.getvalue()
+        self.assertIn(exp, tst)
+
+    def test10b__backup__verify_checksums(self):
+        """Test the ``backup`` method and verify the dataset in each.
+
+        This test is redundant of the previous as the success method for
+        determining a successful backup is a checksum test between the
+        two tables. However, this case acts as an *explicit* test.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``backup`` method can backup a table
+              successfully.
+            - Verify the checksums between the source and backup tables
+              match.
+
+        """
+        buff = io.StringIO()
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp1 = 'backup successful'
+        with contextlib.redirect_stdout(buff):
+            dbi.backup(table_name='guitars')
+        tst1 = buff.getvalue()
+        tst2A = dbi.checksum(table_name='guitars', database_name='dbilib_test')
+        tst2B = dbi.checksum(table_name='guitars', database_name='__bak__dbilib_test')
+        self.assertIn(exp1, tst1)
+        self.assertEqual(tst2A, tst2B)
+
+    def test10c__backup__not_exist(self):
+        """Test the ``backup`` method for a table which does not exist.
+
+        :Test:
+            - Create a database object using the connection string.
+            - Verify the ``backup`` method provides the correct output
+              for a table which does not exist.
+
+        """
+        buff = io.StringIO()
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp1 = 'Table does not exist: dbilib_test.idontexist'
+        exp2 = 'backup failed'
+        with contextlib.redirect_stdout(buff):
+            dbi.backup(table_name='idontexist')
+        tst = buff.getvalue()
+        self.assertIn(exp1, tst)
+        self.assertIn(exp2, tst)
+
+# %% Helper methods
 
     @classmethod
     def _db_setup(cls) -> bool:

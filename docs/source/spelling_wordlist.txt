@@ -11,6 +11,7 @@ generalised
 initialiser
 instantiation
 iterable
+prepending
 specialisation
 specialise
 specialised

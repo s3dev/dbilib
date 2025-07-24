@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>database &mdash; dbilib - v0.4.0rc1 Documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/s5defs-rules.css" type="text/css" />
+  <title>database &mdash; dbilib - v0.5.0.dev2 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/s5defs-rules.css?v=0345028d" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=f1bd860b"></script>
+        <script src="../_static/documentation_options.js?v=48ed5a3b"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.4.0rc1
+                0.5.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -103,10 +105,10 @@
 <span class="c1"># Silence the spurious IDE-based error.</span>
 <span class="c1"># pylint: disable=import-error</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="nn">sa</span>
-<span class="kn">from</span> <span class="nn">utils4</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils4</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span>
 
 <span class="c1"># Set syspath to enable the private modules to import their db-specific class.</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
@@ -114,7 +116,7 @@
 
 <div class="viewcode-block" id="DBInterface">
 <a class="viewcode-back" href="../database.html#database.DBInterface">[docs]</a>
-<span class="k">class</span> <span class="nc">DBInterface</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DBInterface</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class holds the methods and properties which are used across</span>
 <span class="sd">    all databases. This class is the primary entry-point for the database</span>
 <span class="sd">    interface.</span>
@@ -242,11 +244,11 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_SUPPORTED_DBS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mysql&#39;</span><span class="p">,</span> <span class="s1">&#39;oracle&#39;</span><span class="p">,</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">]</span>
+    <span class="n">_SUPPORTED_DBS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mssql&#39;</span><span class="p">,</span> <span class="s1">&#39;mysql&#39;</span><span class="p">,</span> <span class="s1">&#39;oracle&#39;</span><span class="p">,</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="DBInterface.__new__">
 <a class="viewcode-back" href="../database.html#database.DBInterface.__new__">[docs]</a>
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Provide a database interface based on the connection string.</span>
 
 <span class="sd">        Using the provided connection string, a</span>
@@ -275,17 +277,21 @@
         <span class="c1"># These are intentionally verbose as a ModuleNotFoundError will</span>
         <span class="c1"># be raised during the test if operating on an environment without</span>
         <span class="c1"># that driver installed.</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;mssql&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;pyodbc&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_mssql</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIMSSQL</span>
+                <span class="k">return</span> <span class="n">_DBIMSSQL</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;mysql&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;mysql.connector&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-                <span class="kn">from</span> <span class="nn">_dbi_mysql</span> <span class="kn">import</span> <span class="n">_DBIMySQL</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_mysql</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIMySQL</span>
                 <span class="k">return</span> <span class="n">_DBIMySQL</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;oracle&#39;</span><span class="p">:</span>  <span class="c1"># pragma: nocover</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;cx_Oracle&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-                <span class="kn">from</span> <span class="nn">_dbi_oracle</span> <span class="kn">import</span> <span class="n">_DBIOracle</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_oracle</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIOracle</span>
                 <span class="k">return</span> <span class="n">_DBIOracle</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;sqlite&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;sqlite3&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-                <span class="kn">from</span> <span class="nn">_dbi_sqlite</span> <span class="kn">import</span> <span class="n">_DBISQLite</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_sqlite</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBISQLite</span>
                 <span class="k">return</span> <span class="n">_DBISQLite</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># Fallback if a module is not installed.</span>
         <span class="c1"># This is actually caught by the _create_engine__internal_only method.</span>
@@ -297,7 +303,7 @@
 <div class="viewcode-block" id="DBInterface._create_engine__internal_only">
 <a class="viewcode-back" href="../database.html#database.DBInterface._create_engine__internal_only">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_create_engine__internal_only</span><span class="p">(</span><span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_engine__internal_only</span><span class="p">(</span><span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a database engine using the provided connection string.</span>
 
 <span class="sd">        Warning:</span>
@@ -334,7 +340,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.4.0rc1.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev2.</p>
   </div>
 
    

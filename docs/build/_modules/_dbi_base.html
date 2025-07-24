@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_base &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+  <title>_dbi_base &mdash; dbilib - v0.5.0.dev2 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=e5bd2af7"></script>
+        <script src="../_static/documentation_options.js?v=48ed5a3b"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev1
+                0.5.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -167,8 +167,6 @@
 
     <span class="n">_PREFIX</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">[DatabaseError]:&#39;</span>
 
-<div class="viewcode-block" id="_DBIBase.__init__">
-<a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Class initialiser.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connstr</span> <span class="o">=</span> <span class="n">connstr</span>
@@ -176,8 +174,7 @@
         <span class="k">if</span> <span class="n">connstr</span><span class="p">:</span>
             <span class="c1"># Testing: Enable an instance to be created without a</span>
             <span class="c1"># connection string.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_engine</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_engine</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">database_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -195,6 +192,7 @@
                       <span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                       <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">commit</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">ignore_unsafe</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute a query statement.</span>
 
@@ -216,6 +214,9 @@
 <span class="sd">            raw (bool, optional): Return the data in &#39;raw&#39; (tuple)</span>
 <span class="sd">                format rather than as a formatted DataFrame.</span>
 <span class="sd">                Defaults to True for efficiency.</span>
+<span class="sd">            commit (bool, optional): Call COMMIT after the transaction</span>
+<span class="sd">                is complete. Defaults to True (for backwards</span>
+<span class="sd">                compatibility).</span>
 <span class="sd">            ignore_unsafe (bool, optional): Bypass the &#39;is dangerous&#39;</span>
 <span class="sd">              check and the run query anyway. This may be required if</span>
 <span class="sd">              a script contains multiple statements. Defaults to False.</span>
@@ -238,7 +239,8 @@
 <span class="sd">               **will be executed**, and may have *destructive</span>
 <span class="sd">               implications.*</span>
 
-<span class="sd">            2) This method contains a ``commit`` call.</span>
+<span class="sd">            2) This method contains a ``commit`` call, and the option to</span>
+<span class="sd">               disable the COMMIT.</span>
 
 <span class="sd">            If a statement is passed into this method, and the user has</span>
 <span class="sd">            the appropriate permissions - the change</span>
@@ -266,11 +268,12 @@
             <span class="k">if</span> <span class="n">ignore_unsafe</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">):</span>
                 <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
                     <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">stmt</span><span class="p">),</span> <span class="n">params</span><span class="p">)</span>
-                    <span class="c1"># ???: Added for SQL Server support.</span>
+                    <span class="c1"># ???: Added for SQL Server support (v0.5.0.dev1).</span>
                     <span class="c1">#       Does this work for other engines?</span>
                     <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returns_rows</span><span class="p">:</span>
                         <span class="n">rtn</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span> <span class="k">if</span> <span class="n">raw</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_to_df__cursor</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
-                    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">commit</span><span class="p">:</span>
+                        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
                     <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">SecurityWarning</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
@@ -290,8 +293,6 @@
 <span class="sd">            object.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># ???: Do these values need to be moved to an external config?</span>
-        <span class="c1"># Added in s3ddb v0.7.0:</span>
         <span class="c1"># The pool_* arguments to prevent MySQL timeout which causes</span>
         <span class="c1"># a broken pipe and lost connection errors.</span>
         <span class="k">return</span> <span class="n">sa</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_connstr</span><span class="p">,</span>
@@ -320,11 +321,9 @@
 <span class="sd">            bool: False if the checks pass.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># import sys</span>
         <span class="k">if</span> <span class="n">stmt</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Multiple statements are disallowed for security reasons.&#39;</span>
             <span class="k">raise</span> <span class="n">SecurityWarning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-            <span class="c1"># sys.exit(1)</span>
         <span class="k">if</span> <span class="s1">&#39;--&#39;</span> <span class="ow">in</span> <span class="n">stmt</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Comments are not allowed in the statement for security reasons.&#39;</span>
             <span class="k">raise</span> <span class="n">SecurityWarning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -408,7 +407,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.5.0.dev1.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev2.</p>
   </div>
 
    

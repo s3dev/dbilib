@@ -35,7 +35,7 @@ except ImportError:
     from _dbi_base import _DBIBase
 
 
-class _DBISQLServer(_DBIBase):
+class _DBIMSSQL(_DBIBase):
     """This *private* class holds the methods and properties which are
     used for accessing Microsoft SQL Server databases.
 
@@ -83,6 +83,38 @@ class _DBISQLServer(_DBIBase):
     """
 
     # The __init__ method is implemented in the parent class.
+
+    def backup(self, table_name: str) -> None:
+        """Backup the given table to the backup database.
+
+        Args:
+            table_name (str): Name of the table to be backed up.
+
+        .. important::
+            The backup database (which is implicitly determined by the
+            engine's database name) **must** exist, or this method will
+            fail. See below for the backup database's naming convention.
+
+            Due to MSSQL's (interesting) handling of the
+            ``CREATE DATABASE`` statement, the database cannot be created
+            by this method for you; sorry.  Cheers MS!
+
+
+        .. note::
+
+            The backup database name is derived by prepending
+            ``'__bak__'`` to the database name.
+
+            This obfuscation was done intentionally to help prevent a
+            user from click-selecting the wrong database (in SSMS) by
+            accident.
+
+        """
+        bkdb = f'__bak__{self.database_name}'
+        s = self.table_exists(table_name=table_name, verbose=True)
+        if s: s = self.database_exists(database_name=bkdb, verbose=True)
+        if s: s = self._backup(table_name=table_name, bkdb_name=bkdb)
+        self._print_summary(success=s)
 
     # pylint: disable=line-too-long
     def call_procedure(self,
@@ -206,6 +238,10 @@ class _DBISQLServer(_DBIBase):
             reporterror(err)
         return (rowid, success) if return_id else success
 
+    #
+    # XXX: This has been left for possible future development.
+    #      Currently a MySQL implementation.
+    #
     # def call_procedure_update_many(self, *args, proc: str, iterable: list | tuple) -> bool:
     #     r"""Call an *update* or *insert* stored procedure for an iterable.
 
@@ -287,6 +323,53 @@ class _DBISQLServer(_DBIBase):
             con.commit()
             con.close()
 
+    def checksum(self, table_name: str, database_name: str=None) -> int | None:
+        """Calculate a hash (checksum) on the given table.
+
+        Args:
+            table_name (str) Name of the table against which the checksum
+                is to be calculated.
+            database_name (str) Name of the database to use.
+                This argument can be used if the table resides in a
+                different database than the one to which the engine
+                object already points. Defaults to None.
+
+        This method wraps the ``CHECKSUM_AGG`` and ``BINARY_CHECKSUM``
+        MSSQL functions.
+
+        Returns:
+            int | None: A signed integer representation of the table's
+            hash value, if the table exists. Otherwise, None.
+
+        """
+        db = database_name if database_name else self.database_name
+        stmt = f'SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM [{db}].[dbo].[{table_name}]'
+        if all((not self._is_dangerous(stmt=stmt),
+                self.table_exists(table_name=table_name, database_name=db))):
+            return self.execute_query(stmt)[0][0]
+        return None
+
+    def database_exists(self, database_name: str, verbose: bool=False) -> bool:
+        """Using the ``engine`` object, test if the given database exists.
+
+        Args:
+            database_name (str): Name of the database to test.
+            verbose (bool, optional): Print a message if the database
+                does not exist. Defaults to False.
+
+        Returns:
+            bool: True if the given database exists, otherwise False.
+
+        """
+        exists = False
+        stmt = f'select count(*) from [sys].[databases] where [name] = \'{database_name}\''
+        if not self._is_dangerous(stmt=stmt):
+            exists = bool(self.execute_query(stmt, raw=True)[0][0])
+            if (not exists) & verbose:
+                msg = f'Database does not exist: {database_name}'
+                ui.print_warning(text=msg)
+        return exists
+
     def get_parameter_names(self, proc: str) -> tuple:
         """Retrieve the parameter names for the given USP.
 
@@ -316,13 +399,17 @@ class _DBISQLServer(_DBIBase):
             if resp:
                 return next(zip(*resp))
             raise RuntimeError(f'No parameters returned. The following USP may not exist: {proc}')
-        raise RuntimeWarning('SUSPECT QUERY INJECTION')
+        return ()  # pragma: nocover  # Unreachable
 
-    def table_exists(self, table_name: str, verbose: bool=False) -> bool:
+    def table_exists(self, table_name: str, database_name: str=None, verbose: bool=False) -> bool:
         """Using the ``engine`` object, test if the given table exists.
 
         Args:
             table_name (str): Name of the table to test.
+            database_name (str) Name of the database to use.
+                This argument can be used if the table resides in a
+                different database than the one to which the engine
+                object already points. Defaults to None.
             verbose (bool, optional): Print a message if the table does
                 not exist. Defaults to False.
 
@@ -330,17 +417,59 @@ class _DBISQLServer(_DBIBase):
             bool: True if the given table exists, otherwise False.
 
         """
+        exists = False
+        db = database_name if database_name else self.database_name
         params = {
-                  'table_catalog': self._engine.url.database,
+                  'table_catalog': db,
                   'table_name': table_name,
                   'table_schema': 'dbo',
                  }
-        stmt = ('select count(*) from information_schema.tables '
+        stmt = (f'select count(*) from [{db}].[information_schema].[tables] '
                 'where table_catalog = :table_catalog '
                 'and table_schema = :table_schema '
                 'and table_name = :table_name')
-        exists = bool(self.execute_query(stmt, params=params, raw=True)[0][0])
-        if (not exists) & verbose:
-            msg = f'Table does not exist: {self._engine.url.database}.{table_name}'
-            ui.print_warning(text=msg)
+        if not self._is_dangerous(stmt=stmt):
+            exists = bool(self.execute_query(stmt, params=params, raw=True)[0][0])
+            if (not exists) & verbose:
+                msg = f'Table does not exist: {db}.{table_name}'
+                ui.print_warning(text=msg)
         return exists
+
+    def _backup(self, table_name: str, bkdb_name: str) -> bool:
+        """Perform the table backup to the backup database.
+
+        Args:
+            table_name (str): Name of the table to be backed up.
+            bkdb_name (str): Name of the backup database.
+
+        Returns:
+            bool: True if the backup was successful, otherwise False.
+            A successful backup is determined by verifying matching table
+            checksum values between the origin and backup tables.
+
+        """
+        stmt1 = f'DROP TABLE IF EXISTS [{bkdb_name}].[dbo].[{table_name}]'
+        stmt2 = f'SELECT * INTO [{bkdb_name}].[dbo].[{table_name}] FROM [dbo].[{table_name}]'
+        if all((not self._is_dangerous(stmt=stmt1), not self._is_dangerous(stmt=stmt2))):
+            self.execute_query(stmt1)
+            self.execute_query(stmt2)
+        ck1 = self.checksum(table_name=table_name, database_name=self.database_name)
+        ck2 = self.checksum(table_name=table_name, database_name=bkdb_name)
+        return ck1 == ck2
+
+    @staticmethod
+    def _print_summary(success: bool) -> None:
+        """Print a short end-of-processing summary.
+
+        Args:
+            success (bool): Flag indicating if the backup was successful.
+
+        This message is designed to be short and concise, as the backup
+        is designed to be called by other applications, so a short
+        message is preferable.
+
+        """
+        if success:
+            ui.print_normal('Table backup successful.')
+        else:
+            ui.print_warning('Table backup failed.')

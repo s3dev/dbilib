@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mssql &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+  <title>_dbi_mssql &mdash; dbilib - v0.5.0.dev2 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=e5bd2af7"></script>
+        <script src="../_static/documentation_options.js?v=48ed5a3b"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev1
+                0.5.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -117,9 +117,9 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIBase</span>
 
 
-<div class="viewcode-block" id="_DBISQLServer">
-<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBISQLServer">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">_DBISQLServer</span><span class="p">(</span><span class="n">_DBIBase</span><span class="p">):</span>
+<div class="viewcode-block" id="_DBIMSSQL">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">_DBIMSSQL</span><span class="p">(</span><span class="n">_DBIBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This *private* class holds the methods and properties which are</span>
 <span class="sd">    used for accessing Microsoft SQL Server databases.</span>
 
@@ -168,9 +168,44 @@
 
     <span class="c1"># The __init__ method is implemented in the parent class.</span>
 
+<div class="viewcode-block" id="_DBIMSSQL.backup">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.backup">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">backup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Backup the given table to the backup database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            table_name (str): Name of the table to be backed up.</span>
+
+<span class="sd">        .. important::</span>
+<span class="sd">            The backup database (which is implicitly determined by the</span>
+<span class="sd">            engine&#39;s database name) **must** exist, or this method will</span>
+<span class="sd">            fail. See below for the backup database&#39;s naming convention.</span>
+
+<span class="sd">            Due to MSSQL&#39;s (interesting) handling of the</span>
+<span class="sd">            ``CREATE DATABASE`` statement, the database cannot be created</span>
+<span class="sd">            by this method for you; sorry.  Cheers MS!</span>
+
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The backup database name is derived by prepending</span>
+<span class="sd">            ``&#39;__bak__&#39;`` to the database name.</span>
+
+<span class="sd">            This obfuscation was done intentionally to help prevent a</span>
+<span class="sd">            user from click-selecting the wrong database (in SSMS) by</span>
+<span class="sd">            accident.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bkdb</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;__bak__</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">database_name</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_exists</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_exists</span><span class="p">(</span><span class="n">database_name</span><span class="o">=</span><span class="n">bkdb</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">bkdb_name</span><span class="o">=</span><span class="n">bkdb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_print_summary</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="n">s</span><span class="p">)</span></div>
+
+
     <span class="c1"># pylint: disable=line-too-long</span>
-<div class="viewcode-block" id="_DBISQLServer.call_procedure">
-<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBISQLServer.call_procedure">[docs]</a>
+<div class="viewcode-block" id="_DBIMSSQL.call_procedure">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.call_procedure">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">call_procedure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                        <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                        <span class="o">*</span><span class="p">,</span>
@@ -234,8 +269,8 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">success</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_status</span> <span class="k">else</span> <span class="n">data</span></div>
 
 
-<div class="viewcode-block" id="_DBISQLServer.call_procedure_update">
-<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBISQLServer.call_procedure_update">[docs]</a>
+<div class="viewcode-block" id="_DBIMSSQL.call_procedure_update">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.call_procedure_update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">call_procedure_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                               <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                               <span class="o">*</span><span class="p">,</span>
@@ -296,6 +331,10 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">rowid</span><span class="p">,</span> <span class="n">success</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_id</span> <span class="k">else</span> <span class="n">success</span></div>
 
 
+    <span class="c1">#</span>
+    <span class="c1"># XXX: This has been left for possible future development.</span>
+    <span class="c1">#      Currently a MySQL implementation.</span>
+    <span class="c1">#</span>
     <span class="c1"># def call_procedure_update_many(self, *args, proc: str, iterable: list | tuple) -&gt; bool:</span>
     <span class="c1">#     r&quot;&quot;&quot;Call an *update* or *insert* stored procedure for an iterable.</span>
 
@@ -333,8 +372,8 @@
     <span class="c1">#         reporterror(err)</span>
     <span class="c1">#     return success</span>
 
-<div class="viewcode-block" id="_DBISQLServer.call_procedure_update_raw">
-<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBISQLServer.call_procedure_update_raw">[docs]</a>
+<div class="viewcode-block" id="_DBIMSSQL.call_procedure_update_raw">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.call_procedure_update_raw">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">call_procedure_update_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                   <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                                   <span class="o">*</span><span class="p">,</span>
@@ -380,8 +419,61 @@
             <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="_DBISQLServer.get_parameter_names">
-<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBISQLServer.get_parameter_names">[docs]</a>
+<div class="viewcode-block" id="_DBIMSSQL.checksum">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.checksum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">database_name</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate a hash (checksum) on the given table.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            table_name (str) Name of the table against which the checksum</span>
+<span class="sd">                is to be calculated.</span>
+<span class="sd">            database_name (str) Name of the database to use.</span>
+<span class="sd">                This argument can be used if the table resides in a</span>
+<span class="sd">                different database than the one to which the engine</span>
+<span class="sd">                object already points. Defaults to None.</span>
+
+<span class="sd">        This method wraps the ``CHECKSUM_AGG`` and ``BINARY_CHECKSUM``</span>
+<span class="sd">        MSSQL functions.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int | None: A signed integer representation of the table&#39;s</span>
+<span class="sd">            hash value, if the table exists. Otherwise, None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">database_name</span> <span class="k">if</span> <span class="n">database_name</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_name</span>
+        <span class="n">stmt</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM [</span><span class="si">{</span><span class="n">db</span><span class="si">}</span><span class="s1">].[dbo].[</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s1">]&#39;</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">((</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">table_exists</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">database_name</span><span class="o">=</span><span class="n">db</span><span class="p">))):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="_DBIMSSQL.database_exists">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.database_exists">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">database_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Using the ``engine`` object, test if the given database exists.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            database_name (str): Name of the database to test.</span>
+<span class="sd">            verbose (bool, optional): Print a message if the database</span>
+<span class="sd">                does not exist. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the given database exists, otherwise False.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">stmt</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;select count(*) from [sys].[databases] where [name] = </span><span class="se">\&#39;</span><span class="si">{</span><span class="n">database_name</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">):</span>
+            <span class="n">exists</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exists</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Database does not exist: </span><span class="si">{</span><span class="n">database_name</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">ui</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">exists</span></div>
+
+
+<div class="viewcode-block" id="_DBIMSSQL.get_parameter_names">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.get_parameter_names">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_parameter_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proc</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the parameter names for the given USP.</span>
 
@@ -411,16 +503,20 @@
             <span class="k">if</span> <span class="n">resp</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">resp</span><span class="p">))</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No parameters returned. The following USP may not exist: </span><span class="si">{</span><span class="n">proc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">RuntimeWarning</span><span class="p">(</span><span class="s1">&#39;SUSPECT QUERY INJECTION&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="p">()</span>  <span class="c1"># pragma: nocover  # Unreachable</span></div>
 
 
-<div class="viewcode-block" id="_DBISQLServer.table_exists">
-<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBISQLServer.table_exists">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">table_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="_DBIMSSQL.table_exists">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.table_exists">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">table_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">database_name</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Using the ``engine`` object, test if the given table exists.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            table_name (str): Name of the table to test.</span>
+<span class="sd">            database_name (str) Name of the database to use.</span>
+<span class="sd">                This argument can be used if the table resides in a</span>
+<span class="sd">                different database than the one to which the engine</span>
+<span class="sd">                object already points. Defaults to None.</span>
 <span class="sd">            verbose (bool, optional): Print a message if the table does</span>
 <span class="sd">                not exist. Defaults to False.</span>
 
@@ -428,20 +524,68 @@
 <span class="sd">            bool: True if the given table exists, otherwise False.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">database_name</span> <span class="k">if</span> <span class="n">database_name</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_name</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-                  <span class="s1">&#39;table_catalog&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">database</span><span class="p">,</span>
+                  <span class="s1">&#39;table_catalog&#39;</span><span class="p">:</span> <span class="n">db</span><span class="p">,</span>
                   <span class="s1">&#39;table_name&#39;</span><span class="p">:</span> <span class="n">table_name</span><span class="p">,</span>
                   <span class="s1">&#39;table_schema&#39;</span><span class="p">:</span> <span class="s1">&#39;dbo&#39;</span><span class="p">,</span>
                  <span class="p">}</span>
-        <span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;select count(*) from information_schema.tables &#39;</span>
+        <span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;select count(*) from [</span><span class="si">{</span><span class="n">db</span><span class="si">}</span><span class="s1">].[information_schema].[tables] &#39;</span>
                 <span class="s1">&#39;where table_catalog = :table_catalog &#39;</span>
                 <span class="s1">&#39;and table_schema = :table_schema &#39;</span>
                 <span class="s1">&#39;and table_name = :table_name&#39;</span><span class="p">)</span>
-        <span class="n">exists</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exists</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Table does not exist: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">database</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s1">&#39;</span>
-            <span class="n">ui</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">):</span>
+            <span class="n">exists</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exists</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Table does not exist: </span><span class="si">{</span><span class="n">db</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">ui</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">exists</span></div>
+
+
+<div class="viewcode-block" id="_DBIMSSQL._backup">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL._backup">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_backup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">bkdb_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform the table backup to the backup database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            table_name (str): Name of the table to be backed up.</span>
+<span class="sd">            bkdb_name (str): Name of the backup database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the backup was successful, otherwise False.</span>
+<span class="sd">            A successful backup is determined by verifying matching table</span>
+<span class="sd">            checksum values between the origin and backup tables.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stmt1</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;DROP TABLE IF EXISTS [</span><span class="si">{</span><span class="n">bkdb_name</span><span class="si">}</span><span class="s1">].[dbo].[</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s1">]&#39;</span>
+        <span class="n">stmt2</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;SELECT * INTO [</span><span class="si">{</span><span class="n">bkdb_name</span><span class="si">}</span><span class="s1">].[dbo].[</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s1">] FROM [dbo].[</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s1">]&#39;</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">((</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt1</span><span class="p">),</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dangerous</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt2</span><span class="p">))):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt2</span><span class="p">)</span>
+        <span class="n">ck1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checksum</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">database_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">database_name</span><span class="p">)</span>
+        <span class="n">ck2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checksum</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">database_name</span><span class="o">=</span><span class="n">bkdb_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ck1</span> <span class="o">==</span> <span class="n">ck2</span></div>
+
+
+<div class="viewcode-block" id="_DBIMSSQL._print_summary">
+<a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL._print_summary">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_print_summary</span><span class="p">(</span><span class="n">success</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print a short end-of-processing summary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            success (bool): Flag indicating if the backup was successful.</span>
+
+<span class="sd">        This message is designed to be short and concise, as the backup</span>
+<span class="sd">        is designed to be called by other applications, so a short</span>
+<span class="sd">        message is preferable.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+            <span class="n">ui</span><span class="o">.</span><span class="n">print_normal</span><span class="p">(</span><span class="s1">&#39;Table backup successful.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ui</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span><span class="s1">&#39;Table backup failed.&#39;</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
@@ -453,7 +597,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2024 | S3DEV | version 0.5.0.dev1.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev2.</p>
   </div>
 
    

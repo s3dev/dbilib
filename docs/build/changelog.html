@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Change Log &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+  <title>Change Log &mdash; dbilib - v0.5.0.dev2 Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=e5bd2af7"></script>
+        <script src="_static/documentation_options.js?v=48ed5a3b"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -42,7 +42,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev1
+                0.5.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -84,6 +84,41 @@
   <section id="module-changelog">
 <span id="change-log"></span><h1>Change Log<a class="headerlink" href="#module-changelog" title="Link to this heading"></a></h1>
 <ul>
+<li><p><strong>0.5.0.dev2 - Included table backup functionality for the MSSQL interface.</strong><span> by </span><em>u555923</em><span> at </span><em>2025-07-24 10:44:12</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MSSQL</span> <span class="n">table</span> <span class="n">backup</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">Functionality</span> <span class="n">has</span> <span class="n">been</span> <span class="n">added</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MSSQL</span> <span class="n">interface</span> <span class="k">for</span> <span class="n">backing</span> <span class="n">up</span> <span class="nb">any</span>
+  <span class="n">given</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">database</span> <span class="n">to</span> <span class="n">the</span> <span class="o">*</span><span class="n">backup</span> <span class="n">database</span><span class="o">*.</span> <span class="n">Note</span> <span class="n">this</span> <span class="ow">is</span>
+  <span class="o">*</span><span class="ow">not</span><span class="o">*</span> <span class="n">a</span> <span class="n">filesystem</span> <span class="n">backup</span><span class="o">.</span>
+<span class="o">-</span> <span class="n">A</span> <span class="s1">&#39;database_exists&#39;</span> <span class="n">function</span> <span class="n">has</span> <span class="n">been</span> <span class="n">added</span> <span class="n">to</span> <span class="n">the</span> <span class="n">interface</span> <span class="n">primarily</span>
+  <span class="n">to</span> <span class="n">facilitate</span> <span class="n">the</span> <span class="n">backup</span><span class="p">,</span> <span class="n">but</span> <span class="n">also</span> <span class="k">for</span> <span class="n">general</span> <span class="n">use</span><span class="o">.</span>
+
+<span class="n">MSSQL</span> <span class="n">table</span> <span class="n">checksum</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">A</span> <span class="n">function</span> <span class="n">has</span> <span class="n">been</span> <span class="n">added</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MSSQL</span> <span class="n">interface</span> <span class="n">enabling</span> <span class="n">the</span> <span class="n">user</span> <span class="n">to</span>
+  <span class="n">calculate</span> <span class="n">a</span> <span class="n">table</span> <span class="n">checksum</span> <span class="p">(</span><span class="n">easily</span><span class="p">)</span><span class="o">.</span>
+<span class="o">-</span> <span class="n">Aside</span><span class="p">,</span> <span class="n">this</span> <span class="n">function</span> <span class="n">will</span> <span class="n">also</span> <span class="n">be</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">MSSQL</span> <span class="n">table</span> <span class="n">backup</span> <span class="n">logic</span>
+  <span class="n">to</span> <span class="n">verify</span> <span class="k">if</span> <span class="n">a</span> <span class="n">table</span> <span class="n">was</span> <span class="n">successfully</span> <span class="n">backed</span> <span class="n">up</span><span class="o">.</span>
+
+<span class="n">Other</span> <span class="n">changes</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">Updated</span> <span class="n">the</span> <span class="s1">&#39;execute_query&#39;</span> <span class="n">method</span> <span class="n">to</span> <span class="n">include</span> <span class="n">a</span> <span class="s1">&#39;commit&#39;</span> <span class="n">argument</span><span class="p">,</span>
+  <span class="n">which</span> <span class="n">defaults</span> <span class="n">to</span> <span class="kc">True</span> <span class="k">for</span> <span class="n">backwards</span> <span class="n">compaiability</span><span class="o">.</span>
+
+<span class="n">Fixes</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">Consistently</span> <span class="n">applied</span> <span class="n">the</span> <span class="n">name</span> <span class="s1">&#39;mssql&#39;</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">MS</span> <span class="n">SQL</span> <span class="n">Server</span> <span class="n">related</span>
+  <span class="nb">object</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">interface</span><span class="p">;</span> <span class="n">rather</span> <span class="n">than</span> <span class="n">variations</span> <span class="n">such</span> <span class="k">as</span>
+  <span class="s1">&#39;sqlserver&#39;</span><span class="o">.</span>
+
+<span class="n">Testing</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">The</span> <span class="n">tests</span> <span class="k">for</span> <span class="n">the</span> <span class="n">MSSQL</span> <span class="n">interface</span> <span class="n">have</span> <span class="n">been</span> <span class="n">updated</span> <span class="k">for</span> <span class="mi">100</span><span class="o">%</span> <span class="n">code</span>
+  <span class="n">coverage</span><span class="o">.</span> <span class="n">All</span> <span class="n">MSSQL</span> <span class="n">interface</span> <span class="n">tests</span> <span class="n">complete</span> <span class="n">successfully</span><span class="o">.</span>
+<span class="o">-</span> <span class="n">Testing</span> <span class="k">for</span> <span class="n">MySQL</span> <span class="ow">and</span> <span class="n">SQLite</span> <span class="n">completed</span> <span class="n">successfully</span> <span class="p">(</span><span class="n">on</span> <span class="n">a</span> <span class="n">different</span>
+  <span class="n">environment</span><span class="p">)</span> <span class="k">with</span> <span class="mi">98</span><span class="o">%</span> <span class="n">code</span> <span class="n">coverage</span><span class="o">.</span> <span class="n">The</span> <span class="n">remaining</span> <span class="mi">2</span><span class="o">%</span> <span class="n">relates</span> <span class="n">to</span> <span class="n">the</span>
+  <span class="n">MSSQL</span> <span class="ow">and</span> <span class="n">non</span><span class="o">-</span><span class="n">supported</span> <span class="n">database</span> <span class="n">engine</span> <span class="n">routing</span> <span class="ow">in</span> <span class="n">the</span>
+  <span class="n">database</span><span class="o">.</span><span class="n">DBInterface</span><span class="o">.</span><span class="fm">__new__</span> <span class="n">method</span><span class="o">.</span>
+
+<span class="n">Released</span><span class="p">:</span> <span class="n">n</span><span class="o">/</span><span class="n">a</span>
+</pre></div>
+</div>
+</li>
 <li><p><strong>0.5.0.dev1 - Introduction of Microsoft SQL Server support.</strong><span> by </span><em>u555923</em><span> at </span><em>2025-07-14 14:09:00</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SQL</span> <span class="n">Server</span><span class="p">:</span>
 <span class="o">-</span> <span class="n">A</span> <span class="n">database</span> <span class="n">interface</span> <span class="n">has</span> <span class="n">been</span> <span class="n">added</span> <span class="k">for</span> <span class="n">MS</span> <span class="n">SQL</span> <span class="n">Server</span> <span class="n">support</span><span class="p">,</span> <span class="n">via</span>
@@ -351,7 +386,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev1.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev2.</p>
   </div>
 
    

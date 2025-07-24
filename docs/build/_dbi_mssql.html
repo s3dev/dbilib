@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mssql - Private database interface for MS SQL Server &mdash; dbilib - v0.5.0.dev1 Documentation</title>
+  <title>_dbi_mssql - Private database interface for MS SQL Server &mdash; dbilib - v0.5.0.dev2 Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=e5bd2af7"></script>
+        <script src="_static/documentation_options.js?v=48ed5a3b"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -42,7 +42,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev1
+                0.5.0.dev2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -57,20 +57,25 @@
 <li class="toctree-l2"><a class="reference internal" href="database.html">database - Public database interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="_dbi_base.html">_dbi_base - Private base module for all database interfaces</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">_dbi_mssql - Private database interface for MS SQL Server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#dbi_mssql._DBISQLServer"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.call_procedure"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.call_procedure()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.call_procedure_update"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.call_procedure_update()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.call_procedure_update_raw"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.call_procedure_update_raw()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.get_parameter_names"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.get_parameter_names()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.table_exists"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.table_exists()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer._create_engine"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer._create_engine()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer._is_dangerous"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer._is_dangerous()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer._report_sa_error"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer._report_sa_error()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer._result_to_df__cursor"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer._result_to_df__cursor()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer._result_to_df__stored"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer._result_to_df__stored()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.database_name"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.database_name</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.engine"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.engine</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBISQLServer.execute_query"><code class="docutils literal notranslate"><span class="pre">_DBISQLServer.execute_query()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dbi_mssql._DBIMSSQL"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.backup"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.backup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.call_procedure"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.call_procedure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.call_procedure_update"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.call_procedure_update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.call_procedure_update_raw"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.call_procedure_update_raw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.checksum"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.checksum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.database_exists"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.database_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.get_parameter_names"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.get_parameter_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.table_exists"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.table_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL._backup"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL._backup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL._print_summary"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL._print_summary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL._create_engine"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL._create_engine()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL._is_dangerous"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL._is_dangerous()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL._report_sa_error"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL._report_sa_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL._result_to_df__cursor"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL._result_to_df__cursor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL._result_to_df__stored"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL._result_to_df__stored()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.database_name"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.database_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.engine"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.engine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbi_mssql._DBIMSSQL.execute_query"><code class="docutils literal notranslate"><span class="pre">_DBIMSSQL.execute_query()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -134,14 +139,14 @@ methods.</p>
 for the following classes:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><a class="reference internal" href="#dbi_mssql._DBISQLServer" title="_dbi_mssql._DBISQLServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">_DBISQLServer</span></code></a></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">_DBISQLServer</span></code></p></li>
 </ul>
 </div></blockquote>
 </dd>
 </dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_DBISQLServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBISQLServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBISQLServer" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_DBIMSSQL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="_dbi_base.html#dbi_base._DBIBase" title="_dbi_base._DBIBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">_DBIBase</span></code></a></p>
 <p>This <em>private</em> class holds the methods and properties which are
 used for accessing Microsoft SQL Server databases.</p>
@@ -188,8 +193,36 @@ string as follows:</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.call_procedure">
-<span class="sig-name descname"><span class="pre">call_procedure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pd.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">pd.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBISQLServer.call_procedure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBISQLServer.call_procedure" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.backup">
+<span class="sig-name descname"><span class="pre">backup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.backup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.backup" title="Link to this definition"></a></dt>
+<dd><p>Backup the given table to the backup database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>table_name</strong> (<em>str</em>) – Name of the table to be backed up.</p>
+</dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The backup database (which is implicitly determined by the
+engine’s database name) <strong>must</strong> exist, or this method will
+fail. See below for the backup database’s naming convention.</p>
+<p>Due to MSSQL’s (interesting) handling of the
+<code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">DATABASE</span></code> statement, the database cannot be created
+by this method for you; sorry.  Cheers MS!</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The backup database name is derived by prepending
+<code class="docutils literal notranslate"><span class="pre">'__bak__'</span></code> to the database name.</p>
+<p>This obfuscation was done intentionally to help prevent a
+user from click-selecting the wrong database (in SSMS) by
+accident.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.call_procedure">
+<span class="sig-name descname"><span class="pre">call_procedure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pd.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">pd.DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.call_procedure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.call_procedure" title="Link to this definition"></a></dt>
 <dd><p>Call a stored procedure, and return as a DataFrame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -202,7 +235,7 @@ into the procedure.</p></li>
 <li><p><strong>paramnames</strong> (<em>list</em><em>|</em><em>tuple</em><em>, </em><em>optional</em>) – An iterable object
 containing the procedure’s parameter names, in order.
 Defaults to None. If not provided, these are collected
-from the database via the <a class="reference internal" href="#dbi_mssql._DBISQLServer.get_parameter_names" title="_dbi_mssql._DBISQLServer.get_parameter_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_parameter_names()</span></code></a>
+from the database via the <a class="reference internal" href="#dbi_mssql._DBIMSSQL.get_parameter_names" title="_dbi_mssql._DBIMSSQL.get_parameter_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_parameter_names()</span></code></a>
 method. For efficiency, the parameter names should be
 passed if making repeated calls to the procedure.</p></li>
 <li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple) format
@@ -228,8 +261,8 @@ data and the method’s return status is returned as:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.call_procedure_update">
-<span class="sig-name descname"><span class="pre">call_procedure_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBISQLServer.call_procedure_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBISQLServer.call_procedure_update" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.call_procedure_update">
+<span class="sig-name descname"><span class="pre">call_procedure_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.call_procedure_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.call_procedure_update" title="Link to this definition"></a></dt>
 <dd><p>Call an <em>update</em> or <em>insert</em> stored procedure.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -237,7 +270,7 @@ data and the method’s return status is returned as:</p>
 status flag and the optional last row ID, which <strong>must be
 provided by the USP</strong> if desired.</p>
 <p>If results are desired, please use the
-<a class="reference internal" href="#dbi_mssql._DBISQLServer.call_procedure" title="_dbi_mssql._DBISQLServer.call_procedure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure()</span></code></a> method.</p>
+<a class="reference internal" href="#dbi_mssql._DBIMSSQL.call_procedure" title="_dbi_mssql._DBIMSSQL.call_procedure"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure()</span></code></a> method.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -249,7 +282,7 @@ names, and values being the data values.</p></li>
 <li><p><strong>paramnames</strong> (<em>list</em><em>|</em><em>tuple</em><em>, </em><em>optional</em>) – An iterable object
 containing the procedure’s parameter names, in order.
 Defaults to None. If not provided, these are collected
-from the database via the <a class="reference internal" href="#dbi_mssql._DBISQLServer.get_parameter_names" title="_dbi_mssql._DBISQLServer.get_parameter_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_parameter_names()</span></code></a>
+from the database via the <a class="reference internal" href="#dbi_mssql._DBIMSSQL.get_parameter_names" title="_dbi_mssql._DBIMSSQL.get_parameter_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_parameter_names()</span></code></a>
 method. For efficiency, the parameter names should be
 passed if making repeated calls to the procedure.</p></li>
 <li><p><strong>return_id</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the ID of the last
@@ -274,14 +307,14 @@ are returned as:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.call_procedure_update_raw">
-<span class="sig-name descname"><span class="pre">call_procedure_update_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBISQLServer.call_procedure_update_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBISQLServer.call_procedure_update_raw" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.call_procedure_update_raw">
+<span class="sig-name descname"><span class="pre">call_procedure_update_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.call_procedure_update_raw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.call_procedure_update_raw" title="Link to this definition"></a></dt>
 <dd><p>Call an <em>update</em> or <em>insert</em> stored procedure, without error
 handling.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This method is <strong>unprotected</strong>, perhaps use
-<a class="reference internal" href="#dbi_mssql._DBISQLServer.call_procedure_update" title="_dbi_mssql._DBISQLServer.call_procedure_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure_update()</span></code></a> instead.</p>
+<a class="reference internal" href="#dbi_mssql._DBIMSSQL.call_procedure_update" title="_dbi_mssql._DBIMSSQL.call_procedure_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">call_procedure_update()</span></code></a> instead.</p>
 <p>This ‘raw’ method <em>does not</em> contain an error handler. It is
 (by design) the responsibility of the caller to contain and
 control the errors.</p>
@@ -299,7 +332,7 @@ names, and values being the data values.</p></li>
 <li><p><strong>paramnames</strong> (<em>list</em><em>|</em><em>tuple</em><em>, </em><em>optional</em>) – An iterable object
 containing the procedure’s parameter names, in order.
 Defaults to None. If not provided, these are collected
-from the database via the <a class="reference internal" href="#dbi_mssql._DBISQLServer.get_parameter_names" title="_dbi_mssql._DBISQLServer.get_parameter_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_parameter_names()</span></code></a>
+from the database via the <a class="reference internal" href="#dbi_mssql._DBIMSSQL.get_parameter_names" title="_dbi_mssql._DBIMSSQL.get_parameter_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_parameter_names()</span></code></a>
 method. For efficiency, the parameter names should be
 passed if making repeated calls to the procedure.</p></li>
 </ul>
@@ -308,8 +341,56 @@ passed if making repeated calls to the procedure.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.get_parameter_names">
-<span class="sig-name descname"><span class="pre">get_parameter_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBISQLServer.get_parameter_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBISQLServer.get_parameter_names" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.checksum">
+<span class="sig-name descname"><span class="pre">checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.checksum" title="Link to this definition"></a></dt>
+<dd><p>Calculate a hash (checksum) on the given table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_name</strong> (<em>str</em>) – is to be calculated.</p></li>
+<li><p><strong>database_name</strong> (<em>str</em>) – This argument can be used if the table resides in a
+different database than the one to which the engine
+object already points. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+<p>This method wraps the <code class="docutils literal notranslate"><span class="pre">CHECKSUM_AGG</span></code> and <code class="docutils literal notranslate"><span class="pre">BINARY_CHECKSUM</span></code>
+MSSQL functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A signed integer representation of the table’s
+hash value, if the table exists. Otherwise, None.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.database_exists">
+<span class="sig-name descname"><span class="pre">database_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.database_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.database_exists" title="Link to this definition"></a></dt>
+<dd><p>Using the <code class="docutils literal notranslate"><span class="pre">engine</span></code> object, test if the given database exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database_name</strong> (<em>str</em>) – Name of the database to test.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print a message if the database
+does not exist. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the given database exists, otherwise False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.get_parameter_names">
+<span class="sig-name descname"><span class="pre">get_parameter_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.get_parameter_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.get_parameter_names" title="Link to this definition"></a></dt>
 <dd><p>Retrieve the parameter names for the given USP.</p>
 <p>For portability, this method has been updated to use an embedded
 query rather than a USP.</p>
@@ -327,13 +408,16 @@ query rather than a USP.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.table_exists">
-<span class="sig-name descname"><span class="pre">table_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBISQLServer.table_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBISQLServer.table_exists" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.table_exists">
+<span class="sig-name descname"><span class="pre">table_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.table_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.table_exists" title="Link to this definition"></a></dt>
 <dd><p>Using the <code class="docutils literal notranslate"><span class="pre">engine</span></code> object, test if the given table exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<em>str</em>) – Name of the table to test.</p></li>
+<li><p><strong>database_name</strong> (<em>str</em>) – This argument can be used if the table resides in a
+different database than the one to which the engine
+object already points. Defaults to None.</p></li>
 <li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print a message if the table does
 not exist. Defaults to False.</p></li>
 </ul>
@@ -348,8 +432,44 @@ not exist. Defaults to False.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer._create_engine">
-<span class="sig-name descname"><span class="pre">_create_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">sqlalchemy.engine.base.Engine</span></span></span><a class="headerlink" href="#dbi_mssql._DBISQLServer._create_engine" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL._backup">
+<span class="sig-name descname"><span class="pre">_backup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bkdb_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL._backup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL._backup" title="Link to this definition"></a></dt>
+<dd><p>Perform the table backup to the backup database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table_name</strong> (<em>str</em>) – Name of the table to be backed up.</p></li>
+<li><p><strong>bkdb_name</strong> (<em>str</em>) – Name of the backup database.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the backup was successful, otherwise False.
+A successful backup is determined by verifying matching table
+checksum values between the origin and backup tables.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL._print_summary">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_print_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">success</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL._print_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL._print_summary" title="Link to this definition"></a></dt>
+<dd><p>Print a short end-of-processing summary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>success</strong> (<em>bool</em>) – Flag indicating if the backup was successful.</p>
+</dd>
+</dl>
+<p>This message is designed to be short and concise, as the backup
+is designed to be called by other applications, so a short
+message is preferable.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL._create_engine">
+<span class="sig-name descname"><span class="pre">_create_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">sqlalchemy.engine.base.Engine</span></span></span><a class="headerlink" href="#dbi_mssql._DBIMSSQL._create_engine" title="Link to this definition"></a></dt>
 <dd><p>Create a database engine using the provided environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -363,8 +483,8 @@ object.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer._is_dangerous">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_is_dangerous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#dbi_mssql._DBISQLServer._is_dangerous" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL._is_dangerous">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_is_dangerous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#dbi_mssql._DBIMSSQL._is_dangerous" title="Link to this definition"></a></dt>
 <dd><p>Perform a dirty security check for injection attempts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -384,8 +504,8 @@ object.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer._report_sa_error">
-<span class="sig-name descname"><span class="pre">_report_sa_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sqlalchemy.exc.SQLAlchemyError</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_mssql._DBISQLServer._report_sa_error" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL._report_sa_error">
+<span class="sig-name descname"><span class="pre">_report_sa_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sqlalchemy.exc.SQLAlchemyError</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbi_mssql._DBIMSSQL._report_sa_error" title="Link to this definition"></a></dt>
 <dd><p>Report SQLAlchemy error to the terminal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -400,8 +520,8 @@ from the try/except block.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer._result_to_df__cursor">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sqlalchemy.engine.cursor.CursorResult</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_mssql._DBISQLServer._result_to_df__cursor" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL._result_to_df__cursor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">sqlalchemy.engine.cursor.CursorResult</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_mssql._DBIMSSQL._result_to_df__cursor" title="Link to this definition"></a></dt>
 <dd><p>Convert a <code class="docutils literal notranslate"><span class="pre">CursorResult</span></code> object to a DataFrame.</p>
 <p>If the cursor did not return results, an empty DataFrame
 containing the column names only, is returned.</p>
@@ -421,8 +541,8 @@ cursor’s data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer._result_to_df__stored">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__stored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_mssql._DBISQLServer._result_to_df__stored" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL._result_to_df__stored">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_result_to_df__stored</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#dbi_mssql._DBIMSSQL._result_to_df__stored" title="Link to this definition"></a></dt>
 <dd><p>Convert a <code class="docutils literal notranslate"><span class="pre">MySQLCursor.stored_results</span></code> object to a DataFrame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -442,20 +562,20 @@ procedure call.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.database_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_name</span></span><a class="headerlink" href="#dbi_mssql._DBISQLServer.database_name" title="Link to this definition"></a></dt>
-<dd><p>Accessor to the database name used by the <a class="reference internal" href="#dbi_mssql._DBISQLServer.engine" title="_dbi_mssql._DBISQLServer.engine"><code class="xref py py-attr docutils literal notranslate"><span class="pre">engine</span></code></a> object.</p>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.database_name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">database_name</span></span><a class="headerlink" href="#dbi_mssql._DBIMSSQL.database_name" title="Link to this definition"></a></dt>
+<dd><p>Accessor to the database name used by the <a class="reference internal" href="#dbi_mssql._DBIMSSQL.engine" title="_dbi_mssql._DBIMSSQL.engine"><code class="xref py py-attr docutils literal notranslate"><span class="pre">engine</span></code></a> object.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.engine">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">engine</span></span><a class="headerlink" href="#dbi_mssql._DBISQLServer.engine" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.engine">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">engine</span></span><a class="headerlink" href="#dbi_mssql._DBIMSSQL.engine" title="Link to this definition"></a></dt>
 <dd><p>Accessor to the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.engine.base.Engine</span></code> object.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="dbi_mssql._DBISQLServer.execute_query">
-<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_unsafe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_mssql._DBISQLServer.execute_query" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.execute_query">
+<span class="sig-name descname"><span class="pre">execute_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_unsafe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#dbi_mssql._DBIMSSQL.execute_query" title="Link to this definition"></a></dt>
 <dd><p>Execute a query statement.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -468,7 +588,7 @@ method:</p>
 </ul>
 </div></blockquote>
 <p>If found, a <code class="xref py py-class docutils literal notranslate"><span class="pre">SecurityWarning</span></code> will be raised by the
-<a class="reference internal" href="#dbi_mssql._DBISQLServer._is_dangerous" title="_dbi_mssql._DBISQLServer._is_dangerous"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_is_dangerous()</span></code></a> method.</p>
+<a class="reference internal" href="#dbi_mssql._DBIMSSQL._is_dangerous" title="_dbi_mssql._DBIMSSQL._is_dangerous"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_is_dangerous()</span></code></a> method.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -480,6 +600,9 @@ dictionary, if applicable. Defaults to None.</p></li>
 <li><p><strong>raw</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return the data in ‘raw’ (tuple)
 format rather than as a formatted DataFrame.
 Defaults to True for efficiency.</p></li>
+<li><p><strong>commit</strong> (<em>bool</em><em>, </em><em>optional</em>) – Call COMMIT after the transaction
+is complete. Defaults to True (for backwards
+compatibility).</p></li>
 <li><p><strong>ignore_unsafe</strong> (<em>bool</em><em>, </em><em>optional</em>) – <p>Bypass the ‘is dangerous’
 check and the run query anyway. This may be required if
 a script contains multiple statements. Defaults to False.</p>
@@ -504,7 +627,8 @@ bindings.</p>
 <li><p>Generally, whatever statement is passed into this method
 <strong>will be executed</strong>, and may have <em>destructive
 implications.</em></p></li>
-<li><p>This method contains a <code class="docutils literal notranslate"><span class="pre">commit</span></code> call.</p></li>
+<li><p>This method contains a <code class="docutils literal notranslate"><span class="pre">commit</span></code> call, and the option to
+disable the COMMIT.</p></li>
 </ol>
 <p>If a statement is passed into this method, and the user has
 the appropriate permissions - the change
@@ -543,7 +667,7 @@ regardless of the value passed to the <code class="docutils literal notranslate"
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev1.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev2.</p>
   </div>
 
    

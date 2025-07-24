@@ -103,6 +103,7 @@ class _DBIBase:
                       stmt: str,
                       params: dict=None,
                       raw: bool=True,
+                      commit: bool=True,
                       ignore_unsafe: bool=False) -> list | pd.DataFrame | None:
         """Execute a query statement.
 
@@ -124,6 +125,9 @@ class _DBIBase:
             raw (bool, optional): Return the data in 'raw' (tuple)
                 format rather than as a formatted DataFrame.
                 Defaults to True for efficiency.
+            commit (bool, optional): Call COMMIT after the transaction
+                is complete. Defaults to True (for backwards
+                compatibility).
             ignore_unsafe (bool, optional): Bypass the 'is dangerous'
               check and the run query anyway. This may be required if
               a script contains multiple statements. Defaults to False.
@@ -146,7 +150,8 @@ class _DBIBase:
                **will be executed**, and may have *destructive
                implications.*
 
-            2) This method contains a ``commit`` call.
+            2) This method contains a ``commit`` call, and the option to
+               disable the COMMIT.
 
             If a statement is passed into this method, and the user has
             the appropriate permissions - the change
@@ -174,11 +179,12 @@ class _DBIBase:
             if ignore_unsafe or not self._is_dangerous(stmt=stmt):
                 with self._engine.connect() as conn:
                     result = conn.execute(sa.text(stmt), params)
-                    # ???: Added for SQL Server support.
+                    # ???: Added for SQL Server support (v0.5.0.dev1).
                     #       Does this work for other engines?
                     if result.returns_rows:
                         rtn = result.fetchall() if raw else self._result_to_df__cursor(result=result)
-                    conn.commit()
+                    if commit:
+                        conn.commit()
                     conn.close()
         except SecurityWarning:
             print(traceback.format_exc())
@@ -195,8 +201,6 @@ class _DBIBase:
             object.
 
         """
-        # ???: Do these values need to be moved to an external config?
-        # Added in s3ddb v0.7.0:
         # The pool_* arguments to prevent MySQL timeout which causes
         # a broken pipe and lost connection errors.
         return sa.create_engine(url=self._connstr,
@@ -222,11 +226,9 @@ class _DBIBase:
             bool: False if the checks pass.
 
         """
-        # import sys
         if stmt.count(';') > 1:
             msg = 'Multiple statements are disallowed for security reasons.'
             raise SecurityWarning(msg)
-            # sys.exit(1)
         if '--' in stmt:
             msg = 'Comments are not allowed in the statement for security reasons.'
             raise SecurityWarning(msg)

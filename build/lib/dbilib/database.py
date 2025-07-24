@@ -193,8 +193,8 @@ class DBInterface:
         # that driver installed.
         if name == 'mssql':
             if utils.testimport('pyodbc', verbose=False):
-                from _dbi_sqlserver import _DBISQLServer
-                return _DBISQLServer(connstr=connstr, *args, **kwargs)
+                from _dbi_mssql import _DBIMSSQL
+                return _DBIMSSQL(connstr=connstr, *args, **kwargs)
         if name == 'mysql':
             if utils.testimport('mysql.connector', verbose=False):
                 from _dbi_mysql import _DBIMySQL
