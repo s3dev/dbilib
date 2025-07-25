@@ -30,7 +30,10 @@ from sqlalchemy.exc import SQLAlchemyError
 from utils4.reporterror import reporterror
 from utils4.user_interface import ui
 # locals
-from _dbi_base import _DBIBase
+try:
+    from ._dbi_base import _DBIBase
+except ImportError:
+    from _dbi_base import _DBIBase
 
 
 class _DBIMySQL(_DBIBase):

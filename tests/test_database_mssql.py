@@ -28,6 +28,7 @@ from base import TestBase
 from testlibs.constants import startoftest
 from testlibs.constants import templates
 from testlibs.utilities import utilities
+from dbilib._dbi_base import ExitCode
 from dbilib.database import DBInterface
 
 
@@ -41,6 +42,7 @@ class TestDatabaseMSSQL(TestBase):
         ``dbilib.database`` module.
 
     """
+    # pylint: disable=too-many-public-methods
 
     _MSG1 = templates.not_as_expected.database
     _CREDS = {'database': 'dbilib_test',
@@ -73,6 +75,7 @@ class TestDatabaseMSSQL(TestBase):
             raise cls().skipTest(msg)
         cls.ignore_warnings()
         utilities.msgs.print_testing_start(msg=startoftest.database_mssql)
+        cls._db_teardown()  # Start from scratch.
         if not cls._db_setup():
             msg = 'The database setup failed. All further module testing aborted.'
             print(msg)  # Not printed from the raise.
@@ -428,16 +431,16 @@ class TestDatabaseMSSQL(TestBase):
 
         :Test:
             - Call the raw procedure (with a non-existant USP) and verify
-              the error is trapped locally.
+              the error propogates back through to this test case.
 
         """
         # pylint: disable=broad-exception-caught  # It's OK.
         buff = io.StringIO()
-        exp = 'No parameters returned. The following USP may not exist: usp_i_dont_exist'
+        exp = 'Could not find stored procedure \'usp_i_dont_exist\'.'
         dbi = DBInterface(connstr=self._CONNSTR)
         with contextlib.redirect_stdout(buff):
             try:
-                dbi.call_procedure_update_raw(proc='usp_i_dont_exist', data={})
+                _ = dbi.call_procedure_update_raw(proc='usp_i_dont_exist', data={})
             except Exception as err:
                 print(err)
         tst = buff.getvalue()
@@ -512,13 +515,14 @@ class TestDatabaseMSSQL(TestBase):
 
         :Test:
             - Create a database object using the connection string.
-            - Verify the ``get_parameter_name`` method raises the
-              expected error.
+            - Verify the ``get_parameter_name`` returns the expected
+              value.
 
         """
         dbi = DBInterface(connstr=self._CONNSTR)
-        with self.assertRaises(RuntimeError):
-            _ = dbi.get_parameter_names(proc='sp_idontexist')
+        exp = ()
+        tst = dbi.get_parameter_names(proc='sp_idontexist')
+        self.assertEqual(exp, tst)
 
     def test10a__backup(self):
         """Test the ``backup`` method.
@@ -531,11 +535,13 @@ class TestDatabaseMSSQL(TestBase):
         """
         buff = io.StringIO()
         dbi = DBInterface(connstr=self._CONNSTR)
-        exp = 'backup successful'
+        exp1 = ExitCode.OK
+        exp2 = 'backup successful'
         with contextlib.redirect_stdout(buff):
-            dbi.backup(table_name='guitars')
-        tst = buff.getvalue()
-        self.assertIn(exp, tst)
+            tst1 = dbi.backup(table_name='guitars')
+        tst2 = buff.getvalue()
+        self.assertEqual(exp1, tst1)
+        self.assertIn(exp2, tst2)
 
     def test10b__backup__verify_checksums(self):
         """Test the ``backup`` method and verify the dataset in each.
@@ -554,14 +560,16 @@ class TestDatabaseMSSQL(TestBase):
         """
         buff = io.StringIO()
         dbi = DBInterface(connstr=self._CONNSTR)
-        exp1 = 'backup successful'
+        exp1 = ExitCode.OK
+        exp2 = 'backup successful'
         with contextlib.redirect_stdout(buff):
-            dbi.backup(table_name='guitars')
-        tst1 = buff.getvalue()
-        tst2A = dbi.checksum(table_name='guitars', database_name='dbilib_test')
-        tst2B = dbi.checksum(table_name='guitars', database_name='__bak__dbilib_test')
-        self.assertIn(exp1, tst1)
-        self.assertEqual(tst2A, tst2B)
+            tst1 = dbi.backup(table_name='guitars')
+        tst2 = buff.getvalue()
+        tst3A = dbi.checksum(table_name='guitars', database_name='dbilib_test')
+        tst3B = dbi.checksum(table_name='guitars', database_name='__bak__dbilib_test')
+        self.assertEqual(exp1, tst1)
+        self.assertIn(exp2, tst2)
+        self.assertEqual(tst3A, tst3B)
 
     def test10c__backup__not_exist(self):
         """Test the ``backup`` method for a table which does not exist.
@@ -574,13 +582,15 @@ class TestDatabaseMSSQL(TestBase):
         """
         buff = io.StringIO()
         dbi = DBInterface(connstr=self._CONNSTR)
-        exp1 = 'Table does not exist: dbilib_test.idontexist'
-        exp2 = 'backup failed'
+        exp1 = ExitCode.ERR_BKUP_TBNEX
+        exp2A = 'Table does not exist: dbilib_test.idontexist'
+        exp2B = 'backup failed'
         with contextlib.redirect_stdout(buff):
-            dbi.backup(table_name='idontexist')
-        tst = buff.getvalue()
-        self.assertIn(exp1, tst)
-        self.assertIn(exp2, tst)
+            tst1 = dbi.backup(table_name='idontexist')
+        tst2 = buff.getvalue()
+        self.assertEqual(exp1, tst1)
+        self.assertIn(exp2A, tst2)
+        self.assertIn(exp2B, tst2)
 
 # %% Helper methods
 

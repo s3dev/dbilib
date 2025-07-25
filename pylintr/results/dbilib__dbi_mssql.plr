@@ -2,7 +2,7 @@
 
 Report
 ======
-69 statements analysed.
+121 statements analysed.
 
 Statistics by type
 ------------------
@@ -12,9 +12,9 @@ Statistics by type
 +=========+=======+===========+===========+============+=========+
 |module   |1      |1          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|class    |3      |3          |=          |100.00      |0.00     |
+|class    |1      |1          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |9      |9          |=          |100.00      |0.00     |
+|method   |10     |10         |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
 |function |0      |NC         |NC         |0           |0        |
 +---------+-------+-----------+-----------+------------+---------+
@@ -25,16 +25,15 @@ External dependencies
 ---------------------
 ::
 
-    pandas (dbilib._dbi_base)
-    sqlalchemy (dbilib._dbi_base)
-      \-exc (dbilib._dbi_base)
+    sqlalchemy (dbilib._dbi_mssql)
+      \-exc (dbilib._dbi_mssql)
     utils4 
-      \-reporterror (dbilib._dbi_base)
-      \-user_interface (dbilib._dbi_base)
+      \-reporterror (dbilib._dbi_mssql)
+      \-user_interface (dbilib._dbi_mssql)
 
 
 
-309 lines have been analyzed
+492 lines have been analyzed
 
 Raw metrics
 -----------
@@ -42,13 +41,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |88     |28.48 |88       |=          |
+|code      |149    |30.28 |149      |=          |
 +----------+-------+------+---------+-----------+
-|docstring |183    |59.22 |183      |=          |
+|docstring |272    |55.28 |272      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |18     |5.83  |18       |=          |
+|comment   |48     |9.76  |48       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |20     |6.47  |20       |=          |
+|empty     |23     |4.67  |23       |=          |
 +----------+-------+------+---------+-----------+
 
 

@@ -17,7 +17,7 @@
     For class-specific usage examples, please refer to the docstring
     for the following classes:
 
-        - :class:`_DBISQLServer`
+        - :class:`_DBIMSSQL`
 
 """
 # pylint: disable=import-error
@@ -30,9 +30,9 @@ from utils4.reporterror import reporterror
 from utils4.user_interface import ui
 # locals
 try:
-    from ._dbi_base import _DBIBase
+    from ._dbi_base import _DBIBase, ExitCode
 except ImportError:
-    from _dbi_base import _DBIBase
+    from _dbi_base import _DBIBase, ExitCode
 
 
 class _DBIMSSQL(_DBIBase):
@@ -84,11 +84,13 @@ class _DBIMSSQL(_DBIBase):
 
     # The __init__ method is implemented in the parent class.
 
-    def backup(self, table_name: str) -> None:
+    def backup(self, table_name: str, verbose: bool=True) -> ExitCode:
         """Backup the given table to the backup database.
 
         Args:
             table_name (str): Name of the table to be backed up.
+            verbose (bool, optional): Display helpful text indicating the
+                status of the backup. Defaults to True.
 
         .. important::
             The backup database (which is implicitly determined by the
@@ -109,12 +111,21 @@ class _DBIMSSQL(_DBIBase):
             user from click-selecting the wrong database (in SSMS) by
             accident.
 
+        Returns:
+            ExitCode: The exit code enumerator object associated to the
+            status of the backup process.
+
         """
         bkdb = f'__bak__{self.database_name}'
-        s = self.table_exists(table_name=table_name, verbose=True)
-        if s: s = self.database_exists(database_name=bkdb, verbose=True)
-        if s: s = self._backup(table_name=table_name, bkdb_name=bkdb)
-        self._print_summary(success=s)
+        s1, s2, s3 = False, False, False
+        s1 = self.table_exists(table_name=table_name, verbose=verbose)
+        if s1: s2 = self.database_exists(database_name=bkdb, verbose=verbose)
+        if s2: s3 = self._backup(table_name=table_name, bkdb_name=bkdb)
+        if verbose: self._print_summary(success=all((s1, s2, s3)))
+        if not s1: return ExitCode.ERR_BKUP_TBNEX
+        if not s2: return ExitCode.ERR_BKUP_DBNEX
+        if not s3: return ExitCode.ERR_BKUP_CKSUM
+        return ExitCode.OK
 
     # pylint: disable=line-too-long
     def call_procedure(self,
@@ -383,6 +394,8 @@ class _DBIMSSQL(_DBIBase):
             tuple: A tuple of parameter names for the given USP.
 
         """
+        # TODO: Make this more robust by removing the hardcoded SUBSTRING and
+        #       test if the first char is '@' before removing.
         stmt = f"""
             /* Use SUBSTRING to remove the '@' from the parameter name. */
             SELECT
@@ -398,7 +411,7 @@ class _DBIMSSQL(_DBIBase):
             resp = self.execute_query(stmt=stmt, raw=True)
             if resp:
                 return next(zip(*resp))
-            raise RuntimeError(f'No parameters returned. The following USP may not exist: {proc}')
+            return ()
         return ()  # pragma: nocover  # Unreachable
 
     def table_exists(self, table_name: str, database_name: str=None, verbose: bool=False) -> bool:

@@ -36,9 +36,21 @@ from __future__ import annotations
 import pandas as pd
 import traceback
 import sqlalchemy as sa
+from enum import IntEnum
 from sqlalchemy.exc import SQLAlchemyError
 from utils4.reporterror import reporterror
 from utils4.user_interface import ui
+
+
+class ExitCode(IntEnum):
+    """Program exit code container class."""
+
+    OK = 0                      # General OK
+
+    # Backup codes (110-119)
+    ERR_BKUP_TBNEX = 110        # Table does not exist
+    ERR_BKUP_DBNEX = 111        # Backup database does not exist
+    ERR_BKUP_CKSUM = 112        # Checksum mismatch
 
 
 class SecurityWarning(Warning):
@@ -101,6 +113,7 @@ class _DBIBase:
 
     def execute_query(self,
                       stmt: str,
+                      *,
                       params: dict=None,
                       raw: bool=True,
                       commit: bool=True,
@@ -244,12 +257,12 @@ class _DBIBase:
                 from the try/except block.
 
         """
-        msg = f'\n{self._PREFIX} {msg}'
-        stmt = f'- Statement: {error.statement}'
-        errr = f'- Error: {str(error.orig)}'
-        ui.print_alert(text=msg)
-        ui.print_alert(text=stmt)
-        ui.print_alert(text=errr)
+        err_stmt = error.statement if hasattr(error, 'statement') else 'n/a'
+        err_orig = str(error.orig) if hasattr(error, 'orig') else 'n/a'
+        ui.print_alert(text=f'\n{self._PREFIX} {msg}')
+        ui.print_alert(text=f'- Raw: {str(error).strip()}')
+        ui.print_alert(text=f'- Statement: {err_stmt}')
+        ui.print_alert(text=f'- Error: {err_orig}')
 
     @staticmethod
     def _result_to_df__cursor(result: sa.engine.cursor.CursorResult) -> pd.DataFrame:

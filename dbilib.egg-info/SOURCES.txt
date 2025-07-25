@@ -21,7 +21,6 @@ dbilib.egg-info/SOURCES.txt
 dbilib.egg-info/dependency_links.txt
 dbilib.egg-info/requires.txt
 dbilib.egg-info/top_level.txt
-dist/dbilib-0.5.0.dev2-py3-none-any.whl
 docs/.constants.config
 docs/create.sh
 docs/requirements.txt
@@ -126,10 +125,10 @@ docs/source/_static/tbl/contact.csv
 pylintr/generate_rcfile.sh
 pylintr/pylintr.sh
 pylintr/results/dbilib__dbi_base.plr
+pylintr/results/dbilib__dbi_mssql.plr
 pylintr/results/dbilib__dbi_mysql.plr
 pylintr/results/dbilib__dbi_oracle.plr
 pylintr/results/dbilib__dbi_sqlite.plr
-pylintr/results/dbilib__dbi_sqlserver.plr
 pylintr/results/dbilib_changelog.plr
 pylintr/results/dbilib_database.plr
 pylintr/results/summary.plr
@@ -157,11 +156,11 @@ tests/htmlcov/index.html
 tests/htmlcov/keybd_closed_cb_ce680311.png
 tests/htmlcov/status.json
 tests/htmlcov/style_cb_8e611ae1.css
-tests/htmlcov/z_7b9777112a44a44a___init___py.html
-tests/htmlcov/z_7b9777112a44a44a__dbi_base_py.html
-tests/htmlcov/z_7b9777112a44a44a__dbi_mysql_py.html
-tests/htmlcov/z_7b9777112a44a44a__dbi_sqlite_py.html
-tests/htmlcov/z_7b9777112a44a44a__version_py.html
-tests/htmlcov/z_7b9777112a44a44a_database_py.html
+tests/htmlcov/z_29e7f544485278e0___init___py.html
+tests/htmlcov/z_29e7f544485278e0__dbi_base_py.html
+tests/htmlcov/z_29e7f544485278e0__dbi_mysql_py.html
+tests/htmlcov/z_29e7f544485278e0__dbi_sqlite_py.html
+tests/htmlcov/z_29e7f544485278e0__version_py.html
+tests/htmlcov/z_29e7f544485278e0_database_py.html
 tests/testlibs/constants.py
 tests/testlibs/utilities.py

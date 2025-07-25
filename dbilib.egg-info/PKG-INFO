@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: dbilib
-Version: 0.5.0.dev2
+Version: 0.5.0.dev3
 Summary: A generalised and simple database interface library.
 Author-email: The Developers <development@s3dev.uk>
 License-Expression: MIT

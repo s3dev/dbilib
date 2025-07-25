@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mssql &mdash; dbilib - v0.5.0.dev2 Documentation</title>
+  <title>_dbi_mssql &mdash; dbilib - v0.5.0.dev3 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=48ed5a3b"></script>
+        <script src="../_static/documentation_options.js?v=2c228a7f"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev2
+                0.5.0.dev3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -99,7 +99,7 @@
 <span class="sd">    For class-specific usage examples, please refer to the docstring</span>
 <span class="sd">    for the following classes:</span>
 
-<span class="sd">        - :class:`_DBISQLServer`</span>
+<span class="sd">        - :class:`_DBIMSSQL`</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="c1"># pylint: disable=import-error</span>
@@ -112,9 +112,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">utils4.user_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">ui</span>
 <span class="c1"># locals</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">._dbi_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIBase</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">._dbi_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIBase</span><span class="p">,</span> <span class="n">ExitCode</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIBase</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIBase</span><span class="p">,</span> <span class="n">ExitCode</span>
 
 
 <div class="viewcode-block" id="_DBIMSSQL">
@@ -170,11 +170,13 @@
 
 <div class="viewcode-block" id="_DBIMSSQL.backup">
 <a class="viewcode-back" href="../_dbi_mssql.html#_dbi_mssql._DBIMSSQL.backup">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">backup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">backup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ExitCode</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Backup the given table to the backup database.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            table_name (str): Name of the table to be backed up.</span>
+<span class="sd">            verbose (bool, optional): Display helpful text indicating the</span>
+<span class="sd">                status of the backup. Defaults to True.</span>
 
 <span class="sd">        .. important::</span>
 <span class="sd">            The backup database (which is implicitly determined by the</span>
@@ -195,12 +197,21 @@
 <span class="sd">            user from click-selecting the wrong database (in SSMS) by</span>
 <span class="sd">            accident.</span>
 
+<span class="sd">        Returns:</span>
+<span class="sd">            ExitCode: The exit code enumerator object associated to the</span>
+<span class="sd">            status of the backup process.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">bkdb</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;__bak__</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">database_name</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_exists</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_exists</span><span class="p">(</span><span class="n">database_name</span><span class="o">=</span><span class="n">bkdb</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">bkdb_name</span><span class="o">=</span><span class="n">bkdb</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_print_summary</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="n">s</span><span class="p">)</span></div>
+        <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s3</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="n">s1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_exists</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s1</span><span class="p">:</span> <span class="n">s2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database_exists</span><span class="p">(</span><span class="n">database_name</span><span class="o">=</span><span class="n">bkdb</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">s2</span><span class="p">:</span> <span class="n">s3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backup</span><span class="p">(</span><span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">bkdb_name</span><span class="o">=</span><span class="n">bkdb</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print_summary</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="nb">all</span><span class="p">((</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">s3</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s1</span><span class="p">:</span> <span class="k">return</span> <span class="n">ExitCode</span><span class="o">.</span><span class="n">ERR_BKUP_TBNEX</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s2</span><span class="p">:</span> <span class="k">return</span> <span class="n">ExitCode</span><span class="o">.</span><span class="n">ERR_BKUP_DBNEX</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s3</span><span class="p">:</span> <span class="k">return</span> <span class="n">ExitCode</span><span class="o">.</span><span class="n">ERR_BKUP_CKSUM</span>
+        <span class="k">return</span> <span class="n">ExitCode</span><span class="o">.</span><span class="n">OK</span></div>
 
 
     <span class="c1"># pylint: disable=line-too-long</span>
@@ -487,6 +498,8 @@
 <span class="sd">            tuple: A tuple of parameter names for the given USP.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Make this more robust by removing the hardcoded SUBSTRING and</span>
+        <span class="c1">#       test if the first char is &#39;@&#39; before removing.</span>
         <span class="n">stmt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">            /* Use SUBSTRING to remove the &#39;@&#39; from the parameter name. */</span>
 <span class="s2">            SELECT</span>
@@ -502,7 +515,7 @@
             <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="n">stmt</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">resp</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">resp</span><span class="p">))</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No parameters returned. The following USP may not exist: </span><span class="si">{</span><span class="n">proc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">()</span>
         <span class="k">return</span> <span class="p">()</span>  <span class="c1"># pragma: nocover  # Unreachable</span></div>
 
 
@@ -597,7 +610,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev2.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev3.</p>
   </div>
 
    

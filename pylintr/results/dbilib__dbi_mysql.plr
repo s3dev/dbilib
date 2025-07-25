@@ -2,7 +2,7 @@
 
 Report
 ======
-73 statements analysed.
+76 statements analysed.
 
 Statistics by type
 ------------------
@@ -25,6 +25,9 @@ External dependencies
 ---------------------
 ::
 
+    mysql 
+      \-connector 
+        \-errors (dbilib._dbi_mysql)
     pandas (dbilib._dbi_mysql)
     sqlalchemy 
       \-exc (dbilib._dbi_mysql)
@@ -34,7 +37,7 @@ External dependencies
 
 
 
-258 lines have been analyzed
+261 lines have been analyzed
 
 Raw metrics
 -----------
@@ -42,13 +45,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |81     |31.40 |81       |=          |
+|code      |84     |32.18 |84       |=          |
 +----------+-------+------+---------+-----------+
-|docstring |152    |58.91 |152      |=          |
+|docstring |152    |58.24 |152      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |16     |6.20  |16       |=          |
+|comment   |16     |6.13  |16       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |9      |3.49  |9        |=          |
+|empty     |9      |3.45  |9        |=          |
 +----------+-------+------+---------+-----------+
 
 

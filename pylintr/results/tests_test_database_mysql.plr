@@ -2,7 +2,7 @@
 
 Report
 ======
-166 statements analysed.
+168 statements analysed.
 
 Statistics by type
 ------------------
@@ -26,14 +26,19 @@ External dependencies
 ::
 
     base (test_database_mysql)
+    mysql 
+      \-connector 
+        \-errors (test_database_mysql)
     pandas (test_database_mysql)
     testlibs 
       \-constants (test_database_mysql)
       \-utilities (test_database_mysql)
+    utils4 
+      \-utils (test_database_mysql)
 
 
 
-448 lines have been analyzed
+450 lines have been analyzed
 
 Raw metrics
 -----------
@@ -41,13 +46,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |186    |41.52 |186      |=          |
+|code      |188    |41.78 |188      |=          |
 +----------+-------+------+---------+-----------+
-|docstring |219    |48.88 |219      |=          |
+|docstring |219    |48.67 |219      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |17     |3.79  |16       |+1.00      |
+|comment   |17     |3.78  |17       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |26     |5.80  |26       |=          |
+|empty     |26     |5.78  |26       |=          |
 +----------+-------+------+---------+-----------+
 
 
@@ -71,7 +76,7 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |0      |6        |6          |
+|convention |0      |0        |0          |
 +-----------+-------+---------+-----------+
 |refactor   |0      |0        |0          |
 +-----------+-------+---------+-----------+
@@ -92,6 +97,6 @@ Messages
 
 
 
--------------------------------------------------------------------
-Your code has been rated at 10.00/10 (previous run: 9.64/10, +0.36)
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
 
