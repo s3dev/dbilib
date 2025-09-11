@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: dbilib
-Version: 0.5.0.dev3
+Version: 0.5.0b1
 Summary: A generalised and simple database interface library.
 Author-email: The Developers <development@s3dev.uk>
 License-Expression: MIT
@@ -8,7 +8,7 @@ Project-URL: Documentation, https://dbilib.readthedocs.io/en/latest/
 Project-URL: Homepage, https://github.com/s3dev/dbilib
 Project-URL: Repository, https://github.com/s3dev/dbilib
 Keywords: database,interface,utilities
-Classifier: Development Status :: 3 - Alpha
+Classifier: Development Status :: 4 - Beta
 Classifier: Intended Audience :: Developers
 Classifier: Operating System :: POSIX :: Linux
 Classifier: Operating System :: Microsoft :: Windows
