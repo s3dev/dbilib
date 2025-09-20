@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mssql &mdash; dbilib - v0.5.0.dev3 Documentation</title>
+  <title>_dbi_mssql &mdash; dbilib - v0.5.0 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=2c228a7f"></script>
+        <script src="../_static/documentation_options.js?v=67b26ddf"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev3
+                0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -310,16 +310,18 @@
 <span class="sd">                method. For efficiency, the parameter names should be</span>
 <span class="sd">                passed if making repeated calls to the procedure.</span>
 <span class="sd">            return_id (bool, optional): Return the ID of the last</span>
-<span class="sd">                inserted row. **See note above.** Defaults to False.</span>
+<span class="sd">                inserted row. If a duplicate constraint is encountered,</span>
+<span class="sd">                -1 is returned as the row ID. **See note above.**</span>
+<span class="sd">                Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool | tuple: If ``return_id`` is False, True is</span>
 <span class="sd">            returned if the procedure completed  successfully, otherwise</span>
 <span class="sd">            False. If ``return_id`` is True, a tuple containing the</span>
-<span class="sd">            ID of the last inserted row and the execution success flag</span>
-<span class="sd">            are returned as::</span>
+<span class="sd">            ID of the last inserted row (or -1 on duplicate) and the</span>
+<span class="sd">            execution success flag are returned as::</span>
 
-<span class="sd">                (id, success_flag)</span>
+<span class="sd">                (rowid, success_flag)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># pylint: disable=consider-using-f-string  # No, need the formatter.</span>
@@ -338,7 +340,12 @@
                 <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-            <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;Cannot insert duplicate key&#39;</span> <span class="ow">in</span> <span class="nb">repr</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_PREFIXW</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s1"> Duplicate record detected, skipping.&#39;</span>
+                <span class="n">rowid</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)]</span>  <span class="c1"># Match format of a returned row ID.</span>
+                <span class="n">ui</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">rowid</span><span class="p">,</span> <span class="n">success</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_id</span> <span class="k">else</span> <span class="n">success</span></div>
 
 
@@ -610,7 +617,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev3.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.</p>
   </div>
 
    

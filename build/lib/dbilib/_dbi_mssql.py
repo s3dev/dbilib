@@ -218,16 +218,18 @@ class _DBIMSSQL(_DBIBase):
                 method. For efficiency, the parameter names should be
                 passed if making repeated calls to the procedure.
             return_id (bool, optional): Return the ID of the last
-                inserted row. **See note above.** Defaults to False.
+                inserted row. If a duplicate constraint is encountered,
+                -1 is returned as the row ID. **See note above.**
+                Defaults to False.
 
         Returns:
             bool | tuple: If ``return_id`` is False, True is
             returned if the procedure completed  successfully, otherwise
             False. If ``return_id`` is True, a tuple containing the
-            ID of the last inserted row and the execution success flag
-            are returned as::
+            ID of the last inserted row (or -1 on duplicate) and the
+            execution success flag are returned as::
 
-                (id, success_flag)
+                (rowid, success_flag)
 
         """
         # pylint: disable=consider-using-f-string  # No, need the formatter.
@@ -246,7 +248,12 @@ class _DBIMSSQL(_DBIBase):
                 con.close()
                 success = True
         except Exception as err:
-            reporterror(err)
+            if 'Cannot insert duplicate key' in repr(err):
+                msg = f'{self._PREFIXW.strip()} Duplicate record detected, skipping.'
+                rowid = [(-1,)]  # Match format of a returned row ID.
+                ui.print_warning(text=msg)
+            else:
+                reporterror(err)
         return (rowid, success) if return_id else success
 
     #

@@ -15,6 +15,7 @@
 """
 # pylint: disable=import-error
 # pylint: disable=invalid-name
+# pylint: disable=no-member
 # pylint: disable=wrong-import-order
 
 import contextlib
@@ -350,6 +351,22 @@ class TestDatabaseMySQL(TestBase):
             tst = dbi.execute_query(stmt=stmt_)
         self.assertIn('SecurityWarning: Comments are not allowed', buff.getvalue())
         self.assertIs(None, tst, msg=self._MSG1.format(None, tst))
+
+    def test06f__execute_query__flat(self):
+        """Test the execute_query method, returning flattened results.
+
+        :Test:
+            - Call the ``execute_query`` method with a parameter.
+            - Verify the results are as expected.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = (3,)
+        tst = dbi.execute_query(stmt='select count(*) from guitars where colour = :colour',
+                                params={'colour': 'Black'},
+                                raw=True,
+                                flat=True)
+        self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
 
     def test07a__call_procedure_update_raw__no_error(self):
         """Test the call_procedure_update_raw method, no errors.

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_base &mdash; dbilib - v0.5.0.dev3 Documentation</title>
+  <title>_dbi_base &mdash; dbilib - v0.5.0 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=2c228a7f"></script>
+        <script src="../_static/documentation_options.js?v=67b26ddf"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev3
+                0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -181,6 +181,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">_PREFIX</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">[DatabaseError]:&#39;</span>
+    <span class="n">_PREFIXW</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">[DatabaseWarning]:&#39;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connstr</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Class initialiser.&quot;&quot;&quot;</span>
@@ -205,9 +206,10 @@
 <a class="viewcode-back" href="../_dbi_base.html#_dbi_base._DBIBase.execute_query">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">execute_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                       <span class="n">stmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                      <span class="o">*</span><span class="p">,</span>
                       <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="o">*</span><span class="p">,</span>
                       <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">flat</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                       <span class="n">commit</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">ignore_unsafe</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute a query statement.</span>
@@ -230,6 +232,14 @@
 <span class="sd">            raw (bool, optional): Return the data in &#39;raw&#39; (tuple)</span>
 <span class="sd">                format rather than as a formatted DataFrame.</span>
 <span class="sd">                Defaults to True for efficiency.</span>
+<span class="sd">            flat (bool, optional): Flatten the response. This is useful</span>
+<span class="sd">                if the expected response is a collection of *single</span>
+<span class="sd">                elements*. If True, this will return a flattened tuple of</span>
+<span class="sd">                elements, rather than a list of tuples, as is the default</span>
+<span class="sd">                behaviour. Note (1): If true, and the return is a list of</span>
+<span class="sd">                multi-value tuples, only the first element in each tuple</span>
+<span class="sd">                will be returned. Note (2): This argument should only be</span>
+<span class="sd">                used if ``raw=True``. Defaults to False.</span>
 <span class="sd">            commit (bool, optional): Call COMMIT after the transaction</span>
 <span class="sd">                is complete. Defaults to True (for backwards</span>
 <span class="sd">                compatibility).</span>
@@ -296,7 +306,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;object does not return rows&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">err</span><span class="o">.</span><span class="n">_message</span><span class="p">():</span>
                 <span class="n">reporterror</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">rtn</span></div>
+        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">rtn</span><span class="p">))</span> <span class="k">if</span> <span class="n">flat</span> <span class="k">else</span> <span class="n">rtn</span></div>
 
 
 <div class="viewcode-block" id="_DBIBase._create_engine">
@@ -358,12 +368,16 @@
 <span class="sd">                from the try/except block.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_PREFIX</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span>
         <span class="n">err_stmt</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">statement</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s1">&#39;statement&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;n/a&#39;</span>
         <span class="n">err_orig</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">orig</span><span class="p">)</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s1">&#39;orig&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;n/a&#39;</span>
-        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_PREFIX</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;- Raw: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;- Statement: </span><span class="si">{</span><span class="n">err_stmt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;- Error: </span><span class="si">{</span><span class="n">err_orig</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+        <span class="n">raw</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;- Raw: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">stmt</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;- Statement: </span><span class="si">{</span><span class="n">err_stmt</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">errr</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;- Error: </span><span class="si">{</span><span class="n">err_orig</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">raw</span><span class="p">)</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">stmt</span><span class="p">)</span>
+        <span class="n">ui</span><span class="o">.</span><span class="n">print_alert</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">errr</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="_DBIBase._result_to_df__cursor">
@@ -423,7 +437,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev3.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.</p>
   </div>
 
    

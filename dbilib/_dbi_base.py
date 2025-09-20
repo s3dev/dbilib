@@ -91,6 +91,7 @@ class _DBIBase:
     """
 
     _PREFIX = '\n[DatabaseError]:'
+    _PREFIXW = '\n[DatabaseWarning]:'
 
     def __init__(self, connstr: str):
         """Class initialiser."""
@@ -113,9 +114,10 @@ class _DBIBase:
 
     def execute_query(self,
                       stmt: str,
-                      *,
                       params: dict=None,
+                      *,
                       raw: bool=True,
+                      flat: bool=False,
                       commit: bool=True,
                       ignore_unsafe: bool=False) -> list | pd.DataFrame | None:
         """Execute a query statement.
@@ -138,6 +140,14 @@ class _DBIBase:
             raw (bool, optional): Return the data in 'raw' (tuple)
                 format rather than as a formatted DataFrame.
                 Defaults to True for efficiency.
+            flat (bool, optional): Flatten the response. This is useful
+                if the expected response is a collection of *single
+                elements*. If True, this will return a flattened tuple of
+                elements, rather than a list of tuples, as is the default
+                behaviour. Note (1): If true, and the return is a list of
+                multi-value tuples, only the first element in each tuple
+                will be returned. Note (2): This argument should only be
+                used if ``raw=True``. Defaults to False.
             commit (bool, optional): Call COMMIT after the transaction
                 is complete. Defaults to True (for backwards
                 compatibility).
@@ -204,7 +214,7 @@ class _DBIBase:
         except Exception as err:
             if 'object does not return rows' not in err._message():
                 reporterror(err)
-        return rtn
+        return next(zip(*rtn)) if flat else rtn
 
     def _create_engine(self) -> sa.engine.base.Engine:
         """Create a database engine using the provided environment.
@@ -257,12 +267,16 @@ class _DBIBase:
                 from the try/except block.
 
         """
+        msg = f'\n{self._PREFIX} {msg}'
         err_stmt = error.statement if hasattr(error, 'statement') else 'n/a'
         err_orig = str(error.orig) if hasattr(error, 'orig') else 'n/a'
-        ui.print_alert(text=f'\n{self._PREFIX} {msg}')
-        ui.print_alert(text=f'- Raw: {str(error).strip()}')
-        ui.print_alert(text=f'- Statement: {err_stmt}')
-        ui.print_alert(text=f'- Error: {err_orig}')
+        raw = f'- Raw: {str(error).strip()}'
+        stmt = f'- Statement: {err_stmt}'
+        errr = f'- Error: {err_orig}'
+        ui.print_alert(text=msg)
+        ui.print_alert(text=raw)
+        ui.print_alert(text=stmt)
+        ui.print_alert(text=errr)
 
     @staticmethod
     def _result_to_df__cursor(result: sa.engine.cursor.CursorResult) -> pd.DataFrame:

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Change Log &mdash; dbilib - v0.5.0b1 Documentation</title>
+  <title>Change Log &mdash; dbilib - v0.5.0 Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=ceb4d387"></script>
+        <script src="_static/documentation_options.js?v=67b26ddf"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -42,7 +42,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0b1
+                0.5.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -84,6 +84,21 @@
   <section id="module-changelog">
 <span id="change-log"></span><h1>Change Log<a class="headerlink" href="#module-changelog" title="Link to this heading"></a></h1>
 <ul>
+<li><p><strong>0.5.0 - Release implementing support for MSSQL.</strong><span> by </span><em>u555923</em><span> at </span><em>2025-09-20 10:46:05</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Changes</span> <span class="n">relative</span> <span class="n">to</span> <span class="mf">0.5.0</span><span class="n">b1</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">The</span> <span class="n">MSSQL</span> <span class="s1">&#39;call_procedure_update&#39;</span> <span class="n">method</span> <span class="n">now</span> <span class="n">returns</span> <span class="o">-</span><span class="mi">1</span> <span class="k">as</span> <span class="n">the</span> <span class="n">row</span> <span class="n">ID</span>
+  <span class="k">for</span> <span class="n">a</span> <span class="n">duplicated</span> <span class="n">row</span> <span class="n">on</span> <span class="n">update</span> <span class="n">USP</span> <span class="n">calls</span><span class="o">.</span> <span class="n">Note</span><span class="p">:</span> <span class="n">The</span> <span class="n">table</span> <span class="n">must</span> <span class="n">have</span> <span class="n">a</span>
+  <span class="n">UNIQUE</span> <span class="n">constraint</span> <span class="k">for</span> <span class="n">this</span> <span class="n">to</span> <span class="n">be</span> <span class="n">triggered</span><span class="o">.</span>
+<span class="o">-</span> <span class="n">A</span> <span class="s1">&#39;flat&#39;</span> <span class="n">parameter</span> <span class="n">has</span> <span class="n">been</span> <span class="n">added</span> <span class="n">to</span> <span class="n">the</span> <span class="s1">&#39;execute_query&#39;</span> <span class="n">method</span> <span class="k">for</span>
+  <span class="n">flattening</span> <span class="n">the</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">tuples</span> <span class="n">result</span> <span class="k">for</span> <span class="n">single</span> <span class="n">element</span> <span class="n">responses</span><span class="o">.</span>
+
+<span class="n">Testing</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">Testing</span> <span class="n">completed</span> <span class="n">successfully</span> <span class="k">with</span> <span class="mi">100</span><span class="o">%</span> <span class="n">code</span> <span class="n">coverage</span><span class="o">.</span>
+
+<span class="n">Released</span><span class="p">:</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">20</span>
+</pre></div>
+</div>
+</li>
 <li><p><strong>0.5.0b1 - Beta release for version 0.5.0.dev3.</strong><span> by </span><em>j_berendt</em><span> at </span><em>2025-09-11 10:28:13</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Released</span><span class="p">:</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">11</span>
 </pre></div>
@@ -405,7 +420,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0b1.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.</p>
   </div>
 
    

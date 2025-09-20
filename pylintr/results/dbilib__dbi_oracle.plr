@@ -1,7 +1,7 @@
 ************* Module dbilib._dbi_oracle
-/var/devmt/py/dbilib_0.5.0.dev3/dbilib/_dbi_oracle.py:114:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dbilib_0.5.0.dev3/dbilib/_dbi_oracle.py:191:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
-/var/devmt/py/dbilib_0.5.0.dev3/dbilib/_dbi_oracle.py:207:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dbilib_0.5.0/dbilib/_dbi_oracle.py:114:15: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dbilib_0.5.0/dbilib/_dbi_oracle.py:191:49: I1101: Module 'cx_Oracle' has no 'DatabaseError' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+/var/devmt/py/dbilib_0.5.0/dbilib/_dbi_oracle.py:207:41: I1101: Module 'cx_Oracle' has no 'Cursor' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
 
 
 Report

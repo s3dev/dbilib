@@ -26,6 +26,8 @@ External dependencies
 ::
 
     base (test_database_sqlite)
+    dbilib 
+      \-database (test_database_sqlite)
     pandas (test_database_sqlite)
     testlibs 
       \-constants (test_database_sqlite)
@@ -33,7 +35,7 @@ External dependencies
 
 
 
-237 lines have been analyzed
+238 lines have been analyzed
 
 Raw metrics
 -----------
@@ -41,13 +43,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |95     |40.08 |95       |=          |
+|code      |95     |39.92 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|docstring |116    |48.95 |116      |=          |
+|docstring |116    |48.74 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|comment   |10     |4.22  |10       |=          |
+|comment   |11     |4.62  |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|empty     |16     |6.75  |16       |=          |
+|empty     |16     |6.72  |NC       |NC         |
 +----------+-------+------+---------+-----------+
 
 

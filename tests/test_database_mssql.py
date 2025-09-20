@@ -15,6 +15,7 @@
 """
 # pylint: disable=import-error
 # pylint: disable=invalid-name
+# pylint: disable=no-member
 # pylint: disable=wrong-import-order
 
 import contextlib
@@ -222,24 +223,65 @@ class TestDatabaseMSSQL(TestBase):
         exp = pd.read_pickle(os.path.join(self._DIR_DATA, fname))
         self.assertTrue(exp.equals(df.iloc[:,1:]), msg=self._MSG1.format(exp, df))
 
-    def test03b__call_procedure__insert(self):
-        """Test the call_procedure method for an INSERT USP.
+    def test03b__call_procedure__raw(self):
+        """Test the call_procedure method with raw return value.
+
+        :Test:
+            - Call the ``call_procedure`` method and verify the returned
+              results are as expected.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = [(12, 'Gibson', 'Les Paul', 'Gold')]
+        params={'_colour': 'gold'}
+        tst = dbi.call_procedure(proc='usp_get_guitars_colour', params=params, raw=True)
+        self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
+
+    def test03b__call_procedure_update__insert(self):
+        """Test the call_procedure_update method for an INSERT USP.
 
         This test case is designed to test the method's ``conn.commit()``
         call inserts and commits the new data.
 
         :Test:
-            - Call the ``call_procedure`` method to insert new data.
+            - Call the ``call_procedure_update`` method to insert new
+              data.
             - Query the table to verify the returned results are as
               expected.
 
         """
         dbi = DBInterface(connstr=self._CONNSTR)
         exp = 'Natural'
-        params = {'_make': 'Taylor', '_model': 'Presentation', '_colour': 'Natural'}
-        dbi.call_procedure(proc='usp_insert_guitars_add_new', params=params, return_status=False)
-        tst = dbi.execute_query('select colour from guitars where model = \'Presentation\'')[0][0]
-        self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
+        data = {'_make': 'Taylor', '_model': 'Presentation', '_colour': 'Natural'}
+        tst1 = dbi.call_procedure_update(proc='usp_insert_guitars_add_new',
+                                         data=data,
+                                         return_id=False)
+        tst2 = dbi.execute_query('select colour from guitars where model = \'Presentation\'')[0][0]
+        self.assertTrue(tst1)
+        self.assertEqual(exp, tst2, msg=self._MSG1.format(exp, tst2))
+
+    def test03b__call_procedure_update__insert_duplicate(self):
+        """Test the call_procedure_update method for an INSERT USP.
+
+        This test case is designed to test the method's duplicate row
+        response.
+
+        :Test:
+            - Call the ``call_procedure_update`` method to insert
+              duplicate data.
+            - Verify the returned rowid and success values.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp1 = [(-1,)]
+        exp2 = False
+        data = {'_make': 'Taylor', '_model': 'Presentation', '_colour': 'Natural'}
+        with contextlib.redirect_stdout(None):
+            rowid, success = dbi.call_procedure_update(proc='usp_insert_guitars_add_new',
+                                                       data=data,
+                                                       return_id=True)
+        self.assertEqual(exp1, rowid, msg=self._MSG1.format(exp1, rowid))
+        self.assertEqual(exp2, success, msg=self._MSG1.format(exp2, success))
 
     def test04a__call_procedure_update(self):
         """Test the call_procedure_update method, without a return ID.
@@ -252,7 +294,7 @@ class TestDatabaseMSSQL(TestBase):
         """
         dbi = DBInterface(connstr=self._CONNSTR)
         exp1 = True
-        exp2 = 'green'
+        exp2 = 'Green'
         data = {'_id': 1, '_colour': exp2}
         tst1 = dbi.call_procedure_update(proc='usp_update_guitars_colour', data=data)
         tst2 = dbi.execute_query('select colour from guitars where id = 1')[0][0]
@@ -286,7 +328,7 @@ class TestDatabaseMSSQL(TestBase):
         players  = ['David Gilmour', 'Eric Clapton', 'Eric Johnson', 'Mark Knopfler']
         dbi = DBInterface(connstr=self._CONNSTR)
         # Add new guitar.
-        exp1 = ([(16,)], True)
+        exp1 = ([(17,)], True)
         data = {'_make': 'Fender', '_model': 'Stratocaster', '_colour': 'Various'}
         tst1 = dbi.call_procedure_update(proc='usp_insert_guitars_add_new',
                                          data=data,
@@ -409,6 +451,21 @@ class TestDatabaseMSSQL(TestBase):
         self.assertIn('SecurityWarning: Comments are not allowed', buff.getvalue())
         self.assertIsNone(tst)
 
+    def test06f__execute_query__flat(self):
+        """Test the execute_query method with the ``flat`` argument.
+
+        :Test:
+            - Call the ``execute_query`` method using the ``flat``
+              argument.
+            - Verify the returned results are as expected.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = ('Fender', 'Fender', 'Gibson')
+        stmt = 'select make from guitars where colour = :colour;'
+        tst = dbi.execute_query(stmt=stmt, params={'colour': 'black'}, flat=True, raw=True)
+        self.assertEqual(exp, tst)
+
     def test07a__call_procedure_update_raw__no_error(self):
         """Test the call_procedure_update_raw method, no errors.
 
@@ -422,7 +479,7 @@ class TestDatabaseMSSQL(TestBase):
         exp = ''
         with contextlib.redirect_stdout(buff):
             dbi.call_procedure_update_raw(proc='usp_update_guitars_colour',
-                                                data={'_id': 1, '_colour': 'Blue'})
+                                                data={'_id': 1, '_colour': 'Fiesta Red'})
         tst = buff.getvalue()
         self.assertEqual(exp, tst, msg=self._MSG1.format(exp, tst))
 
@@ -611,7 +668,7 @@ class TestDatabaseMSSQL(TestBase):
         for table in tables:
             with open(table, 'r', encoding='utf-8') as f:
                 stmt = f.read()
-                dbi.execute_query(stmt=stmt)
+                dbi.execute_query(stmt=stmt, ignore_unsafe=True)
         for usp in usps:
             with open(usp, 'r', encoding='utf-8') as f:
                 stmt = f.read()
