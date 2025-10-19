@@ -185,13 +185,13 @@ class DBInterface:
         # Enable the use of *args and **kwargs for class parameters.
         # pylint: disable=unused-argument
         name = cls._create_engine__internal_only(connstr=connstr)
-        if name not in cls._SUPPORTED_DBS:
+        if name not in cls._SUPPORTED_DBS:  # nocover
             raise NotImplementedError('The only databases supported at this time are: '
                                       f'{cls._SUPPORTED_DBS}.')
         # These are intentionally verbose as a ModuleNotFoundError will
         # be raised during the test if operating on an environment without
         # that driver installed.
-        if name == 'mssql':
+        if name == 'mssql':  # nocover  # MSSQL is tested in a different environment.
             if utils.testimport('pyodbc', verbose=False):
                 from _dbi_mssql import _DBIMSSQL
                 return _DBIMSSQL(connstr=connstr, *args, **kwargs)

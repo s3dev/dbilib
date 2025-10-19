@@ -193,7 +193,7 @@ class _DBIMSSQL(_DBIBase):
     def call_procedure_update(self,
                               proc: str,
                               *,
-                              data: dict,
+                              data: dict | list[dict],
                               paramnames: list | tuple=None,
                               return_id: bool=False) -> bool | tuple:
         """Call an *update* or *insert* stored procedure.
@@ -208,9 +208,15 @@ class _DBIMSSQL(_DBIBase):
 
         Args:
             proc (str): Name of the stored procedure to call.
-            data (dict): A dictionary containing the data to be loaded
+            data (dict | list[dict]): A dictionary containing the data to be loaded
                 as key/value pairs, with the keys being the parameter
                 names, and values being the data values.
+
+                Note:
+                    If *multiple* rows are to be inserted, this
+                    parameter must contain a list of dictionaries, with
+                    each row to be added as a dictionary of it's own.
+
             paramnames (list|tuple, optional): An iterable object
                 containing the procedure's parameter names, in order.
                 Defaults to None. If not provided, these are collected
@@ -239,7 +245,7 @@ class _DBIMSSQL(_DBIBase):
             # Collect parameter names for the EXEC call if not provided.
             if not paramnames:
                 paramnames = self.get_parameter_names(proc=proc)
-            params = ', '.join(map(':{}'.format, paramnames))
+            params = ', '.join(map('@{} = :{}'.format, paramnames, paramnames))
             with self.engine.connect() as con:
                 resp = con.execute(sa.text(f'EXEC {proc} {params}'), data)
                 if resp.returns_rows:
@@ -255,47 +261,6 @@ class _DBIMSSQL(_DBIBase):
             else:
                 reporterror(err)
         return (rowid, success) if return_id else success
-
-    #
-    # XXX: This has been left for possible future development.
-    #      Currently a MySQL implementation.
-    #
-    # def call_procedure_update_many(self, *args, proc: str, iterable: list | tuple) -> bool:
-    #     r"""Call an *update* or *insert* stored procedure for an iterable.
-
-    #     Note:
-    #         The arguments are passed into the USP in the following order:
-
-    #             \*args, iterable_item
-
-    #         Ensure the USP is designed to accept the iterable item as
-    #         the *last* parameter.
-
-    #     Args:
-    #         *args (str | int | float): Positional arguments to be
-    #             passed into the USP, in front of each iterable item.
-    #             Note: The parameters are passed into the USP in the
-    #             order received, followed by the iterable item.
-    #         proc (str): Name of the stored procedure to call.
-    #         iterable (list | tuple): List of items to be loaded into
-    #             the database.
-
-    #     Returns:
-    #         bool: True if the update was successful, otherwise False.
-
-    #     """
-    #     try:
-    #         success = False
-    #         with self.engine.connect() as conn:
-    #             cur = conn.connection.cursor()
-    #             for i in iterable:
-    #                 cur.callproc(proc, [*args, i])
-    #                 conn.connection.connection.commit()
-    #             cur.close()
-    #             success = True
-    #     except Exception as err:
-    #         reporterror(err)
-    #     return success
 
     def call_procedure_update_raw(self,
                                   proc: str,

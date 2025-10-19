@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>database &mdash; dbilib - v0.5.0.dev2 Documentation</title>
+  <title>database &mdash; dbilib - v0.5.1 Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=48ed5a3b"></script>
+        <script src="../_static/documentation_options.js?v=037dbd9b"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0.dev2
+                0.5.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -271,13 +271,13 @@
         <span class="c1"># Enable the use of *args and **kwargs for class parameters.</span>
         <span class="c1"># pylint: disable=unused-argument</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_create_engine__internal_only</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_SUPPORTED_DBS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_SUPPORTED_DBS</span><span class="p">:</span>  <span class="c1"># nocover</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;The only databases supported at this time are: &#39;</span>
                                       <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_SUPPORTED_DBS</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
         <span class="c1"># These are intentionally verbose as a ModuleNotFoundError will</span>
         <span class="c1"># be raised during the test if operating on an environment without</span>
         <span class="c1"># that driver installed.</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;mssql&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;mssql&#39;</span><span class="p">:</span>  <span class="c1"># nocover  # MSSQL is tested in a different environment.</span>
             <span class="k">if</span> <span class="n">utils</span><span class="o">.</span><span class="n">testimport</span><span class="p">(</span><span class="s1">&#39;pyodbc&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
                 <span class="kn">from</span><span class="w"> </span><span class="nn">_dbi_mssql</span><span class="w"> </span><span class="kn">import</span> <span class="n">_DBIMSSQL</span>
                 <span class="k">return</span> <span class="n">_DBIMSSQL</span><span class="p">(</span><span class="n">connstr</span><span class="o">=</span><span class="n">connstr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -340,7 +340,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.dev2.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.1.</p>
   </div>
 
    

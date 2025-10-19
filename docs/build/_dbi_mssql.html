@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>_dbi_mssql - Private database interface for MS SQL Server &mdash; dbilib - v0.5.0 Documentation</title>
+  <title>_dbi_mssql - Private database interface for MS SQL Server &mdash; dbilib - v0.5.1 Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=67b26ddf"></script>
+        <script src="_static/documentation_options.js?v=037dbd9b"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -42,7 +42,7 @@
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.5.0
+                0.5.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -275,7 +275,7 @@ data and the method’s return status is returned as:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbi_mssql._DBIMSSQL.call_procedure_update">
-<span class="sig-name descname"><span class="pre">call_procedure_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.call_procedure_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.call_procedure_update" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">call_procedure_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paramnames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/_dbi_mssql.html#_DBIMSSQL.call_procedure_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dbi_mssql._DBIMSSQL.call_procedure_update" title="Link to this definition"></a></dt>
 <dd><p>Call an <em>update</em> or <em>insert</em> stored procedure.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -289,9 +289,16 @@ provided by the USP</strong> if desired.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>proc</strong> (<em>str</em>) – Name of the stored procedure to call.</p></li>
-<li><p><strong>data</strong> (<em>dict</em>) – A dictionary containing the data to be loaded
+<li><p><strong>data</strong> (<em>dict</em><em> | </em><em>list</em><em>[</em><em>dict</em><em>]</em>) – <p>A dictionary containing the data to be loaded
 as key/value pairs, with the keys being the parameter
-names, and values being the data values.</p></li>
+names, and values being the data values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <em>multiple</em> rows are to be inserted, this
+parameter must contain a list of dictionaries, with
+each row to be added as a dictionary of it’s own.</p>
+</div>
+</p></li>
 <li><p><strong>paramnames</strong> (<em>list</em><em>|</em><em>tuple</em><em>, </em><em>optional</em>) – An iterable object
 containing the procedure’s parameter names, in order.
 Defaults to None. If not provided, these are collected
@@ -690,7 +697,7 @@ regardless of the value passed to the <code class="docutils literal notranslate"
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.</p>
+    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.1.</p>
   </div>
 
    
