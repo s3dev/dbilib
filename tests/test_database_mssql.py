@@ -48,7 +48,8 @@ class TestDatabaseMSSQL(TestBase):
     _MSG1 = templates.not_as_expected.database
     _CREDS = {'database': 'dbilib_test',
               'drivername': 'mssql+pyodbc',
-              'host': '<REMOVED>',
+              # 'host': '<REMOVED>',
+              'host': 'gbdozdv-sql002v',
               'password': '',
               'port': 50002,
               'username': '',
@@ -260,7 +261,33 @@ class TestDatabaseMSSQL(TestBase):
         self.assertTrue(tst1)
         self.assertEqual(exp, tst2, msg=self._MSG1.format(exp, tst2))
 
-    def test03b__call_procedure_update__insert_duplicate(self):
+    # !!!: Here
+    def test03c__call_procedure_update__insert_multi(self):
+        """Test the call_procedure_update method for an INSERT USP.
+
+        This test case is designed to test the method's ``conn.commit()``
+        call inserts and commits the new data.
+
+        :Test:
+            - Call the ``call_procedure_update`` method to insert
+              multiple rows of new data in a single call.
+            - Query the table to verify the returned results are as
+              expected.
+
+        """
+        dbi = DBInterface(connstr=self._CONNSTR)
+        exp = (3,)
+        data = [{'_make': 'Tom Anderson', '_model': 'S Icon', '_colour': 'Sunburst'},
+                {'_make': 'Tom Anderson', '_model': 'T Icon', '_colour': 'Anique White'},
+                {'_make': 'Tom Anderson', '_model': 'Cobra T', '_colour': 'Black Quilt'}]
+        tst1 = dbi.call_procedure_update(proc='usp_insert_guitars_add_new',
+                                         data=data,
+                                         return_id=False)
+        tst2 = dbi.execute_query('select count(*) from guitars where make = \'Tom Anderson\'', raw=True, flat=True)
+        self.assertTrue(tst1)
+        self.assertEqual(exp, tst2, msg=self._MSG1.format(exp, tst2))
+
+    def test03d__call_procedure_update__insert_duplicate(self):
         """Test the call_procedure_update method for an INSERT USP.
 
         This test case is designed to test the method's duplicate row
@@ -328,7 +355,7 @@ class TestDatabaseMSSQL(TestBase):
         players  = ['David Gilmour', 'Eric Clapton', 'Eric Johnson', 'Mark Knopfler']
         dbi = DBInterface(connstr=self._CONNSTR)
         # Add new guitar.
-        exp1 = ([(17,)], True)
+        exp1 = ([(20,)], True)
         data = {'_make': 'Fender', '_model': 'Stratocaster', '_colour': 'Various'}
         tst1 = dbi.call_procedure_update(proc='usp_insert_guitars_add_new',
                                          data=data,
