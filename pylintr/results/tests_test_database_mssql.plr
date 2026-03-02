@@ -2,7 +2,7 @@
 
 Report
 ======
-293 statements analysed.
+301 statements analysed.
 
 Statistics by type
 ------------------
@@ -14,7 +14,7 @@ Statistics by type
 +---------+-------+-----------+-----------+------------+---------+
 |class    |1      |1          |=          |100.00      |0.00     |
 +---------+-------+-----------+-----------+------------+---------+
-|method   |33     |33         |=          |100.00      |45.45    |
+|method   |34     |34         |=          |100.00      |47.06    |
 +---------+-------+-----------+-----------+------------+---------+
 |function |0      |NC         |NC         |0           |0        |
 +---------+-------+-----------+-----------+------------+---------+
@@ -26,9 +26,6 @@ External dependencies
 ::
 
     base (test_database_mssql)
-    dbilib 
-      \-_dbi_base (test_database_mssql)
-      \-database (test_database_mssql)
     pandas (test_database_mssql)
     testlibs 
       \-constants (test_database_mssql)
@@ -38,7 +35,7 @@ External dependencies
 
 
 
-705 lines have been analyzed
+732 lines have been analyzed
 
 Raw metrics
 -----------
@@ -46,13 +43,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |317    |44.96 |NC       |NC         |
+|code      |331    |45.22 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|docstring |334    |47.38 |NC       |NC         |
+|docstring |346    |47.27 |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|comment   |16     |2.27  |NC       |NC         |
+|comment   |16     |2.19  |NC       |NC         |
 +----------+-------+------+---------+-----------+
-|empty     |38     |5.39  |NC       |NC         |
+|empty     |39     |5.33  |NC       |NC         |
 +----------+-------+------+---------+-----------+
 
 

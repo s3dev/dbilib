@@ -28,7 +28,7 @@ from _version import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'dbilib'
-copyright = f'2023-2025 | s3dev | version {__version__}'
+copyright = f'2023-2026 | s3dev | version {__version__}'
 author = 'The Developers'
 version = __version__
 release = __version__

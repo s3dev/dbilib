@@ -132,6 +132,7 @@ class _DBIMSSQL(_DBIBase):
                        proc: str,
                        *,
                        params: dict | tuple=None,
+                       schema: str='dbo',
                        paramnames: list | tuple=None,
                        raw: bool=True,
                        return_status: bool=False) -> pd.DataFrame | tuple[pd.DataFrame | tuple, bool]:  # noqa  # pylint: disable=undefined-variable
@@ -149,6 +150,8 @@ class _DBIMSSQL(_DBIBase):
                 from the database via the :meth:`get_parameter_names`
                 method. For efficiency, the parameter names should be
                 passed if making repeated calls to the procedure.
+            schema (str, optional): Name of the schema to use.
+                Defaults to dbo.
             raw (bool, optional): Return the data in 'raw' (tuple) format
                 rather than as a formatted DataFrame. Defaults to True
                 for efficiency.
@@ -171,10 +174,10 @@ class _DBIMSSQL(_DBIBase):
         try:
             # Collect parameter names for the EXEC call if not provided.
             if not paramnames:
-                paramnames = self.get_parameter_names(proc=proc)
+                paramnames = self.get_parameter_names(proc=proc, schema=schema)
             paramdef = ', '.join(map(':{}'.format, paramnames))
             with self.engine.connect() as con:
-                resp = con.execute(sa.text(f'EXEC {proc} {paramdef}'), params)
+                resp = con.execute(sa.text(f'EXEC {schema}.{proc} {paramdef}'), params)
                 if resp.returns_rows:
                     if raw:
                         data = resp.fetchall()
@@ -193,8 +196,9 @@ class _DBIMSSQL(_DBIBase):
     def call_procedure_update(self,
                               proc: str,
                               *,
-                              data: dict | list[dict],
+                              data: dict,
                               paramnames: list | tuple=None,
+                              schema: str='dbo',
                               return_id: bool=False) -> bool | tuple:
         """Call an *update* or *insert* stored procedure.
 
@@ -223,6 +227,8 @@ class _DBIMSSQL(_DBIBase):
                 from the database via the :meth:`get_parameter_names`
                 method. For efficiency, the parameter names should be
                 passed if making repeated calls to the procedure.
+            schema (str, optional): Name of the schema to use.
+                Defaults to dbo.
             return_id (bool, optional): Return the ID of the last
                 inserted row. If a duplicate constraint is encountered,
                 -1 is returned as the row ID. **See note above.**
@@ -244,10 +250,10 @@ class _DBIMSSQL(_DBIBase):
             rowid = None
             # Collect parameter names for the EXEC call if not provided.
             if not paramnames:
-                paramnames = self.get_parameter_names(proc=proc)
+                paramnames = self.get_parameter_names(proc=proc, schema=schema)
             params = ', '.join(map('@{} = :{}'.format, paramnames, paramnames))
             with self.engine.connect() as con:
-                resp = con.execute(sa.text(f'EXEC {proc} {params}'), data)
+                resp = con.execute(sa.text(f'EXEC {schema}.{proc} {params}'), data)
                 if resp.returns_rows:
                     rowid = resp.fetchall()
                 con.commit()
@@ -267,7 +273,6 @@ class _DBIMSSQL(_DBIBase):
                                   *,
                                   data: dict,
                                   paramnames: list | tuple=None) -> None:
-
         """Call an *update* or *insert* stored procedure, without error
         handling.
 
@@ -306,7 +311,10 @@ class _DBIMSSQL(_DBIBase):
             con.commit()
             con.close()
 
-    def checksum(self, table_name: str, database_name: str=None) -> int | None:
+    def checksum(self,
+                 table_name: str,
+                 database_name: str=None,
+                 schema: str='dbo') -> int | None:
         """Calculate a hash (checksum) on the given table.
 
         Args:
@@ -316,6 +324,8 @@ class _DBIMSSQL(_DBIBase):
                 This argument can be used if the table resides in a
                 different database than the one to which the engine
                 object already points. Defaults to None.
+            schema (str, optional): Name of the schema to use.
+                Defaults to dbo.
 
         This method wraps the ``CHECKSUM_AGG`` and ``BINARY_CHECKSUM``
         MSSQL functions.
@@ -326,7 +336,7 @@ class _DBIMSSQL(_DBIBase):
 
         """
         db = database_name if database_name else self.database_name
-        stmt = f'SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM [{db}].[dbo].[{table_name}]'
+        stmt = f'SELECT CHECKSUM_AGG(BINARY_CHECKSUM(*)) FROM [{db}].[{schema}].[{table_name}]'
         if all((not self._is_dangerous(stmt=stmt),
                 self.table_exists(table_name=table_name, database_name=db))):
             return self.execute_query(stmt)[0][0]
@@ -353,7 +363,7 @@ class _DBIMSSQL(_DBIBase):
                 ui.print_warning(text=msg)
         return exists
 
-    def get_parameter_names(self, proc: str) -> tuple:
+    def get_parameter_names(self, proc: str, schema: str='dbo') -> tuple:
         """Retrieve the parameter names for the given USP.
 
         For portability, this method has been updated to use an embedded
@@ -361,7 +371,8 @@ class _DBIMSSQL(_DBIBase):
 
         Args:
             proc (str): Name of the target stored procedure.
-
+            schema (str, optional): Name of the schema to use.
+                Defaults to dbo.
         Returns:
             tuple: A tuple of parameter names for the given USP.
 
@@ -375,7 +386,8 @@ class _DBIMSSQL(_DBIBase):
             FROM
                 [sys].[parameters]
             WHERE
-                [object_id] = ( SELECT [object_id] FROM [sys].[objects] WHERE [name] = '{proc}' )
+                [object_id] = ( SELECT [object_id] FROM [sys].[objects] WHERE [name] = '{proc}'
+                                AND schema_id = SCHEMA_ID('{schema}') )
             ORDER BY
                 [parameter_id];
         """
@@ -386,7 +398,11 @@ class _DBIMSSQL(_DBIBase):
             return ()
         return ()  # pragma: nocover  # Unreachable
 
-    def table_exists(self, table_name: str, database_name: str=None, verbose: bool=False) -> bool:
+    def table_exists(self,
+                     table_name: str,
+                     database_name: str=None,
+                     schema: str='dbo',
+                     verbose: bool=False) -> bool:
         """Using the ``engine`` object, test if the given table exists.
 
         Args:
@@ -395,6 +411,8 @@ class _DBIMSSQL(_DBIBase):
                 This argument can be used if the table resides in a
                 different database than the one to which the engine
                 object already points. Defaults to None.
+            schema (str, optional): Name of the schema to use.
+                Defaults to dbo.
             verbose (bool, optional): Print a message if the table does
                 not exist. Defaults to False.
 
@@ -407,7 +425,7 @@ class _DBIMSSQL(_DBIBase):
         params = {
                   'table_catalog': db,
                   'table_name': table_name,
-                  'table_schema': 'dbo',
+                  'table_schema': schema,
                  }
         stmt = (f'select count(*) from [{db}].[information_schema].[tables] '
                 'where table_catalog = :table_catalog '
@@ -420,26 +438,27 @@ class _DBIMSSQL(_DBIBase):
                 ui.print_warning(text=msg)
         return exists
 
-    def _backup(self, table_name: str, bkdb_name: str) -> bool:
+    def _backup(self, table_name: str, bkdb_name: str, schema: str='dbo') -> bool:
         """Perform the table backup to the backup database.
 
         Args:
             table_name (str): Name of the table to be backed up.
             bkdb_name (str): Name of the backup database.
-
+            schema (str, optional): Name of the schema to use.
+                Defaults to dbo.
         Returns:
             bool: True if the backup was successful, otherwise False.
             A successful backup is determined by verifying matching table
             checksum values between the origin and backup tables.
 
         """
-        stmt1 = f'DROP TABLE IF EXISTS [{bkdb_name}].[dbo].[{table_name}]'
-        stmt2 = f'SELECT * INTO [{bkdb_name}].[dbo].[{table_name}] FROM [dbo].[{table_name}]'
+        stmt1 = f'DROP TABLE IF EXISTS [{bkdb_name}].[{schema}].[{table_name}]'
+        stmt2 = f'SELECT * INTO [{bkdb_name}].[{schema}].[{table_name}] FROM [{schema}].[{table_name}]'
         if all((not self._is_dangerous(stmt=stmt1), not self._is_dangerous(stmt=stmt2))):
             self.execute_query(stmt1)
             self.execute_query(stmt2)
-        ck1 = self.checksum(table_name=table_name, database_name=self.database_name)
-        ck2 = self.checksum(table_name=table_name, database_name=bkdb_name)
+        ck1 = self.checksum(table_name=table_name, database_name=self.database_name, schema=schema)
+        ck2 = self.checksum(table_name=table_name, database_name=bkdb_name, schema=schema)
         return ck1 == ck2
 
     @staticmethod

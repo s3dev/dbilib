@@ -1,27 +1,25 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>database - Public database interface &mdash; dbilib - v0.5.0 Documentation</title>
+  <title>database - Public database interface &mdash; dbilib - v0.5.2 Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/css/s5defs-rules.css?v=0345028d" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=67b26ddf"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=ae2dcd57"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,9 +39,6 @@
             dbilib
               <img src="_static/s3dev_tri_white_sm.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                0.5.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -59,6 +54,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#database.DBInterface._SUPPORTED_DBS"><code class="docutils literal notranslate"><span class="pre">DBInterface._SUPPORTED_DBS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#database.DBInterface.__new__"><code class="docutils literal notranslate"><span class="pre">DBInterface.__new__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#database.DBInterface._create_engine__internal_only"><code class="docutils literal notranslate"><span class="pre">DBInterface._create_engine__internal_only()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database.DBInterface.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">DBInterface.__firstlineno__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database.DBInterface.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">DBInterface.__static_attributes__</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -272,7 +269,7 @@ into its class, manually.</p>
 <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute, an instance of the associated database
 interface class is returned.</p>
 <p>For example, if the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute is <code class="docutils literal notranslate"><span class="pre">'mysql'</span></code>, an
-instance of the <a class="reference internal" href="_dbi_mysql.html#dbi_mysql._DBIMySQL" title="_dbi_mysql._DBIMySQL"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_mysql._DBIMySQL</span></code></a> private interface
+instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_mysql._DBIMySQL</span></code> private interface
 class is returned. Likewise, if the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute is
 <code class="docutils literal notranslate"><span class="pre">'oracle'</span></code>, an instance of the <a class="reference internal" href="_dbi_oracle.html#dbi_oracle._DBIOracle" title="_dbi_oracle._DBIOracle"><code class="xref py py-class docutils literal notranslate"><span class="pre">_dbi_oracle._DBIOracle</span></code></a>
 private interface class is returned, etc.</p>
@@ -317,6 +314,16 @@ engine.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="database.DBInterface.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">35</span></em><a class="headerlink" href="#database.DBInterface.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="database.DBInterface.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#database.DBInterface.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </section>
@@ -332,7 +339,7 @@ engine.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023-2025 | s3dev | version 0.5.0.</p>
+    <p>&#169; Copyright 2023-2026 | s3dev | version 0.5.2.</p>
   </div>
 
    

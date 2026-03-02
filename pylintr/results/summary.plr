@@ -1,12 +1,12 @@
 Pylint Summary:
 ------------------------
-dbilib_changelog.plr:
-dbilib_database.plr: 10.00/10
 dbilib__dbi_base.plr: 10.00/10
 dbilib__dbi_mssql.plr: 10.00/10
 dbilib__dbi_mysql.plr: 10.00/10
 dbilib__dbi_oracle.plr: 10.00/10
 dbilib__dbi_sqlite.plr: 10.00/10
+dbilib_changelog.plr:
+dbilib_database.plr: 10.00/10
 testlibs_constants.plr: 10.00/10
 testlibs_utilities.plr: 10.00/10
 tests_base.plr: 10.00/10
@@ -14,4 +14,4 @@ tests_test_database_mssql.plr: 10.00/10
 tests_test_database_mysql.plr: 10.00/10
 tests_test_database_sqlite.plr: 10.00/10
 ------------------------
-Run date: Sat 20 Sep 12:55:58 BST 2025
+Run date: Mon Mar 2 11:20:01 GMTST 2026

@@ -48,10 +48,9 @@ class TestDatabaseMSSQL(TestBase):
     _MSG1 = templates.not_as_expected.database
     _CREDS = {'database': 'dbilib_test',
               'drivername': 'mssql+pyodbc',
-              # 'host': '<REMOVED>',
-              'host': 'gbdozdv-sql002v',
+              'host': '<REMOVED>',
               'password': '',
-              'port': 50002,
+              'port': 00000,
               'username': '',
               'driver': 'ODBC+Driver+17+for+SQL+Server',
               'trusted_connection': 'yes'}
@@ -261,7 +260,6 @@ class TestDatabaseMSSQL(TestBase):
         self.assertTrue(tst1)
         self.assertEqual(exp, tst2, msg=self._MSG1.format(exp, tst2))
 
-    # !!!: Here
     def test03c__call_procedure_update__insert_multi(self):
         """Test the call_procedure_update method for an INSERT USP.
 
@@ -283,7 +281,9 @@ class TestDatabaseMSSQL(TestBase):
         tst1 = dbi.call_procedure_update(proc='usp_insert_guitars_add_new',
                                          data=data,
                                          return_id=False)
-        tst2 = dbi.execute_query('select count(*) from guitars where make = \'Tom Anderson\'', raw=True, flat=True)
+        tst2 = dbi.execute_query('select count(*) from guitars where make = \'Tom Anderson\'',
+                                 raw=True,
+                                 flat=True)
         self.assertTrue(tst1)
         self.assertEqual(exp, tst2, msg=self._MSG1.format(exp, tst2))
 

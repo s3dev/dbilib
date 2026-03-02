@@ -25,9 +25,6 @@ External dependencies
 ---------------------
 ::
 
-    mysql 
-      \-connector 
-        \-errors (dbilib._dbi_mysql)
     pandas (dbilib._dbi_mysql)
     sqlalchemy 
       \-exc (dbilib._dbi_mysql)
@@ -45,7 +42,7 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |84     |32.18 |84       |=          |
+|code      |84     |32.18 |81       |+3.00      |
 +----------+-------+------+---------+-----------+
 |docstring |152    |58.24 |152      |=          |
 +----------+-------+------+---------+-----------+
